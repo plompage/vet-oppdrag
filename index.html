@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vet-oppdrag</title>
+<meta name="theme-color" content="#2f5d50">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Vet-oppdrag">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+:root{
+  --bg:#f4f1ea; --card:#fffdf8; --ink:#1f2a26; --muted:#6b736f; --line:#e2ddd2;
+  --brand:#2f5d50; --brand-2:#e7efe9; --warn:#a4541d; --warn-2:#f7e9dd; --ok:#2f6b3a; --ok-2:#e3f0e3;
+  --grey-2:#ecebe6; --blue:#2c5a85; --blue-2:#e3ecf5; --radius:12px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:0 14px 96px}
+header.top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.top-in{max-width:760px;margin:0 auto;padding:10px 14px;display:flex;align-items:center;gap:10px}
+.logo{font-weight:700;color:var(--brand);letter-spacing:.2px}
+.beta{font-size:11px;background:var(--warn-2);color:var(--warn);padding:2px 8px;border-radius:99px;font-weight:600}
+.role{margin-left:auto;display:flex;background:var(--grey-2);border-radius:99px;padding:3px}
+.role button{border:0;background:transparent;padding:5px 12px;border-radius:99px;cursor:pointer;font-size:13px;color:var(--muted)}
+.role button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08);font-weight:600}
+nav.tabs{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);z-index:6}
+nav.tabs .in{max-width:760px;margin:0 auto;display:flex}
+nav.tabs button{flex:1;border:0;background:none;padding:10px 4px 12px;cursor:pointer;color:var(--muted);font-size:12px;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav.tabs button svg{width:22px;height:22px}
+nav.tabs button.on{color:var(--brand);font-weight:600}
+h1{font-size:22px;margin:18px 0 10px}
+h2{font-size:16px;margin:0 0 10px}
+h3{font-size:13px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin:20px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:10px}
+.row{display:flex;gap:10px;align-items:center}
+.between{justify-content:space-between}
+.wrapf{flex-wrap:wrap}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.right{text-align:right}
+.grow{flex:1;min-width:0}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600}
+.btn:hover{border-color:#cfc8b9}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.warn{color:var(--warn);border-color:#e6cbb4}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--brand);padding:6px 8px}
+.btn.sm{padding:5px 10px;font-size:13px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.fab{position:fixed;right:max(16px,calc(50% - 364px));bottom:78px;z-index:7;border-radius:99px;padding:13px 18px;box-shadow:0 4px 14px rgba(47,93,80,.35)}
+input[type=text],input[type=date],input[type=time],input[type=number],input[type=search],select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:#fff}
+textarea{min-height:70px;resize:vertical}
+label.f{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px;font-weight:600}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+@media(max-width:520px){.grid3{grid-template-columns:1fr 1fr}}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;white-space:nowrap}
+.s-bestilt{background:var(--blue-2);color:var(--blue)}
+.s-utsatt{background:var(--warn-2);color:var(--warn)}
+.s-fullfort{background:var(--ok-2);color:var(--ok)}
+.s-avlyst{background:var(--grey-2);color:var(--muted)}
+.s-fakturert{background:var(--brand-2);color:var(--brand)}
+.seg{display:flex;background:var(--grey-2);border-radius:10px;padding:3px;margin:4px 0 12px}
+.seg button{flex:1;border:0;background:transparent;padding:7px;border-radius:8px;cursor:pointer;color:var(--muted);font-weight:600;font-size:13px}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.item{cursor:pointer}
+.item:hover{border-color:#cfc8b9}
+.lines{width:100%;border-collapse:collapse}
+.lines td,.lines th{padding:7px 4px;border-bottom:1px solid var(--line);vertical-align:middle}
+.lines th{font-size:12px;color:var(--muted);text-align:left;font-weight:600}
+.lines input[type=number]{width:74px;padding:6px}
+.x{border:0;background:none;color:var(--muted);cursor:pointer;font-size:18px;line-height:1;padding:2px 6px}
+.x:hover{color:var(--warn)}
+.picker{position:relative}
+.picker .list{position:absolute;left:0;right:0;top:100%;margin-top:4px;background:#fff;border:1px solid var(--line);border-radius:10px;max-height:240px;overflow:auto;z-index:4;box-shadow:0 6px 18px rgba(0,0,0,.1)}
+.picker .opt{padding:8px 10px;cursor:pointer;display:flex;justify-content:space-between;gap:8px}
+.picker .opt:hover{background:var(--brand-2)}
+.dyr{border:1px dashed #d7d0c1;border-radius:10px;padding:10px;margin-bottom:10px;background:#fffefb}
+.lock{background:var(--grey-2);border-radius:10px;padding:10px 12px;color:var(--muted);font-size:13px}
+.banner{background:var(--warn-2);color:var(--warn);border-radius:10px;padding:9px 12px;font-size:13px;margin:12px 0}
+.total{font-weight:700;font-size:16px}
+.ts{font-size:12px;color:var(--muted)}
+.modal-bg{position:fixed;inset:0;background:rgba(20,25,23,.45);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+@media(min-width:620px){.modal-bg{align-items:center}}
+.modal{background:var(--card);width:100%;max-width:520px;border-radius:16px 16px 0 0;padding:18px;max-height:88vh;overflow:auto}
+@media(min-width:620px){.modal{border-radius:16px}}
+.choice{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:8px;cursor:pointer}
+.choice.on{border-color:var(--brand);background:var(--brand-2)}
+.choice input{margin-top:3px}
+pre.out{white-space:pre-wrap;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;font-size:12px;max-height:260px;overflow:auto}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:86px;background:var(--ink);color:#fff;padding:9px 16px;border-radius:99px;font-size:14px;z-index:30;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+.empty{text-align:center;color:var(--muted);padding:26px 10px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:14px}
+.kv div:nth-child(odd){color:var(--muted)}
+.check{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer}
+.login{position:fixed;inset:0;z-index:40;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px}
+.login-card{max-width:380px;width:100%;text-align:center}
+.login-logo{width:72px;height:72px;border-radius:18px;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:34px;font-weight:700}
+.login h1{margin:0 0 6px;font-size:26px}
+.gbtn{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid #d6d0c4;border-radius:99px;padding:12px 22px;font-weight:600;cursor:pointer;font-size:15px;margin-top:22px}
+.gbtn:hover{border-color:#bdb5a5}
+.syncbar{max-width:760px;margin:0 auto;padding:4px 14px 6px;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;background:#b8b2a6;flex:none}
+.dot.ok{background:#3c8a4a}.dot.busy{background:#d49a2a}.dot.err{background:#c0472c}
+.linkbtn{border:0;background:none;color:var(--brand);font-weight:600;cursor:pointer;padding:0;font-size:12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 6px}
+.chip{border:1px solid #bcd3c8;background:var(--brand-2);color:var(--brand);border-radius:99px;padding:4px 11px;font-size:13px;font-weight:600;cursor:pointer}
+.chip.x{background:#fff;border-color:var(--line);color:var(--ink);font-weight:500}
+@media print{header.top,nav.tabs,.fab,.noprint{display:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <span class="logo">Vet-oppdrag</span><span class="beta">Beta · oppdiktede data</span>
+  <div class="role" id="role"></div>
+</div></header>
+<div id="syncbar"></div>
+<main class="wrap" id="main"></main>
+<div class="login" id="login" style="display:none"><div class="login-card">
+  <div class="login-logo">V</div>
+  <h1>Vet-oppdrag</h1>
+  <div class="muted">Oppdrag, journal og fakturagrunnlag</div>
+  <button class="gbtn" onclick="loggInn()"><svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Logg inn med Google</button>
+  <div id="login-err" class="small" style="color:var(--warn);margin-top:12px"></div>
+  <div class="banner" style="margin-top:28px;text-align:left">Betaversjon: bruk bare oppdiktede kunder og journaler. Dataene lagres i mappen «Vet-oppdrag» på din Google Drive.</div>
+</div></div>
+<nav class="tabs"><div class="in" id="tabs"></div></nav>
+<div id="modal"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const VARER = [{"nr": 1001, "navn": "2.gangs sprøyting estrumat", "pris": 220, "enhet": null}, {"nr": 1002, "navn": "Avhorning fra kalv 2", "pris": 175, "enhet": null}, {"nr": 1003, "navn": "Avhorning kalv 1", "pris": 925, "enhet": null}, {"nr": 1004, "navn": "Avhorning kalv utstyr", "pris": 30, "enhet": null}, {"nr": 1005, "navn": "Avliving hund 19.02.21", "pris": 0, "enhet": null}, {"nr": 1006, "navn": "Avliving kalv", "pris": 250, "enhet": null}, {"nr": 1007, "navn": "Avliving katt", "pris": 0, "enhet": null}, {"nr": 1008, "navn": "Avlivning småfe vakt", "pris": 450, "enhet": null}, {"nr": 1009, "navn": "Bedøvelse katt", "pris": 0, "enhet": null}, {"nr": 1010, "navn": "Blodprøver geit", "pris": 0, "enhet": null}, {"nr": 1011, "navn": "Calf drencher", "pris": 272, "enhet": null}, {"nr": 1012, "navn": "Cryptotest", "pris": 234, "enhet": null}, {"nr": 1013, "navn": "Diaré kalv honorar", "pris": 250, "enhet": null}, {"nr": 1014, "navn": "Drektighetsundersøkelse første 5 stk", "pris": 925, "enhet": null}, {"nr": 1015, "navn": "Drektighetsundersøkelse stk", "pris": 120, "enhet": null}, {"nr": 1016, "navn": "DVP besøk", "pris": 0, "enhet": null}, {"nr": 1017, "navn": "Etterbehandling", "pris": 340, "enhet": null}, {"nr": 1018, "navn": "Etterfakturering vakttelefon Telenor", "pris": 0, "enhet": null}, {"nr": 1019, "navn": "Fakturagebyr", "pris": 60, "enhet": null}, {"nr": 1020, "navn": "Fergebilletter", "pris": 0, "enhet": null}, {"nr": 1021, "navn": "Frakk geno", "pris": 749, "enhet": null}, {"nr": 1022, "navn": "Frakt blodprøver ekspress over natt", "pris": 0, "enhet": null}, {"nr": 1023, "navn": "Grunnhonorar", "pris": 925, "enhet": null}, {"nr": 1024, "navn": "Grunnhonorar helg", "pris": 1850, "enhet": null}, {"nr": 1025, "navn": "Grunnhonorar søndag", "pris": 1850, "enhet": null}, {"nr": 1026, "navn": "Helgetillegg", "pris": 450, "enhet": null}, {"nr": 1027, "navn": "Helgetillegg kveld", "pris": 675, "enhet": null}, {"nr": 1028, "navn": "Helseattest alpakka", "pris": 730, "enhet": null}, {"nr": 1029, "navn": "Helseattest besetning", "pris": 465, "enhet": null}, {"nr": 1030, "navn": "Helseattest geit", "pris": 730, "enhet": null}, {"nr": 1031, "navn": "Helseattest kalv", "pris": 350, "enhet": null}, {"nr": 1032, "navn": "Helseattest storfe", "pris": 925, "enhet": null}, {"nr": 1033, "navn": "Hjemkjøring katt honorar", "pris": 400, "enhet": null}, {"nr": 1034, "navn": "Hjemkjøring smådyr", "pris": 415, "enhet": null}, {"nr": 1035, "navn": "Hjemmeavlivning smådyr", "pris": 0, "enhet": null}, {"nr": 1036, "navn": "Honorar alpakka", "pris": 730, "enhet": null}, {"nr": 1037, "navn": "Honorar gris", "pris": 365, "enhet": null}, {"nr": 1038, "navn": "Honorar hest", "pris": 0, "enhet": null}, {"nr": 1039, "navn": "Honorar hund", "pris": 465, "enhet": null}, {"nr": 1040, "navn": "Honorar hund helg", "pris": 930, "enhet": null}, {"nr": 1041, "navn": "Honorar kalv", "pris": 365, "enhet": null}, {"nr": 1042, "navn": "Honorar kalv helg", "pris": 500, "enhet": null}, {"nr": 1043, "navn": "Honorar kalv oppfølging", "pris": 150, "enhet": null}, {"nr": 1044, "navn": "Honorar kalv påfølgende individ", "pris": 265, "enhet": null}, {"nr": 1045, "navn": "Honorar kalv rask undersøkelse", "pris": 100, "enhet": null}, {"nr": 1046, "navn": "Honorar kalv vakt", "pris": 730, "enhet": null}, {"nr": 1047, "navn": "Honorar kalving vakt", "pris": 0, "enhet": null}, {"nr": 1048, "navn": "Honorar mastitt helg ekskludert speneprøve", "pris": 930, "enhet": null}, {"nr": 1049, "navn": "Honorar mastitt vakt inkl speneprøve", "pris": 1200, "enhet": null}, {"nr": 1050, "navn": "Honorar mastitt, inkudert speneprøve", "pris": 600, "enhet": null}, {"nr": 1051, "navn": "Honorar melkefeber helg", "pris": 1040, "enhet": null}, {"nr": 1052, "navn": "Honorar melkefeber helg kveld", "pris": 1300, "enhet": null}, {"nr": 1053, "navn": "Honorar melkefeber kveld", "pris": 1040, "enhet": null}, {"nr": 1054, "navn": "Honorar mjølkefeber", "pris": 520, "enhet": null}, {"nr": 1055, "navn": "Honorar mjølkefeber helg", "pris": 1040, "enhet": null}, {"nr": 1056, "navn": "Honorar mjølkefeber kveld", "pris": 0, "enhet": null}, {"nr": 1057, "navn": "Honorar mjølkefeber påfølgende behandling", "pris": 465, "enhet": null}, {"nr": 1058, "navn": "Honorar purke", "pris": 350, "enhet": null}, {"nr": 1059, "navn": "Honorar påfølgende individ", "pris": 432, "enhet": null}, {"nr": 1060, "navn": "Honorar påfølgende kalv", "pris": 150, "enhet": null}, {"nr": 1061, "navn": "Honorar rask undersøkelse storfe", "pris": 165, "enhet": null}, {"nr": 1062, "navn": "Honorar rask undersøkelse storfe helg", "pris": 0, "enhet": null}, {"nr": 1063, "navn": "Honorar sau", "pris": 730, "enhet": null}, {"nr": 1064, "navn": "Honorar småfe", "pris": 250, "enhet": null}, {"nr": 1065, "navn": "Honorar speneamputasjon", "pris": 690, "enhet": null}, {"nr": 1066, "navn": "Honorar storfe", "pris": 170, "enhet": null}, {"nr": 1067, "navn": "Honorar storfe", "pris": 730, "enhet": null}, {"nr": 1068, "navn": "Honorar storfe helg", "pris": 930, "enhet": null}, {"nr": 1069, "navn": "Honorar storfe helg inkl speneprøve", "pris": 1065, "enhet": null}, {"nr": 1070, "navn": "Honorar storfe helg kveld", "pris": 0, "enhet": null}, {"nr": 1071, "navn": "Honorar storfe inkl speneprøve", "pris": 600, "enhet": null}, {"nr": 1072, "navn": "Honorar storfe kalving", "pris": 0, "enhet": null}, {"nr": 1073, "navn": "Honorar storfe kalving kveld", "pris": 1000, "enhet": null}, {"nr": 1074, "navn": "Honorar storfe kveld", "pris": 930, "enhet": null}, {"nr": 1075, "navn": "Honorar storfe kveld inkl speneprøve", "pris": 1200, "enhet": null}, {"nr": 1076, "navn": "Honorar storfe søndag kveld", "pris": 1162, "enhet": null}, {"nr": 1077, "navn": "Honorar storfe vakt", "pris": 930, "enhet": null}, {"nr": 1078, "navn": "Honorar storfe/ sau", "pris": 0, "enhet": null}, {"nr": 1079, "navn": "Honorar søye", "pris": 250, "enhet": null}, {"nr": 1080, "navn": "Honorar vaksine hest", "pris": 0, "enhet": null}, {"nr": 1081, "navn": "Hormonbehandling storfe", "pris": 0, "enhet": null}, {"nr": 1082, "navn": "Hurtigtest kalvediaré", "pris": 401, "enhet": null}, {"nr": 1083, "navn": "Innlegg systamex første 5", "pris": 730, "enhet": null}, {"nr": 1084, "navn": "Innlegg systamex stk", "pris": 55, "enhet": null}, {"nr": 1085, "navn": "Kastrering hannkatt", "pris": 900, "enhet": null}, {"nr": 1086, "navn": "Kastrering påfølgende individ", "pris": 175, "enhet": null}, {"nr": 1087, "navn": "Kjøring", "pris": 393, "enhet": null}, {"nr": 1088, "navn": "Kjøring vakt", "pris": 25, "enhet": "Km"}, {"nr": 1089, "navn": "Klinisk undersøkelse hund", "pris": 450, "enhet": null}, {"nr": 1090, "navn": "Klinisk undersøkelse hund helg", "pris": 800, "enhet": null}, {"nr": 1091, "navn": "Klinisk undersøkelse hund helg 30 min", "pris": 900, "enhet": null}, {"nr": 1092, "navn": "Klinisk undersøkelse katt", "pris": 465, "enhet": null}, {"nr": 1093, "navn": "Konsultasjon smådyr 60 min", "pris": 1200, "enhet": null}, {"nr": 1094, "navn": "Konsultasjon smådyr kveld", "pris": 900, "enhet": null}, {"nr": 1095, "navn": "Konsultasjon smådyr kveld 30 min", "pris": 950, "enhet": null}, {"nr": 1096, "navn": "Kontorleie oktober - desember", "pris": 0, "enhet": null}, {"nr": 1097, "navn": "Leie av bil", "pris": 0, "enhet": null}, {"nr": 1098, "navn": "Lørdagstillegg", "pris": 370, "enhet": null}, {"nr": 1099, "navn": "Mastitt 1 kjertel utstyr", "pris": 75, "enhet": null}, {"nr": 1100, "navn": "Mastitt honorar ekskludert speneprøve", "pris": 465, "enhet": null}, {"nr": 1101, "navn": "Medisiner", "pris": null, "enhet": null}, {"nr": 1102, "navn": "Nedgivning", "pris": 0, "enhet": null}, {"nr": 1103, "navn": "Nødhjelp Mattilsynet Skjære", "pris": 1594, "enhet": null}, {"nr": 1104, "navn": "Nødslakt storfe", "pris": 925, "enhet": null}, {"nr": 1105, "navn": "Nødslaktattest", "pris": 465, "enhet": null}, {"nr": 1106, "navn": "Nødslaktattest helg", "pris": 930, "enhet": null}, {"nr": 1107, "navn": "Nødslaktattest påfølgende individ", "pris": 250, "enhet": null}, {"nr": 1108, "navn": "Rektalhansker", "pris": 120, "enhet": null}, {"nr": 1109, "navn": "Rektalhansker Large", "pris": 140, "enhet": null}, {"nr": 1110, "navn": "Resepthonorar", "pris": 64, "enhet": null}, {"nr": 1111, "navn": "Røntgen buk 2 plan", "pris": 450, "enhet": null}, {"nr": 1112, "navn": "Røntgen thorax 3 plan + røntgen svelg", "pris": 650, "enhet": null}, {"nr": 1113, "navn": "Schalmvæske", "pris": 120, "enhet": null}, {"nr": 1114, "navn": "Se på lam på ruta", "pris": 370, "enhet": null}, {"nr": 1115, "navn": "Sedasjon + Oppvåkning hund", "pris": 250, "enhet": null}, {"nr": 1116, "navn": "Seksuell helsekontroll", "pris": 320, "enhet": null}, {"nr": 1117, "navn": "Sintidsbehandling", "pris": 246, "enhet": null}, {"nr": 1118, "navn": "Smertebehandling hund", "pris": 90, "enhet": null}, {"nr": 1119, "navn": "Speneprøve", "pris": 150, "enhet": null}, {"nr": 1120, "navn": "Speneprøveuttak", "pris": 150, "enhet": null}, {"nr": 1121, "navn": "Storfe honorar", "pris": 950, "enhet": null}, {"nr": 1122, "navn": "Timespris klinisk arbeid", "pris": 1850, "enhet": null}, {"nr": 1123, "navn": "Undersøkelse + bandasjering hest", "pris": 300, "enhet": null}, {"nr": 1124, "navn": "Utstyr", "pris": 60, "enhet": null}, {"nr": 1125, "navn": "Utstyr/ varer for videresalg", "pris": 0, "enhet": null}, {"nr": 1126, "navn": "Vaksinering påfølgende sau, stk", "pris": 7, "enhet": null}, {"nr": 1127, "navn": "Vaksinering sau første 10 stk", "pris": 730, "enhet": null}, {"nr": 1128, "navn": "Vaksinering storfe første 5", "pris": 730, "enhet": null}, {"nr": 1129, "navn": "Vaksinering storfe stk", "pris": 22, "enhet": null}, {"nr": 1130, "navn": "Vakttillegg helg", "pris": 730, "enhet": null}, {"nr": 1131, "navn": "Vakttillegg helg 100%", "pris": 925, "enhet": null}, {"nr": 1132, "navn": "Vakttillegg helg kveld", "pris": 698, "enhet": null}, {"nr": 1133, "navn": "Vakttillegg helligdag", "pris": 0, "enhet": null}, {"nr": 1134, "navn": "Vakttillegg man-fre", "pris": 510, "enhet": null}, {"nr": 1135, "navn": "Vakttillegg man-fre", "pris": 510, "enhet": null}, {"nr": 1136, "navn": "Vakttillegg natt", "pris": 730, "enhet": null}, {"nr": 1137, "navn": "Vakttillegg søndag", "pris": 730, "enhet": null}, {"nr": 1138, "navn": "Ventetid ferge", "pris": 0, "enhet": null}, {"nr": 1139, "navn": "Ventetid skyssbåt", "pris": 0, "enhet": null}, {"nr": 1140, "navn": "Væske - og smertebehandling", "pris": 220, "enhet": null}, {"nr": 1141, "navn": "Væskebehandling og utstyr", "pris": 50, "enhet": null}, {"nr": 1142, "navn": "Væskebehandling Ringer Acetat", "pris": 100, "enhet": null}];
+const MEDISINER = [{"navn": "Becoplex", "pris": 114.46}, {"navn": "Borgal 100ml", "pris": 202.6}, {"navn": "Calcikel 7 stk", "pris": 634}, {"navn": "Calcikel stk", "pris": 88.8}, {"navn": "Calcimag 12 stk", "pris": 958}, {"navn": "Calcimag stk", "pris": 80.49}, {"navn": "Dexaject", "pris": 392.8}, {"navn": "Epsomsalt 1 liter", "pris": 273}, {"navn": "Equilis Prequenza Te, vaksine", "pris": 1551}, {"navn": "Finadyne", "pris": 264.8}, {"navn": "Ganutil", "pris": 264.21}, {"navn": "Ku + energi, tuber", "pris": 78}, {"navn": "Ku + kalsium, tuber", "pris": 75}, {"navn": "Ku + kull, tuber", "pris": 96}, {"navn": "Ku + vom, tuber", "pris": 111}, {"navn": "Lidokel", "pris": 67.29}, {"navn": "Magniject 400ml", "pris": 92.16}, {"navn": "Mastipen", "pris": 92}, {"navn": "Melovem 20mg/ml", "pris": 228.92}, {"navn": "Metacam smertestillende mikstur", "pris": 75}, {"navn": "Mineralbolus kvige per stk", "pris": 78}, {"navn": "Navlespray", "pris": 175}, {"navn": "Obionekk", "pris": 2062}, {"navn": "Opticlox øyesalve", "pris": 317}, {"navn": "Oxytocin 10ml", "pris": 30}, {"navn": "Penovet 100ml", "pris": 90}, {"navn": "Receptal", "pris": 128.1}, {"navn": "Repiderma sårspray", "pris": 179}, {"navn": "Ringer Acetat 100ml", "pris": 20}, {"navn": "Selevitan", "pris": 394.4}, {"navn": "Siccalactin 12 stk", "pris": 384.8}, {"navn": "Siccalactin 4 tuber", "pris": 207}, {"navn": "Spasmium", "pris": 395.92}, {"navn": "Specific CIW 300g", "pris": 28}, {"navn": "Systamex bolus stk", "pris": 190}, {"navn": "Tube ku + kalvegel", "pris": 90}, {"navn": "Tube ku + ph", "pris": 90}, {"navn": "Tuber ku + fosfor", "pris": 88}, {"navn": "Vaksine kalv Bovilis bovipast 1 flaske", "pris": 526}, {"navn": "Vaksiner parvo + rødsjuke", "pris": 510}, {"navn": "Vetericyn sårspray", "pris": 269}, {"navn": "Vetocin", "pris": 49.31}, {"navn": "Vetplus Promax 9ml", "pris": 111}, {"navn": "Xysol", "pris": 212}];
+const MED_VARE = VARER.find(v=>v.navn==='Medisiner') || {nr:0,navn:'Medisiner'};
+const MVA = 0.25;
+const KEY = 'vetoppdrag-beta-v1';
+const CLIENT_ID = '842501203444-7fd90tb00se987ktbmliesupatorb4pa.apps.googleusercontent.com';
+const SCOPE = 'https://www.googleapis.com/auth/drive.file';
+const FOLDER = 'Vet-oppdrag', FILE = 'vet-oppdrag-data.json';
+
+// ---------- Hjelpere ----------
+const pad = n => String(n).padStart(2,'0');
+const iso = d => d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const addDays = (n) => { const d=new Date(); d.setDate(d.getDate()+n); return iso(d); };
+const TODAY = iso(new Date());
+const nowTs = () => new Date().toISOString();
+const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const kr = n => (Number(n)||0).toLocaleString('nb-NO',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtDate = s => { if(!s) return ''; const [y,m,d]=s.split('-'); const dt=new Date(+y,+m-1,+d);
+  return dt.toLocaleDateString('nb-NO',{weekday:'short',day:'numeric',month:'short'}); };
+const fmtTs = s => s ? new Date(s).toLocaleString('nb-NO',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '–';
+const uid = () => Math.random().toString(36).slice(2,9);
+
+// ---------- Demodata ----------
+function seed(){
+  const kunder = [
+    {nr:90001,navn:'Nordre Haugen gård',kontakt:'Kari Haugen',adresse:'Haugenvegen 12',postnr:'2656',sted:'Follebu',tlf:'900 00 001'},
+    {nr:90002,navn:'Bakkeli Samdrift DA',kontakt:'Trond Bakkeli',adresse:'Bakkelivegen 4',postnr:'2651',sted:'Østre Gausdal',tlf:'900 00 002'},
+    {nr:90003,navn:'Ola Nordmann',kontakt:'',adresse:'Lisletta 3',postnr:'2653',sted:'Vestre Gausdal',tlf:'900 00 003'},
+    {nr:90004,navn:'Lia gård',kontakt:'Per Lia',adresse:'Liavegen 220',postnr:'2657',sted:'Svatsum',tlf:'900 00 004'},
+    {nr:90005,navn:'Storberget Sau',kontakt:'Ingrid Berg',adresse:'Storbergvegen 9',postnr:'2656',sted:'Follebu',tlf:'900 00 005'},
+    {nr:90006,navn:'Midtgard Melk',kontakt:'Jon Midtgard',adresse:'Midtgardsvegen 1',postnr:'2651',sted:'Østre Gausdal',tlf:'900 00 006'},
+    {nr:90007,navn:'Elin Fjellstad',kontakt:'',adresse:'Fjellstadgata 7',postnr:'2609',sted:'Lillehammer',tlf:'900 00 007'},
+    {nr:90008,navn:'Søndre Myrvang',kontakt:'Arne Myr',adresse:'Myrvangvegen 30',postnr:'2653',sted:'Vestre Gausdal',tlf:'900 00 008'}
+  ];
+  const v = n => { const x=VARER.find(v=>v.navn===n)||VARER[0]; return {varenr:x.nr,navn:x.navn,antall:1,pris:x.pris||0}; };
+  const vq = (n,a) => Object.assign(v(n),{antall:a});
+  const m = (n,a) => { const x=MEDISINER.find(m=>m.navn===n)||MEDISINER[0]; return {navn:x.navn,antall:a,pris:x.pris}; };
+  const ts = (days,h) => { const d=new Date(); d.setDate(d.getDate()+days); d.setHours(h,15,0,0); return d.toISOString(); };
+  const o = (x) => Object.assign({id:uid(),tid:'',linjer:[],medisiner:[],dyr:[],fakturer:false,fakturert:false,
+    henvendelseTs:ts(-1,8),journalTs:null,ferdigTs:null,fakturertTs:null},x);
+  const oppdrag = [
+    o({kundenr:90001,dato:TODAY,tid:'09:00',status:'bestilt',henvendelse:'Ku med nedsatt matlyst, mistanke om ketose.',henvendelseTs:ts(0,7)}),
+    o({kundenr:90006,dato:TODAY,tid:'11:30',status:'bestilt',henvendelse:'Drektighetsundersøkelse, 6 kyr.',henvendelseTs:ts(-2,14)}),
+    o({kundenr:90005,dato:TODAY,tid:'14:00',status:'bestilt',henvendelse:'Halt søye, ønsker undersøkelse.',henvendelseTs:ts(0,7)}),
+    o({kundenr:90002,dato:addDays(1),tid:'08:30',status:'bestilt',henvendelse:'Vaksinering kalver.',henvendelseTs:ts(-1,16)}),
+    o({kundenr:90007,dato:addDays(2),tid:'',status:'utsatt',henvendelse:'Hund – kontroll etter sårskade.',utsattFra:addDays(-1)}),
+    o({kundenr:90001,dato:addDays(-6),tid:'10:00',status:'fullfort',henvendelse:'Mastitt, en kjertel.',henvendelseTs:ts(-6,7),
+      linjer:[v('Grunnhonorar'),v('Kjøring'),v('Speneprøve')],medisiner:[m('Mastipen',2)],
+      dyr:[{id:uid(),art:'Storfe',individ:'NO 12345 0417',diagnose:'Klinisk mastitt, venstre bak',behandling:'Mastipen intramammært, 3 dager. Speneprøve sendt.',notat:'Ny kontroll ved behov.'}],
+      journalTs:ts(-6,11),ferdigTs:ts(-6,11)}),
+    o({kundenr:90004,dato:addDays(-4),tid:'13:00',status:'fullfort',henvendelse:'Kalving, trenger hjelp.',henvendelseTs:ts(-4,12),
+      linjer:[v('Grunnhonorar'),vq('Kjøring vakt',38),v('Utstyr')],medisiner:[m('Oxytocin 10ml',1),m('Penovet 100ml',1)],
+      dyr:[{id:uid(),art:'Storfe',individ:'NO 22222 1033',diagnose:'Feilstilling, kalvingshjelp',behandling:'Korrigert stilling, levende kalv. Penovet 5 dager.',notat:''}],
+      journalTs:ts(-4,15),ferdigTs:ts(-4,15)}),
+    o({kundenr:90003,dato:addDays(-3),tid:'09:00',status:'avlyst',fakturer:true,henvendelse:'Sau med diaré.',henvendelseTs:ts(-3,7),
+      linjer:[v('Kjøring')],dyr:[],ferdigTs:ts(-3,10)}),
+    o({kundenr:90008,dato:addDays(-2),tid:'15:00',status:'avlyst',fakturer:false,henvendelse:'Helseattest storfe.',henvendelseTs:ts(-3,9),ferdigTs:ts(-2,8)}),
+    o({kundenr:90001,dato:addDays(-20),tid:'09:30',status:'fullfort',fakturert:true,fakturertTs:ts(-12,20),henvendelse:'Ketose.',henvendelseTs:ts(-20,7),
+      linjer:[v('Grunnhonorar'),v('Kjøring')],medisiner:[m('Ku + energi, tuber',2)],
+      dyr:[{id:uid(),art:'Storfe',individ:'NO 12345 0417',diagnose:'Subklinisk ketose',behandling:'Energi-tube x2.',notat:''}],
+      journalTs:ts(-20,12),ferdigTs:ts(-20,12)})
+  ];
+  return {kunder,oppdrag};
+}
+
+function seedMaler(){
+  const m=(navn,tjenester,diagnose,behandling,medisiner)=>({id:uid(),navn,tjenester,diagnose,behandling,notat:'',medisiner:medisiner.map(n=>({navn:n,antall:1}))});
+  return [
+    m('Mastitt',[1050,1100,1099,1119,1120,1048,1049],'Klinisk mastitt, kjertel: __','Allmenntilstand: __. Temp: __ °C.\nKjertel __: __ (sekret, hevelse, smerte).\nSpeneprøve tatt: ja/nei.\nBehandling: __.\nTilbakeholdelsestid melk: __ dager, slakt: __ dager. Eier informert.',['Mastipen']),
+    m('Melkefeber',[1054,1055,1056,1057,1051,1052,1053],'Melkefeber (hypokalsemi)','Funn: ligger/står, temp __ °C, __.\nBehandling: __.\nRespons på behandling: __.\nTilbakeholdelsestid: __. Eier informert.',['Calcimag stk']),
+    m('Ketose',[1061],'Ketose','Funn: nedsatt matlyst, melkenedgang, __. Ketontest: __.\nBehandling: __.\nRåd til eier: __.',['Ku + energi, tuber']),
+    m('Kalvingshjelp',[1072,1073,1047],'Kalvingshjelp – __ (feilstilling/trang fødselsvei/__)','Funn ved undersøkelse: __.\nTiltak: __.\nKalv: levende/død, __.\nKu etter kalving: __.\nTilbakeholdelsestid: __.',['Oxytocin 10ml','Penovet 100ml']),
+    m('Drektighetsundersøkelse',[1014,1015],'Drektighetsundersøkelse','Metode: rektal/ultralyd.\nAntall undersøkt: __. Drektige: __. Tomme: __.\nIndivider: __.',[]),
+    m('Vaksinering storfe',[1128,1129],'Vaksinering','Vaksine: __, batch: __.\nAntall dyr: __.\nNeste dose / revaksinering: __.',['Vaksine kalv Bovilis bovipast 1 flaske']),
+    m('Vaksinering sau',[1127,1126],'Vaksinering','Vaksine: __, batch: __.\nAntall dyr: __.\nNeste dose / revaksinering: __.',[]),
+    m('Diaré kalv',[1013,1082],'Diaré kalv – __','Allmenntilstand: __. Dehydrering: __ %. Temp: __ °C.\nHurtigtest: __.\nBehandling: __.\nRåd til eier: __.',[]),
+    m('Avhorning kalv',[1003,1002,1004],'Avhorning','Antall kalver: __.\nBedøvelse og smertelindring: __.\nForløp: __.',['Lidokel','Metacam smertestillende mikstur']),
+    m('Nødslakt',[1104,1105,1106,1107],'Nødslakt – årsak: __','Klinisk undersøkelse før slakt: __.\nLegemidler siste 28 dager: ja/nei, hvilke: __.\nAttest utstedt.',[]),
+    m('Helseattest',[1032,1029,1030,1031,1028],'Helseattest','Antall dyr: __.\nKlinisk undersøkelse: __ (uten anmerkning / __).\nFormål med attest: __.',[])
+  ];
+}
+let S; try{ S = JSON.parse(localStorage.getItem(KEY)) }catch(e){}
+if(!S || !S.kunder) S = seed();
+if(!S.maler) S.maler = seedMaler();
+const saveLocal = () => { try{ localStorage.setItem(KEY, JSON.stringify(S)) }catch(e){} };
+const save = () => { saveLocal(); scheduleSync(); };
+
+let UI = {role:'mia', view:'oppdrag', listTab:'apne', current:null, kunde:null,
+  sok:{q:'',fra:'',til:'',individ:'',status:'',vare:''},
+  eksport:{fra:addDays(-30),til:TODAY}};
+
+const kunde = nr => S.kunder.find(k=>k.nr===nr) || {nr,navn:'Ukjent kunde'};
+const isMia = () => UI.role==='mia';
+const medSum = o => o.medisiner.reduce((s,m)=>s+(+m.antall||0)*(+m.pris||0),0);
+const linjeSum = o => o.linjer.reduce((s,l)=>s+(+l.antall||0)*(+l.pris||0),0);
+const sum = o => linjeSum(o)+medSum(o);
+const statusKey = o => o.fakturert ? 'fakturert' : o.status;
+const STATUS = {bestilt:'Bestilt',utsatt:'Utsatt',fullfort:'Fullført',avlyst:'Avlyst',fakturert:'Fakturert'};
+const pill = o => {
+  let k=statusKey(o), t=STATUS[k];
+  if(o.status==='avlyst' && !o.fakturert) t += o.fakturer ? ' · faktureres' : '';
+  return `<span class="pill s-${k}">${t}</span>`; };
+const fakturerbar = o => !o.fakturert && (o.status==='fullfort' || (o.status==='avlyst' && o.fakturer));
+const apen = o => o.status==='bestilt' || o.status==='utsatt';
+
+function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('on'),1800); }
+
+// ---------- Ramme ----------
+const ICON = {
+  oppdrag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>',
+  sok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>',
+  kunder:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 010 7M18 14.8c2 .7 3.2 2.4 3.5 5.2"/></svg>',
+  maler:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h5"/></svg>',
+  eksport:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>'
+};
+function renderFrame(){
+  document.getElementById('role').innerHTML =
+    `<button class="${isMia()?'on':''}" onclick="setRole('mia')">Mia</button><button class="${!isMia()?'on':''}" onclick="setRole('erik')">Erik</button>`;
+  const tabs=[['oppdrag','Oppdrag'],['sok','Søk'],['kunder','Kunder']].concat(isMia()?[['maler','Maler']]:[]).concat([['eksport','Fakturering']]);
+  document.getElementById('tabs').innerHTML = tabs.map(([k,t])=>
+    `<button class="${UI.view===k||(k==='oppdrag'&&UI.view==='detalj')||(k==='kunder'&&UI.view==='kunde')||(k==='maler'&&UI.view==='mal')?'on':''}" onclick="go('${k}')">${ICON[k]}${t}</button>`).join('');
+}
+function setRole(r){ UI.role=r; render(); toast(r==='mia'?'Visning: veterinær':'Visning: fakturering'); }
+function go(v){ UI.view=v; UI.current=null; render(); window.scrollTo(0,0); }
+function render(){
+  renderFrame();
+  const m=document.getElementById('main');
+  if(!isMia() && (UI.view==='maler'||UI.view==='mal')) UI.view='oppdrag';
+  renderSync();
+  const fn={oppdrag:vOppdrag,detalj:vDetalj,sok:vSok,kunder:vKunder,kunde:vKunde,eksport:vEksport,maler:vMaler,mal:vMal}[UI.view];
+  m.innerHTML = fn();
+  const fab = document.getElementById('fab'); if(fab) fab.remove();
+  if(isMia() && UI.view==='oppdrag'){
+    document.body.insertAdjacentHTML('beforeend','<button id="fab" class="btn primary fab" onclick="nyBestilling()">+ Ny bestilling</button>');
+  }
+}
+
+// ---------- Oppdragsliste ----------
+function oppdragKort(o){
+  const k=kunde(o.kundenr);
+  return `<div class="card item" onclick="apne('${o.id}')">
+    <div class="row between"><strong class="grow">${esc(k.navn)}</strong>${pill(o)}</div>
+    <div class="small muted">${fmtDate(o.dato)}${o.tid?' · kl. '+esc(o.tid):''} · ${esc(k.sted||'')}</div>
+    ${isMia()?`<div class="small" style="margin-top:4px">${esc(o.henvendelse)}</div>`:''}
+    ${!apen(o)&&sum(o)>0?`<div class="small muted" style="margin-top:4px">Sum eks. mva: ${kr(sum(o))} kr</div>`:''}
+  </div>`;
+}
+function vOppdrag(){
+  const tab=UI.listTab;
+  let html=`<h1>Oppdrag</h1>
+  <div class="seg">
+    <button class="${tab==='apne'?'on':''}" onclick="UI.listTab='apne';render()">Åpne (${S.oppdrag.filter(apen).length})</button>
+    <button class="${tab==='ferdig'?'on':''}" onclick="UI.listTab='ferdig';render()">Ferdig behandlet</button>
+  </div>`;
+  if(tab==='apne'){
+    const open=S.oppdrag.filter(apen).sort((a,b)=>(a.dato+a.tid).localeCompare(b.dato+b.tid));
+    const groups=[['Forsinket',o=>o.dato<TODAY],['I dag',o=>o.dato===TODAY],['Kommende',o=>o.dato>TODAY]];
+    let any=false;
+    for(const [t,f] of groups){ const l=open.filter(f); if(!l.length) continue; any=true;
+      html+=`<h3>${t}</h3>`+l.map(oppdragKort).join(''); }
+    if(!any) html+=`<div class="empty">Ingen åpne oppdrag. ${isMia()?'Trykk «Ny bestilling» når telefonen ringer.':''}</div>`;
+  } else {
+    const done=S.oppdrag.filter(o=>!apen(o)).sort((a,b)=>b.dato.localeCompare(a.dato));
+    html+= done.length? done.map(oppdragKort).join('') : '<div class="empty">Ingen ferdig behandlede oppdrag ennå.</div>';
+  }
+  html+=`<div class="noprint" style="margin:24px 0 70px;text-align:center"><button class="btn ghost sm" onclick="bekreftNullstill()">Tilbakestill demodata</button></div>`;
+  return html;
+}
+function apne(id){ UI.current=id; UI.view='detalj'; render(); window.scrollTo(0,0); }
+
+// ---------- Ny bestilling ----------
+function nyBestilling(){
+  modal(`<h2>Ny bestilling</h2>
+    <label class="f">Kunde</label>
+    <div class="picker"><input type="search" id="nb-k" placeholder="Søk navn, kundenr eller sted" oninput="kundePick(this.value)" autocomplete="off"><div id="nb-kl"></div></div>
+    <input type="hidden" id="nb-kn">
+    <div class="grid2"><div><label class="f">Dato</label><input type="date" id="nb-d" value="${TODAY}"></div>
+    <div><label class="f">Tid (valgfritt)</label><input type="time" id="nb-t"></div></div>
+    <label class="f">Hva gjelder henvendelsen?</label><textarea id="nb-h" placeholder="F.eks. ku med høy feber, ønsker besøk i dag"></textarea>
+    <p class="ts">Tidspunktet for henvendelsen lagres automatisk (journalforskriften).</p>
+    <div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn" onclick="closeModal()">Avbryt</button>
+    <button class="btn primary" onclick="lagreBestilling()">Opprett oppdrag</button></div>`);
+  setTimeout(()=>document.getElementById('nb-k').focus(),50);
+}
+function kundePick(q){
+  q=q.trim().toLowerCase(); const el=document.getElementById('nb-kl');
+  document.getElementById('nb-kn').value='';
+  if(!q){ el.innerHTML=''; return; }
+  const l=S.kunder.filter(k=>(k.navn+' '+k.nr+' '+(k.sted||'')+' '+(k.kontakt||'')).toLowerCase().includes(q)).slice(0,8);
+  el.innerHTML = l.length? `<div class="list">${l.map(k=>`<div class="opt" onclick="velgKunde(${k.nr})"><span>${esc(k.navn)}</span><span class="muted small">${k.nr} · ${esc(k.sted||'')}</span></div>`).join('')}</div>`
+    : `<div class="list"><div class="opt muted">Ingen treff. Nye kunder opprettes i Duett og lastes inn derfra.</div></div>`;
+}
+function velgKunde(nr){ const k=kunde(nr); document.getElementById('nb-k').value=k.navn+' ('+nr+')'; document.getElementById('nb-kn').value=nr; document.getElementById('nb-kl').innerHTML=''; }
+function lagreBestilling(){
+  const nr=+document.getElementById('nb-kn').value;
+  if(!nr){ toast('Velg en kunde fra listen'); return; }
+  const o={id:uid(),kundenr:nr,dato:document.getElementById('nb-d').value||TODAY,tid:document.getElementById('nb-t').value,
+    henvendelse:document.getElementById('nb-h').value.trim()||'(ingen beskrivelse)',henvendelseTs:nowTs(),status:'bestilt',
+    linjer:[],medisiner:[],dyr:[],fakturer:false,fakturert:false,journalTs:null,ferdigTs:null,fakturertTs:null};
+  S.oppdrag.push(o); save(); closeModal(); UI.listTab='apne'; render(); toast('Oppdrag opprettet');
+}
+
+// ---------- Oppdragsdetalj ----------
+const cur = () => S.oppdrag.find(o=>o.id===UI.current);
+function vDetalj(){
+  const o=cur(); if(!o) return '<div class="empty">Fant ikke oppdraget.</div>';
+  const k=kunde(o.kundenr);
+  const locked = o.fakturert || !isMia() || o.status==='fullfort' || o.status==='avlyst';
+  const editable = isMia() && !o.fakturert && !(o.status==='fullfort'||o.status==='avlyst');
+  let h=`<div class="noprint" style="margin-top:12px"><button class="btn ghost" onclick="go('oppdrag')">← Oppdrag</button></div>
+  <div class="row between wrapf" style="margin:6px 0 10px"><h1 style="margin:0" class="grow">${esc(k.navn)}</h1>${pill(o)}</div>
+  <div class="card"><div class="kv">
+    <div>Kunde</div><div><a href="#" onclick="visKunde(${k.nr});return false">${k.nr}</a>${k.kontakt?' · '+esc(k.kontakt):''}</div>
+    <div>Adresse</div><div>${esc(k.adresse||'')}, ${esc(k.postnr||'')} ${esc(k.sted||'')}</div>
+    <div>Telefon</div><div>${esc(k.tlf||'')}</div>
+    <div>Dato</div><div>${editable?`<input type="date" value="${o.dato}" onchange="cur().dato=this.value;save()" style="max-width:170px">`:fmtDate(o.dato)}${o.tid?' kl. '+esc(o.tid):''}</div>
+    <div>Henvendelse</div><div>${isMia()?esc(o.henvendelse):'<span class="muted">Skjult (journalopplysning)</span>'}<div class="ts">Mottatt ${fmtTs(o.henvendelseTs)}</div></div>
+    ${o.utsattFra?`<div>Utsatt fra</div><div>${fmtDate(o.utsattFra)}</div>`:''}
+  </div></div>`;
+
+  // Journal
+  if(isMia()){
+    h+=`<h3>Dyr og journal</h3>`;
+    if(!o.dyr.length && !editable) h+=`<div class="lock">Ingen journalførte dyr på dette oppdraget.</div>`;
+    o.dyr.forEach((d,i)=>{
+      h+= editable ? `<div class="dyr">
+        ${malVelger(o,i)}
+        <div class="grid2"><div><label class="f">Dyreart</label><select onchange="dyrSet(${i},'art',this.value)">${['Storfe','Sau','Geit','Gris','Hest','Alpakka','Hund','Katt','Annet'].map(a=>`<option ${d.art===a?'selected':''}>${a}</option>`).join('')}</select></div>
+        <div><label class="f">Individnr. / øremerke</label><input type="text" value="${esc(d.individ)}" onchange="dyrSet(${i},'individ',this.value)" placeholder="NO 12345 0001"></div></div>
+        <label class="f">Diagnose</label><input type="text" value="${esc(d.diagnose)}" onchange="dyrSet(${i},'diagnose',this.value)">
+        <label class="f">Behandling</label><textarea onchange="dyrSet(${i},'behandling',this.value)">${esc(d.behandling)}</textarea>
+        <label class="f">Egne notater</label><textarea onchange="dyrSet(${i},'notat',this.value)" style="min-height:50px">${esc(d.notat)}</textarea>
+        <div class="row between" style="margin-top:6px"><span class="ts">${d.individ?`<a href="#" onclick="dyrHistorikk('${esc(d.individ)}');return false">Se historikk for dette dyret</a>`:''}</span><button class="btn ghost sm warn" onclick="fjernDyr(${i})">Fjern dyr</button></div>
+      </div>` : `<div class="dyr"><div class="row between"><strong>${esc(d.art)}${d.individ?' · '+esc(d.individ):''}</strong>${d.individ?`<a class="small" href="#" onclick="dyrHistorikk('${esc(d.individ)}');return false">Historikk</a>`:''}</div>
+        <div class="kv" style="margin-top:6px"><div>Diagnose</div><div>${esc(d.diagnose)||'–'}</div><div>Behandling</div><div>${esc(d.behandling)||'–'}</div>${d.notat?`<div>Notater</div><div>${esc(d.notat)}</div>`:''}</div></div>`;
+    });
+    if(editable) h+=`<button class="btn sm" onclick="nyttDyr()">+ Legg til dyr</button>`;
+    h+=`<div class="ts" style="margin-top:6px">Sist journalført: ${fmtTs(o.journalTs)}</div>`;
+  } else {
+    h+=`<h3>Journal</h3><div class="lock">🔒 Journalopplysninger (dyr, diagnose, behandling og notater) er bare tilgjengelig for veterinæren.</div>`;
+  }
+
+  // Tjenester og varer
+  h+=`<h3>Tjenester og varer</h3><div class="card">`;
+  if(o.linjer.length){
+    h+=`<table class="lines"><tr><th>Vare</th><th class="right">Antall</th><th class="right">Pris</th><th class="right">Sum</th>${editable?'<th></th>':''}</tr>`+
+    o.linjer.map((l,i)=>`<tr><td>${esc(l.navn)}<div class="ts">${l.varenr}</div></td>
+      <td class="right">${editable?`<input type="number" min="0" step="any" value="${l.antall}" onchange="linjeSet(${i},'antall',this.value)">`:l.antall}</td>
+      <td class="right">${editable?`<input type="number" min="0" step="any" value="${l.pris}" onchange="linjeSet(${i},'pris',this.value)">`:kr(l.pris)}</td>
+      <td class="right">${kr(l.antall*l.pris)}</td>${editable?`<td><button class="x" onclick="fjernLinje(${i})" title="Fjern">×</button></td>`:''}</tr>`).join('')+`</table>`;
+  } else h+=`<div class="muted small">Ingen tjenester eller varer registrert.</div>`;
+  if(editable) h+=`<div class="picker" style="margin-top:10px"><input type="search" placeholder="+ Legg til tjeneste eller vare (søk)" oninput="varePick(this.value,'vare')" autocomplete="off"><div id="pick-vare"></div></div>`;
+  h+=`</div>`;
+
+  // Medisiner
+  h+=`<h3>Medisiner</h3><div class="card">`;
+  if(!isMia()){ h+=`<div class="small muted">Hvilke medisiner som er brukt vises bare for veterinæren.</div>`; }
+  else if(o.medisiner.length){
+    h+=`<table class="lines"><tr><th>Medisin</th><th class="right">Antall</th><th class="right">Pris</th><th class="right">Sum</th>${editable?'<th></th>':''}</tr>`+
+    o.medisiner.map((m,i)=>`<tr><td>${esc(m.navn)}</td>
+      <td class="right">${editable?`<input type="number" min="0" step="any" value="${m.antall}" onchange="medSet(${i},this.value)">`:m.antall}</td>
+      <td class="right">${kr(m.pris)}</td><td class="right">${kr(m.antall*m.pris)}</td>${editable?`<td><button class="x" onclick="fjernMed(${i})">×</button></td>`:''}</tr>`).join('')+`</table>`;
+  } else if(isMia()) h+=`<div class="muted small">Ingen medisiner registrert.</div>`;
+  if(editable) h+=`<div class="picker" style="margin-top:10px"><input type="search" placeholder="+ Legg til medisin (søk)" oninput="varePick(this.value,'med')" autocomplete="off"><div id="pick-med"></div></div>`;
+  h+=`<div class="row between" style="margin-top:10px"><span class="small muted">Faktureres som én linje «Medisiner»</span><strong>${kr(medSum(o))} kr</strong></div></div>`;
+
+  // Sum
+  h+=`<div class="card"><div class="row between"><span>Sum eks. mva</span><span>${kr(sum(o))} kr</span></div>
+    <div class="row between small muted"><span>Mva 25 %</span><span>${kr(sum(o)*MVA)} kr</span></div>
+    <div class="row between total" style="margin-top:4px"><span>Sum inkl. mva</span><span>${kr(sum(o)*(1+MVA))} kr</span></div></div>`;
+
+  // Handlinger
+  if(isMia() && !o.fakturert){
+    if(apen(o)){
+      h+=`<div class="row wrapf noprint" style="margin-top:14px;gap:8px">
+        <button class="btn primary grow" onclick="ferdigDialog()">Ferdig behandlet …</button>
+        <button class="btn" onclick="utsettDialog()">Utsett</button></div>`;
+    } else {
+      h+=`<div class="card" style="background:var(--brand-2);border-color:transparent">
+        <div class="small">Ferdig behandlet ${fmtTs(o.ferdigTs)}. ${fakturerbar(o)?'Oppdraget er klart til fakturering.':'Oppdraget går ikke til fakturering.'}</div>
+        <div style="margin-top:8px"><button class="btn sm" onclick="gjenapne()">Gjenåpne for endringer</button></div></div>`;
+    }
+  }
+  if(o.fakturert) h+=`<div class="lock" style="margin-top:12px">Fakturert ${fmtTs(o.fakturertTs)} – låst for endringer.</div>`;
+  return h;
+}
+function touchJournal(){ cur().journalTs=nowTs(); }
+function dyrSet(i,f,v){ cur().dyr[i][f]=v; touchJournal(); save(); }
+function nyttDyr(){ cur().dyr.push({id:uid(),art:'Storfe',individ:'',diagnose:'',behandling:'',notat:''}); touchJournal(); save(); render(); }
+function fjernDyr(i){ cur().dyr.splice(i,1); touchJournal(); save(); render(); }
+function linjeSet(i,f,v){ cur().linjer[i][f]=+v||0; save(); render(); }
+function fjernLinje(i){ cur().linjer.splice(i,1); save(); render(); }
+function medSet(i,v){ cur().medisiner[i].antall=+v||0; save(); render(); }
+function fjernMed(i){ cur().medisiner.splice(i,1); save(); render(); }
+function varePick(q,type){
+  q=q.trim().toLowerCase(); const el=document.getElementById('pick-'+type);
+  if(!q){ el.innerHTML=''; return; }
+  const src = type==='vare' ? VARER.filter(v=>v.navn!=='Medisiner') : MEDISINER;
+  const l=src.filter(x=>x.navn.toLowerCase().includes(q)||String(x.nr||'').includes(q)).slice(0,10);
+  el.innerHTML = `<div class="list">${l.length?l.map((x,i)=>`<div class="opt" onclick="leggTil('${type}',${src.indexOf(x)})"><span>${esc(x.navn)}</span><span class="muted small">${x.pris!=null?kr(x.pris)+' kr':''}${x.enhet?' / '+esc(x.enhet):''}</span></div>`).join(''):'<div class="opt muted">Ingen treff</div>'}</div>`;
+}
+function leggTil(type,i){
+  const o=cur();
+  if(type==='vare'){ const v=VARER.filter(v=>v.navn!=='Medisiner')[i]; o.linjer.push({varenr:v.nr,navn:v.navn,antall:1,pris:v.pris||0}); }
+  else { const m=MEDISINER[i]; const ex=o.medisiner.find(x=>x.navn===m.navn); if(ex) ex.antall++; else o.medisiner.push({navn:m.navn,antall:1,pris:m.pris}); }
+  save(); render();
+}
+function ferdigDialog(){
+  const o=cur();
+  modal(`<h2>Ferdig behandlet</h2>
+    <label class="choice on" id="ch-f" onclick="velgFerdig('fullfort')"><input type="radio" name="fs" checked><div><strong>Fullført</strong><div class="small muted">Oppdraget ble utført og går til fakturering.</div></div></label>
+    <label class="choice" id="ch-a" onclick="velgFerdig('avlyst')"><input type="radio" name="fs"><div><strong>Avlyst</strong><div class="small muted">Oppdraget ble ikke utført.</div></div></label>
+    <div id="avl-extra" style="display:none;margin:4px 0 8px 4px"><label class="check"><input type="checkbox" id="avl-fak"> Send likevel til fakturering (f.eks. kjøring eller tid brukt)</label>
+    <div class="ts" style="margin-top:4px">Det som er registrert under tjenester og varer blir fakturert.</div></div>
+    ${o.status!=='avlyst' && !o.linjer.length && !o.medisiner.length?'<div class="banner">Det er ikke registrert noen tjenester eller varer på oppdraget.</div>':''}
+    <div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="bekreftFerdig()">Bekreft</button></div>`);
+  UI._fs='fullfort';
+}
+function velgFerdig(s){ UI._fs=s; document.getElementById('ch-f').classList.toggle('on',s==='fullfort'); document.getElementById('ch-a').classList.toggle('on',s==='avlyst');
+  document.getElementById('avl-extra').style.display = s==='avlyst'?'block':'none'; }
+function bekreftFerdig(){
+  const o=cur(); o.status=UI._fs; o.fakturer = o.status==='avlyst' ? document.getElementById('avl-fak').checked : true; o.ferdigTs=nowTs();
+  save(); closeModal(); render(); toast(o.status==='fullfort'?'Fullført – klar til fakturering':(o.fakturer?'Avlyst – sendes til fakturering':'Avlyst'));
+}
+function gjenapne(){ const o=cur(); o.status='bestilt'; o.ferdigTs=null; o.fakturer=false; save(); render(); toast('Oppdraget er åpnet igjen'); }
+function utsettDialog(){
+  const o=cur();
+  modal(`<h2>Utsett oppdrag</h2><label class="f">Ny dato</label><input type="date" id="ut-d" value="${addDays(1)}">
+    <label class="f">Tid (valgfritt)</label><input type="time" id="ut-t" value="${o.tid||''}">
+    <div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="bekreftUtsett()">Utsett</button></div>`);
+}
+function bekreftUtsett(){ const o=cur(); o.utsattFra=o.dato; o.dato=document.getElementById('ut-d').value||o.dato; o.tid=document.getElementById('ut-t').value; o.status='utsatt'; save(); closeModal(); render(); toast('Oppdraget er flyttet til '+fmtDate(o.dato)); }
+
+// ---------- Søk ----------
+function vSok(){
+  const f=UI.sok;
+  const res=S.oppdrag.filter(o=>{
+    const k=kunde(o.kundenr);
+    if(f.q && !(k.navn+' '+k.nr+' '+(k.kontakt||'')+' '+(k.sted||'')).toLowerCase().includes(f.q.toLowerCase())) return false;
+    if(f.fra && o.dato<f.fra) return false; if(f.til && o.dato>f.til) return false;
+    if(f.status && statusKey(o)!==f.status) return false;
+    if(f.vare && !(o.linjer.some(l=>l.navn.toLowerCase().includes(f.vare.toLowerCase())) || (isMia() && o.medisiner.some(m=>m.navn.toLowerCase().includes(f.vare.toLowerCase()))))) return false;
+    if(isMia() && f.individ && !o.dyr.some(d=>(d.individ+' '+d.diagnose+' '+d.behandling+' '+d.notat).toLowerCase().includes(f.individ.toLowerCase()))) return false;
+    return true;
+  }).sort((a,b)=>b.dato.localeCompare(a.dato));
+  return `<h1>Søk og historikk</h1>
+  <div class="card">
+    <label class="f" style="margin-top:0">Kunde</label><input type="search" value="${esc(f.q)}" placeholder="Navn, kundenr, kontaktperson eller sted" oninput="UI.sok.q=this.value;sokRes()">
+    <div class="grid2"><div><label class="f">Fra dato</label><input type="date" value="${f.fra}" onchange="UI.sok.fra=this.value;sokRes()"></div>
+    <div><label class="f">Til dato</label><input type="date" value="${f.til}" onchange="UI.sok.til=this.value;sokRes()"></div></div>
+    ${isMia()?`<label class="f">Øremerke / individnr. / journaltekst</label><input type="search" value="${esc(f.individ)}" placeholder="F.eks. NO 12345 0417 eller mastitt" oninput="UI.sok.individ=this.value;sokRes()">`:''}
+    <div class="grid2"><div><label class="f">Status</label><select onchange="UI.sok.status=this.value;sokRes()"><option value="">Alle</option>${Object.entries(STATUS).map(([k,t])=>`<option value="${k}" ${f.status===k?'selected':''}>${t}</option>`).join('')}</select></div>
+    <div><label class="f">Vare / tjeneste / medisin</label><input type="search" value="${esc(f.vare)}" placeholder="F.eks. kjøring" oninput="UI.sok.vare=this.value;sokRes()"></div></div>
+    <div style="margin-top:10px"><button class="btn ghost sm" onclick="UI.sok={q:'',fra:'',til:'',individ:'',status:'',vare:''};render()">Nullstill filtre</button></div>
+  </div>
+  <div id="sokres"><div class="small muted" style="margin:8px 2px">${res.length} treff</div>${res.map(oppdragKort).join('')||'<div class="empty">Ingen oppdrag passer filtrene.</div>'}</div>`;
+}
+function sokRes(){ const t=document.activeElement; const id=t&&t.getAttribute('oninput'); const pos=t&&t.selectionStart;
+  render(); if(id){ const el=[...document.querySelectorAll('input')].find(e=>e.getAttribute('oninput')===id); if(el){ el.focus(); try{el.setSelectionRange(pos,pos)}catch(e){} } } }
+function dyrHistorikk(ind){ UI.sok={q:'',fra:'',til:'',individ:ind,status:'',vare:''}; go('sok'); }
+
+// ---------- Kunder ----------
+function vKunder(){
+  const q=(UI.kq||'').toLowerCase();
+  const l=S.kunder.filter(k=>!q||(k.navn+' '+k.nr+' '+(k.sted||'')+' '+(k.kontakt||'')).toLowerCase().includes(q));
+  return `<h1>Kunder</h1>
+  <input type="search" placeholder="Søk kunde" value="${esc(UI.kq||'')}" oninput="UI.kq=this.value;sokRes()" style="margin-bottom:10px">
+  ${l.map(k=>{ const n=S.oppdrag.filter(o=>o.kundenr===k.nr).length;
+    return `<div class="card item" onclick="visKunde(${k.nr})"><div class="row between"><strong>${esc(k.navn)}</strong><span class="small muted">${n} oppdrag</span></div>
+    <div class="small muted">${k.nr} · ${esc(k.adresse||'')}, ${esc(k.sted||'')}</div></div>`; }).join('')}
+  <div class="ts" style="margin:10px 2px">Kunderegisteret lastes inn fra samme kundefil som brukes i Duett.</div>`;
+}
+function visKunde(nr){ UI.kunde=nr; UI.view='kunde'; render(); window.scrollTo(0,0); }
+function vKunde(){
+  const k=kunde(UI.kunde); const os=S.oppdrag.filter(o=>o.kundenr===k.nr).sort((a,b)=>b.dato.localeCompare(a.dato));
+  const dyr={}; os.forEach(o=>o.dyr.forEach(d=>{ if(d.individ){ (dyr[d.individ]=dyr[d.individ]||{art:d.art,n:0,siste:o.dato}).n++; } }));
+  return `<div style="margin-top:12px" class="noprint"><button class="btn ghost" onclick="go('kunder')">← Kunder</button></div>
+  <h1 style="margin-top:4px">${esc(k.navn)}</h1>
+  <div class="card"><div class="kv"><div>Kundenr.</div><div>${k.nr}</div>${k.kontakt?`<div>Kontakt</div><div>${esc(k.kontakt)}</div>`:''}
+    <div>Adresse</div><div>${esc(k.adresse||'')}, ${esc(k.postnr||'')} ${esc(k.sted||'')}</div><div>Telefon</div><div>${esc(k.tlf||'')}</div></div>
+    ${isMia()?`<div class="row" style="margin-top:12px;gap:8px"><button class="btn sm" onclick="journalUtdrag(${k.nr})">Journalutdrag</button></div>`:''}</div>
+  ${isMia()&&Object.keys(dyr).length?`<h3>Dyr med journal</h3><div class="card">${Object.entries(dyr).map(([ind,d])=>`<div class="row between" style="padding:4px 0"><a href="#" onclick="dyrHistorikk('${esc(ind)}');return false">${esc(d.art)} · ${esc(ind)}</a><span class="small muted">${d.n} oppdrag · sist ${fmtDate(d.siste)}</span></div>`).join('')}</div>`:''}
+  <h3>Oppdragshistorikk</h3>${os.map(oppdragKort).join('')||'<div class="empty">Ingen oppdrag registrert.</div>'}`;
+}
+function journalUtdrag(nr){
+  const k=kunde(nr); const os=S.oppdrag.filter(o=>o.kundenr===nr && o.dyr.length).sort((a,b)=>a.dato.localeCompare(b.dato));
+  let t=`JOURNALUTDRAG\nVeterinær: [navn veterinær]\nDyreeier: ${k.navn} (${k.nr}), ${k.adresse||''}, ${k.postnr||''} ${k.sted||''}\nUtskrevet: ${new Date().toLocaleString('nb-NO')}\n`;
+  os.forEach(o=>{ t+=`\n— ${o.dato} —\nHenvendelse: ${fmtTs(o.henvendelseTs)} – ${o.henvendelse}\nJournalført: ${fmtTs(o.journalTs)}\n`;
+    o.dyr.forEach(d=>{ t+=`  ${d.art} ${d.individ}\n  Diagnose: ${d.diagnose}\n  Behandling: ${d.behandling}\n`; });
+    if(o.medisiner.length) t+=`  Legemidler: ${o.medisiner.map(m=>m.navn+' x'+m.antall).join(', ')}\n`; });
+  if(!os.length) t+='\nIngen journalførte opplysninger.';
+  modal(`<h2>Journalutdrag – ${esc(k.navn)}</h2><p class="small muted">Til innsyn for dyreeier eller Mattilsynet. Egne notater er ikke tatt med.</p>
+    <pre class="out" id="ju">${esc(t)}</pre><div class="row" style="justify-content:flex-end;gap:8px;margin-top:10px"><button class="btn" onclick="closeModal()">Lukk</button><button class="btn primary" onclick="kopier('ju')">Kopier</button></div>`);
+}
+
+// ---------- Fakturering / eksport ----------
+function eksportData(){
+  const {fra,til}=UI.eksport;
+  const os=S.oppdrag.filter(o=>fakturerbar(o) && (!fra||o.dato>=fra) && (!til||o.dato<=til));
+  const per={};
+  os.forEach(o=>{ (per[o.kundenr]=per[o.kundenr]||[]).push(o); });
+  return {os,per};
+}
+function eksportLinjer(o){
+  const l=o.linjer.map(x=>({varenr:x.varenr,navn:x.navn,antall:x.antall,pris:x.pris}));
+  const ms=medSum(o); if(ms>0) l.push({varenr:MED_VARE.nr,navn:'Medisiner',antall:1,pris:Math.round(ms*100)/100});
+  return l;
+}
+function csv(){
+  const {per}=eksportData();
+  const rows=[['Kundenummer','Kundenavn','Oppdragsdato','Varenummer','Varenavn','Antall','Pris eks mva','Beløp eks mva']];
+  Object.keys(per).sort().forEach(nr=>{ const k=kunde(+nr);
+    per[nr].sort((a,b)=>a.dato.localeCompare(b.dato)).forEach(o=>eksportLinjer(o).forEach(l=>rows.push([k.nr,k.navn,o.dato,l.varenr,l.navn,String(l.antall).replace('.',','),kr(l.pris).replace(/\s/g,''),kr(l.antall*l.pris).replace(/\s/g,'')]))); });
+  return rows.map(r=>r.map(c=>/[;"\n]/.test(String(c))?'"'+String(c).replace(/"/g,'""')+'"':c).join(';')).join('\n');
+}
+function vEksport(){
+  const {os,per}=eksportData(); const e=UI.eksport;
+  const total=os.reduce((s,o)=>s+eksportLinjer(o).reduce((a,l)=>a+l.antall*l.pris,0),0);
+  let h=`<h1>Fakturering</h1>
+  <div class="card"><div class="grid2"><div><label class="f" style="margin-top:0">Fra dato</label><input type="date" value="${e.fra}" onchange="UI.eksport.fra=this.value;render()"></div>
+  <div><label class="f" style="margin-top:0">Til dato</label><input type="date" value="${e.til}" onchange="UI.eksport.til=this.value;render()"></div></div>
+  <div class="ts" style="margin-top:8px">Med: fullførte oppdrag og avlyste oppdrag som er merket for fakturering, som ikke er fakturert før. Alle oppdrag for samme kunde i perioden blir én faktura.</div></div>`;
+  if(!os.length) return h+`<div class="empty">Ingen oppdrag å fakturere i perioden.</div>`;
+  h+=`<h3>${Object.keys(per).length} fakturaer · ${os.length} oppdrag · ${kr(total)} kr eks. mva</h3>`;
+  Object.keys(per).sort().forEach(nr=>{ const k=kunde(+nr); const l=per[nr];
+    const s=l.reduce((a,o)=>a+eksportLinjer(o).reduce((x,y)=>x+y.antall*y.pris,0),0);
+    h+=`<div class="card"><div class="row between"><strong>${esc(k.navn)}</strong><span>${kr(s)} kr</span></div>
+    <table class="lines" style="margin-top:6px">${l.map(o=>`<tr><td colspan="3" class="small" style="background:#faf8f3"><a href="#" onclick="apne('${o.id}');return false">${fmtDate(o.dato)}</a> ${o.status==='avlyst'?'<span class="pill s-avlyst">Avlyst</span>':''}</td></tr>`+
+      eksportLinjer(o).map(x=>`<tr><td>${esc(x.navn)}</td><td class="right small muted">${x.antall} × ${kr(x.pris)}</td><td class="right">${kr(x.antall*x.pris)}</td></tr>`).join('')).join('')}</table></div>`; });
+  h+=`<div class="banner">Filformatet er midlertidig. Når importmalen for ordre fra Duett er på plass, tilpasses kolonnene til den.</div>
+  <div class="row wrapf" style="gap:8px"><button class="btn" onclick="visFil()">Vis fil</button><button class="btn" onclick="lastNed()">Last ned fil</button>
+  <button class="btn primary grow" onclick="merkFakturert()">Merk ${os.length} oppdrag som fakturert</button></div>`;
+  return h;
+}
+function visFil(){
+  modal(`<h2>Eksportfil (CSV)</h2><p class="small muted">Dette er innholdet i filen. Bruk «Last ned fil» for å få den som CSV.</p>
+  <pre class="out" id="csvout">${esc(csv())}</pre><div class="row" style="justify-content:flex-end;gap:8px;margin-top:10px"><button class="btn" onclick="closeModal()">Lukk</button><button class="btn primary" onclick="kopier('csvout')">Kopier</button></div>`);
+}
+function merkFakturert(){
+  const {os}=eksportData();
+  modal(`<h2>Merk som fakturert?</h2><p>${os.length} oppdrag låses og tas ut av fremtidige eksporter. Gjør dette etter at filen er lastet inn i Duett.</p>
+  <div class="row" style="justify-content:flex-end;gap:8px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="bekreftFakturert()">Merk som fakturert</button></div>`);
+}
+function bekreftFakturert(){ const {os}=eksportData(); const t=nowTs(); os.forEach(o=>{o.fakturert=true;o.fakturertTs=t;}); save(); closeModal(); render(); toast(os.length+' oppdrag merket som fakturert'); }
+
+// ---------- Modal og kopier ----------
+function modal(html){ document.getElementById('modal').innerHTML=`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal">${html}</div></div>`; }
+function closeModal(){ document.getElementById('modal').innerHTML=''; }
+function kopier(id){ const t=document.getElementById(id).textContent;
+  try{ navigator.clipboard.writeText(t).then(()=>toast('Kopiert'),()=>toast('Kunne ikke kopiere – merk teksten og kopier manuelt')); }catch(e){ toast('Kunne ikke kopiere'); } }
+function nullstill(){ const ny=seed(); ny.maler=seedMaler(); S.kunder=ny.kunder; S.oppdrag=ny.oppdrag; S.maler=ny.maler; save(); UI.view='oppdrag'; render(); toast('Demodata er tilbakestilt'); }
+
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+// ---------- Journalmaler ----------
+const aktiveMaler = () => S.maler.filter(m=>!m.deleted).sort((a,b)=>a.navn.localeCompare(b.navn,'nb'));
+const malById = id => S.maler.find(m=>m.id===id);
+function foreslatteMaler(o){
+  const nr = new Set(o.linjer.map(l=>l.varenr));
+  return aktiveMaler().filter(m=>m.tjenester.some(t=>nr.has(t)));
+}
+function malVelger(o,i){
+  const fs = foreslatteMaler(o);
+  const alle = aktiveMaler();
+  return `<div class="row wrapf" style="gap:6px;align-items:center;margin-bottom:2px">
+    ${fs.length?`<span class="small muted">Foreslått mal:</span>${fs.map(m=>`<button class="chip" onclick="brukMal(${i},'${m.id}')">${esc(m.navn)}</button>`).join('')}`:''}
+    <select style="width:auto;max-width:100%;padding:5px 8px;font-size:13px" onchange="if(this.value)brukMal(${i},this.value)">
+      <option value="">${fs.length?'Annen mal …':'Bruk journalmal …'}</option>
+      ${alle.map(m=>`<option value="${m.id}">${esc(m.navn)}</option>`).join('')}
+    </select></div>`;
+}
+function brukMal(i,id){
+  const o=cur(), d=o.dyr[i], m=malById(id); if(!m) return;
+  const join=(a,b)=> !b ? a : (a && a.trim() ? a.trim()+'\n'+b : b);
+  d.diagnose = d.diagnose && d.diagnose.trim() ? d.diagnose : m.diagnose;
+  d.behandling = join(d.behandling, m.behandling);
+  d.notat = join(d.notat, m.notat);
+  let n=0;
+  m.medisiner.forEach(x=>{ const med=MEDISINER.find(y=>y.navn===x.navn); if(!med) return;
+    if(!o.medisiner.find(y=>y.navn===x.navn)){ o.medisiner.push({navn:med.navn,antall:x.antall||1,pris:med.pris}); n++; } });
+  touchJournal(); save(); render();
+  toast(`Mal «${m.navn}» brukt`+(n?` · ${n} medisin${n>1?'er':''} lagt til`:''));
+}
+function vMaler(){
+  const l=aktiveMaler();
+  return `<h1>Journalmaler</h1>
+  <p class="small muted" style="margin-top:-4px">En mal fyller ut diagnose og behandling på et dyr og foreslår medisiner. Koble malen til tjenester, så foreslås den når tjenesten legges på oppdraget.</p>
+  <button class="btn primary" onclick="nyMal()" style="margin-bottom:12px">+ Ny mal</button>
+  ${l.map(m=>`<div class="card item" onclick="redigerMal('${m.id}')"><div class="row between"><strong>${esc(m.navn)}</strong><span class="small muted">${m.tjenester.length} tjenester · ${m.medisiner.length} medisiner</span></div>
+    <div class="small muted" style="margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(m.diagnose)}</div></div>`).join('')||'<div class="empty">Ingen maler ennå.</div>'}`;
+}
+function nyMal(){ const m={id:uid(),navn:'Ny mal',tjenester:[],diagnose:'',behandling:'',notat:'',medisiner:[]}; S.maler.push(m); save(); redigerMal(m.id); }
+function redigerMal(id){ UI.mal=id; UI.view='mal'; render(); window.scrollTo(0,0); }
+const curMal = () => malById(UI.mal);
+function malSet(f,v){ curMal()[f]=v; save(); if(f==='navn') renderFrame(); }
+function vMal(){
+  const m=curMal(); if(!m||m.deleted) return '<div class="empty">Fant ikke malen.</div>';
+  const vare = nr => VARER.find(v=>v.nr===nr);
+  return `<div style="margin-top:12px"><button class="btn ghost" onclick="go('maler')">← Maler</button></div>
+  <div class="card">
+    <label class="f" style="margin-top:0">Navn på malen</label><input type="text" value="${esc(m.navn)}" onchange="malSet('navn',this.value)">
+    <label class="f">Diagnose</label><input type="text" value="${esc(m.diagnose)}" onchange="malSet('diagnose',this.value)">
+    <label class="f">Behandling (journaltekst)</label><textarea style="min-height:130px" onchange="malSet('behandling',this.value)">${esc(m.behandling)}</textarea>
+    <label class="f">Egne notater (valgfritt)</label><textarea style="min-height:50px" onchange="malSet('notat',this.value)">${esc(m.notat)}</textarea>
+    <div class="ts" style="margin-top:6px">Tips: Bruk __ der du skal fylle inn noe på stedet.</div>
+  </div>
+  <h3>Koblet til tjenester</h3><div class="card">
+    <div class="chips">${m.tjenester.map(nr=>{const v=vare(nr);return `<span class="chip x">${esc(v?v.navn:nr)} <button class="x" style="font-size:15px;padding:0 0 0 4px" onclick="malFjernTj(${nr})">×</button></span>`}).join('')||'<span class="small muted">Ingen tjenester koblet til.</span>'}</div>
+    <div class="picker"><input type="search" placeholder="+ Koble til tjeneste (søk)" oninput="malPick(this.value,'tj')" autocomplete="off"><div id="mpick-tj"></div></div>
+  </div>
+  <h3>Foreslåtte medisiner</h3><div class="card">
+    ${m.medisiner.length?`<table class="lines"><tr><th>Medisin</th><th class="right">Antall</th><th></th></tr>${m.medisiner.map((x,i)=>`<tr><td>${esc(x.navn)}</td><td class="right"><input type="number" min="0" step="any" value="${x.antall}" onchange="curMal().medisiner[${i}].antall=+this.value||1;save()"></td><td><button class="x" onclick="curMal().medisiner.splice(${i},1);save();render()">×</button></td></tr>`).join('')}</table>`:'<div class="small muted">Ingen foreslåtte medisiner.</div>'}
+    <div class="picker" style="margin-top:10px"><input type="search" placeholder="+ Legg til medisin (søk)" oninput="malPick(this.value,'med')" autocomplete="off"><div id="mpick-med"></div></div>
+  </div>
+  <div class="row between" style="margin-top:14px"><button class="btn warn" onclick="slettMal()">Slett mal</button><button class="btn primary" onclick="go('maler');toast('Malen er lagret')">Ferdig</button></div>`;
+}
+function malPick(q,type){
+  q=q.trim().toLowerCase(); const el=document.getElementById('mpick-'+type); if(!q){el.innerHTML='';return;}
+  const src = type==='tj' ? VARER.filter(v=>v.navn!=='Medisiner') : MEDISINER;
+  const l=src.filter(x=>x.navn.toLowerCase().includes(q)).slice(0,10);
+  el.innerHTML=`<div class="list">${l.length?l.map(x=>`<div class="opt" onclick="malLeggTil('${type}',${src.indexOf(x)})"><span>${esc(x.navn)}</span><span class="small muted">${x.nr?x.nr:''}</span></div>`).join(''):'<div class="opt muted">Ingen treff</div>'}</div>`;
+}
+function malLeggTil(type,i){
+  const m=curMal();
+  if(type==='tj'){ const v=VARER.filter(v=>v.navn!=='Medisiner')[i]; if(!m.tjenester.includes(v.nr)) m.tjenester.push(v.nr); }
+  else { const x=MEDISINER[i]; if(!m.medisiner.find(y=>y.navn===x.navn)) m.medisiner.push({navn:x.navn,antall:1}); }
+  save(); render();
+}
+function malFjernTj(nr){ const m=curMal(); m.tjenester=m.tjenester.filter(x=>x!==nr); save(); render(); }
+function slettMal(){
+  modal(`<h2>Slette malen «${esc(curMal().navn)}»?</h2><p class="small muted">Journaler som allerede er skrevet med malen, endres ikke.</p>
+  <div class="row" style="justify-content:flex-end;gap:8px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="curMal().deleted=true;save();closeModal();go('maler');toast('Malen er slettet')">Slett</button></div>`);
+}
+function bekreftNullstill(){
+  modal(`<h2>Tilbakestille demodata?</h2><p class="small muted">Alle kunder, oppdrag og maler erstattes med demodataene, også i filen på Google Drive.</p>
+  <div class="row" style="justify-content:flex-end;gap:8px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="closeModal();nullstill()">Tilbakestill</button></div>`);
+}
+
+// ---------- Nedlasting ----------
+function lastNed(){
+  const {fra,til}=UI.eksport;
+  const blob=new Blob(['﻿'+csv()],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`fakturagrunnlag_${fra||'start'}_${til||'slutt'}.csv`;
+  document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+  toast('Filen er lastet ned');
+}
+
+// ---------- Google-innlogging ----------
+const AUTH = {token:null, exp:0, user:null, client:null};
+try{ const t=JSON.parse(sessionStorage.getItem('vet-token')||'null'); if(t && t.exp>Date.now()+60000){ AUTH.token=t.token; AUTH.exp=t.exp; } }catch(e){}
+try{ AUTH.user=JSON.parse(localStorage.getItem('vet-user')||'null'); }catch(e){}
+const tokenOk = () => AUTH.token && AUTH.exp > Date.now()+30000;
+function initClient(){
+  if(AUTH.client || !(window.google && google.accounts && google.accounts.oauth2)) return !!AUTH.client;
+  AUTH.client = google.accounts.oauth2.initTokenClient({client_id:CLIENT_ID, scope:SCOPE, callback:onToken,
+    error_callback:e=>{ document.getElementById('login-err').textContent = e && e.type==='popup_closed' ? 'Innloggingen ble avbrutt.' : 'Innloggingen mislyktes. Prøv igjen.'; SYNC.state='err'; renderSync(); }});
+  return true;
+}
+function loggInn(){
+  if(!initClient()){ document.getElementById('login-err').textContent='Laster Google … prøv igjen om et øyeblikk.'; return; }
+  AUTH.client.requestAccessToken({prompt: AUTH.user ? '' : 'consent', login_hint: AUTH.user ? AUTH.user.emailAddress : undefined});
+}
+async function onToken(r){
+  if(r.error){ document.getElementById('login-err').textContent='Innloggingen mislyktes: '+r.error; return; }
+  AUTH.token=r.access_token; AUTH.exp=Date.now()+(+r.expires_in||3600)*1000;
+  try{ sessionStorage.setItem('vet-token',JSON.stringify({token:AUTH.token,exp:AUTH.exp})); }catch(e){}
+  try{
+    const me=await gapi('https://www.googleapis.com/drive/v3/about?fields=user(displayName,emailAddress)');
+    if(AUTH.user && AUTH.user.emailAddress!==me.user.emailAddress){ // annen konto: ikke bland data
+      S=seed(); S.maler=seedMaler(); SYNC.base=null; SYNC.fileId=null; try{localStorage.removeItem('vet-file')}catch(e){}
+    }
+    AUTH.user=me.user; try{ localStorage.setItem('vet-user',JSON.stringify(me.user)); }catch(e){}
+  }catch(e){}
+  document.getElementById('login').style.display='none';
+  render(); await sync(true);
+}
+function loggUt(){
+  modal(`<h2>Logge ut?</h2><p class="small muted">Dataene ligger trygt på Google Drive. Lokal kopi på denne enheten slettes.</p>
+  <div class="row" style="justify-content:flex-end;gap:8px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="bekreftLoggUt()">Logg ut</button></div>`);
+}
+async function bekreftLoggUt(){
+  closeModal();
+  if(SYNC.dirty && tokenOk()) { try{ await sync(); }catch(e){} }
+  try{ if(AUTH.token && window.google) google.accounts.oauth2.revoke(AUTH.token,()=>{}); }catch(e){}
+  AUTH.token=null; AUTH.exp=0; AUTH.user=null;
+  ['vet-user','vet-file','vet-base',KEY].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});
+  try{sessionStorage.removeItem('vet-token')}catch(e){}
+  S=seed(); S.maler=seedMaler(); SYNC.base=null; SYNC.fileId=null;
+  document.getElementById('login').style.display='flex';
+}
+
+// ---------- Synkronisering mot Google Drive ----------
+const SYNC = {state:'idle', dirty:false, timer:null, running:false, last:null, fileId:null, folderId:null, base:null};
+try{ SYNC.fileId=localStorage.getItem('vet-file'); SYNC.base=JSON.parse(localStorage.getItem('vet-base')||'null'); }catch(e){}
+async function gapi(url,opt={}){
+  const r=await fetch(url,Object.assign({},opt,{headers:Object.assign({'Authorization':'Bearer '+AUTH.token},opt.headers||{})}));
+  if(r.status===401){ AUTH.token=null; AUTH.exp=0; try{sessionStorage.removeItem('vet-token')}catch(e){} throw new Error('auth'); }
+  if(!r.ok) throw new Error('http '+r.status);
+  const ct=r.headers.get('content-type')||''; return ct.includes('json') ? r.json() : r.text();
+}
+const q = s => encodeURIComponent(s);
+async function finnFil(){
+  if(SYNC.fileId){
+    try{ const f=await gapi(`https://www.googleapis.com/drive/v3/files/${SYNC.fileId}?fields=id,trashed`); if(!f.trashed) return SYNC.fileId; }catch(e){ if(e.message==='auth') throw e; }
+  }
+  const fo=await gapi(`https://www.googleapis.com/drive/v3/files?q=${q(`name='${FOLDER}' and mimeType='application/vnd.google-apps.folder' and trashed=false`)}&fields=files(id)&spaces=drive`);
+  SYNC.folderId = fo.files.length ? fo.files[0].id : (await gapi('https://www.googleapis.com/drive/v3/files',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:FOLDER,mimeType:'application/vnd.google-apps.folder'})})).id;
+  const fi=await gapi(`https://www.googleapis.com/drive/v3/files?q=${q(`name='${FILE}' and '${SYNC.folderId}' in parents and trashed=false`)}&fields=files(id)&spaces=drive`);
+  SYNC.fileId = fi.files.length ? fi.files[0].id : null;
+  try{ if(SYNC.fileId) localStorage.setItem('vet-file',SYNC.fileId); }catch(e){}
+  return SYNC.fileId;
+}
+async function opprettFil(data){
+  const b='vetb'+Date.now();
+  const body=`--${b}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${JSON.stringify({name:FILE,parents:[SYNC.folderId],mimeType:'application/json'})}\r\n--${b}\r\nContent-Type: application/json\r\n\r\n${data}\r\n--${b}--`;
+  const f=await gapi('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id',{method:'POST',headers:{'Content-Type':'multipart/related; boundary='+b},body});
+  SYNC.fileId=f.id; try{ localStorage.setItem('vet-file',f.id); }catch(e){}
+}
+// Flett: lokale endringer siden forrige synk vinner, ellers vinner det som ligger på Drive.
+function flett(lokal, fjern, base){
+  const out={};
+  for(const k of ['kunder','oppdrag','maler']){
+    const key = k==='kunder' ? 'nr' : 'id';
+    const b=new Map(((base&&base[k])||[]).map(x=>[x[key],JSON.stringify(x)]));
+    const r=new Map(((fjern&&fjern[k])||[]).map(x=>[x[key],x]));
+    const res=new Map();
+    for(const x of (lokal[k]||[])){
+      const endret = JSON.stringify(x)!==b.get(x[key]);
+      res.set(x[key], endret || !r.has(x[key]) ? x : r.get(x[key]));
+    }
+    for(const [id,x] of r){ if(!res.has(id) && !b.has(id)) res.set(id,x); }
+    out[k]=[...res.values()];
+  }
+  return out;
+}
+function scheduleSync(){ SYNC.dirty=true; clearTimeout(SYNC.timer); SYNC.timer=setTimeout(()=>sync(),1500); renderSync(); }
+async function sync(forsteGang){
+  if(!tokenOk()){ SYNC.state='off'; renderSync(); return; }
+  if(SYNC.running){ SYNC.again=true; return; }
+  SYNC.running=true; SYNC.state='busy'; renderSync();
+  try{
+    const id=await finnFil();
+    let fjern=null;
+    if(id){ const txt=await gapi(`https://www.googleapis.com/drive/v3/files/${id}?alt=media`); fjern = typeof txt==='string' ? JSON.parse(txt||'null') : txt; }
+    const merged = fjern ? flett(S, fjern, SYNC.base) : {kunder:S.kunder,oppdrag:S.oppdrag,maler:S.maler};
+    const data=JSON.stringify(Object.assign({app:'vet-oppdrag',versjon:1,lagret:nowTs()},merged));
+    if(id) await gapi(`https://www.googleapis.com/upload/drive/v3/files/${id}?uploadType=media`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:data});
+    else await opprettFil(data);
+    const endretFraDrive = JSON.stringify(merged)!==JSON.stringify({kunder:S.kunder,oppdrag:S.oppdrag,maler:S.maler});
+    S.kunder=merged.kunder; S.oppdrag=merged.oppdrag; S.maler=merged.maler;
+    SYNC.base=JSON.parse(JSON.stringify(merged)); try{ localStorage.setItem('vet-base',JSON.stringify(SYNC.base)); }catch(e){}
+    saveLocal(); SYNC.dirty=false; SYNC.state='ok'; SYNC.last=new Date();
+    if(endretFraDrive && !erIRedigering()) render(); else renderSync();
+  }catch(e){
+    SYNC.state = e.message==='auth' ? 'off' : 'err'; renderSync();
+  }finally{
+    SYNC.running=false;
+    if(SYNC.again){ SYNC.again=false; setTimeout(()=>sync(),300); }
+  }
+}
+const erIRedigering = () => { const a=document.activeElement; return a && /INPUT|TEXTAREA|SELECT/.test(a.tagName) || !!document.querySelector('#modal .modal'); };
+function renderSync(){
+  const el=document.getElementById('syncbar'); if(!el) return;
+  const u=AUTH.user;
+  let dot='', txt='';
+  if(!tokenOk()){ dot='err'; txt = SYNC.dirty ? 'Ikke lagret på Drive – endringer ligger på denne enheten' : 'Ikke koblet til Drive'; }
+  else if(SYNC.state==='busy'){ dot='busy'; txt='Lagrer …'; }
+  else if(SYNC.state==='err'){ dot='err'; txt='Kunne ikke lagre – prøver igjen'; }
+  else if(SYNC.dirty){ dot='busy'; txt='Venter med å lagre …'; }
+  else { dot='ok'; txt='Lagret på Google Drive'+(SYNC.last?' kl. '+SYNC.last.toLocaleTimeString('nb-NO',{hour:'2-digit',minute:'2-digit'}):''); }
+  el.innerHTML=`<div class="syncbar"><span class="dot ${dot}"></span><span class="grow">${txt}</span>
+    ${!tokenOk()?`<button class="linkbtn" onclick="loggInn()">Logg inn igjen</button>`:''}
+    ${u?`<span class="small" title="${esc(u.emailAddress)}">${esc((u.displayName||u.emailAddress).split(' ')[0])}</span> · <button class="linkbtn" onclick="loggUt()">Logg ut</button>`:''}</div>`;
+}
+// Hent endringer fra andre enheter jevnlig, og varsle før token utløper.
+setInterval(()=>{ if(document.visibilityState==='visible' && tokenOk() && !SYNC.running && !erIRedigering()) sync(); renderSync(); }, 60000);
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible' && tokenOk()) sync(); });
+window.addEventListener('beforeunload',e=>{ if(SYNC.dirty){ e.preventDefault(); e.returnValue=''; } });
+
+// ---------- Oppstart ----------
+render();
+if(!AUTH.user){ document.getElementById('login').style.display='flex'; }
+else if(tokenOk()){ sync(true); }
+const waitG=setInterval(()=>{ if(initClient()) clearInterval(waitG); },200);
+
+</script>
+</body>
+</html>
