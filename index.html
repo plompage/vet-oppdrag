@@ -138,7 +138,7 @@ nav.tabs button{font-size:11.5px}
 </head>
 <body>
 <header class="top"><div class="top-in">
-  <span class="logo">Vet-oppdrag</span><span class="beta">Beta</span>
+  <span class="logo">Vet-oppdrag</span><span class="beta" id="beta">Test</span>
   <div class="role" id="role"></div>
 </div></header>
 <div id="syncbar"></div>
@@ -149,13 +149,58 @@ nav.tabs button{font-size:11.5px}
   <div class="muted" style="margin-bottom:18px">Oppdrag, journal og fakturagrunnlag</div>
   <div id="login-body" style="text-align:left"></div>
   <div id="login-err" class="small" style="color:var(--warn);margin-top:12px"></div>
-  <div class="banner" style="margin-top:24px;text-align:left">Betaversjon: bruk bare oppdiktede kunder og journaler.</div>
+  <div class="small muted" style="margin-top:24px;text-align:left">Journaler krypteres på enheten før de lagres. Ingen andre enn veterinæren kan lese dem.</div>
 </div></div>
 <nav class="tabs"><div class="in" id="tabs"></div></nav>
 <div id="modal"></div>
 <div class="toast" id="toast"></div>
 <script>
 const SEED = {"varer": [{"nr": 1001, "navn": "2.gangs sprøyting estrumat", "pris": 220, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1002, "navn": "Avhorning fra kalv 2", "pris": 175, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1003, "navn": "Avhorning kalv 1", "pris": 925, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1004, "navn": "Avhorning kalv utstyr", "pris": 30, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1005, "navn": "Avliving hund 19.02.21", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1006, "navn": "Avliving kalv", "pris": 250, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1007, "navn": "Avliving katt", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1008, "navn": "Avlivning småfe vakt", "pris": 450, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1009, "navn": "Bedøvelse katt", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1010, "navn": "Blodprøver geit", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1011, "navn": "Calf drencher", "pris": 272, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1012, "navn": "Cryptotest", "pris": 234, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1013, "navn": "Diaré kalv honorar", "pris": 250, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1014, "navn": "Drektighetsundersøkelse første 5 stk", "pris": 925, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1015, "navn": "Drektighetsundersøkelse stk", "pris": 120, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1016, "navn": "DVP besøk", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1017, "navn": "Etterbehandling", "pris": 340, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1018, "navn": "Etterfakturering vakttelefon Telenor", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1019, "navn": "Fakturagebyr", "pris": 60, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1020, "navn": "Fergebilletter", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1021, "navn": "Frakk geno", "pris": 749, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1022, "navn": "Frakt blodprøver ekspress over natt", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1023, "navn": "Grunnhonorar", "pris": 925, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1024, "navn": "Grunnhonorar helg", "pris": 1850, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1025, "navn": "Grunnhonorar søndag", "pris": 1850, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1026, "navn": "Helgetillegg", "pris": 450, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1027, "navn": "Helgetillegg kveld", "pris": 675, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1028, "navn": "Helseattest alpakka", "pris": 730, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1029, "navn": "Helseattest besetning", "pris": 465, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1030, "navn": "Helseattest geit", "pris": 730, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1031, "navn": "Helseattest kalv", "pris": 350, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1032, "navn": "Helseattest storfe", "pris": 925, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1033, "navn": "Hjemkjøring katt honorar", "pris": 400, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1034, "navn": "Hjemkjøring smådyr", "pris": 415, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1035, "navn": "Hjemmeavlivning smådyr", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1036, "navn": "Honorar alpakka", "pris": 730, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1037, "navn": "Honorar gris", "pris": 365, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1038, "navn": "Honorar hest", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1039, "navn": "Honorar hund", "pris": 465, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1040, "navn": "Honorar hund helg", "pris": 930, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1041, "navn": "Honorar kalv", "pris": 365, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1042, "navn": "Honorar kalv helg", "pris": 500, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1043, "navn": "Honorar kalv oppfølging", "pris": 150, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1044, "navn": "Honorar kalv påfølgende individ", "pris": 265, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1045, "navn": "Honorar kalv rask undersøkelse", "pris": 100, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1046, "navn": "Honorar kalv vakt", "pris": 730, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1047, "navn": "Honorar kalving vakt", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1048, "navn": "Honorar mastitt helg ekskludert speneprøve", "pris": 930, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1049, "navn": "Honorar mastitt vakt inkl speneprøve", "pris": 1200, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1050, "navn": "Honorar mastitt, inkudert speneprøve", "pris": 600, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1051, "navn": "Honorar melkefeber helg", "pris": 1040, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1052, "navn": "Honorar melkefeber helg kveld", "pris": 1300, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1053, "navn": "Honorar melkefeber kveld", "pris": 1040, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1054, "navn": "Honorar mjølkefeber", "pris": 520, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1055, "navn": "Honorar mjølkefeber helg", "pris": 1040, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1056, "navn": "Honorar mjølkefeber kveld", "pris": 0, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1057, "navn": "Honorar mjølkefeber påfølgende behandling", "pris": 465, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1058, "navn": "Honorar purke", "pris": 350, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": false}, {"nr": 1059, "navn": "Honorar påfølgende individ", "pris": 432, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1060, "navn": "Honorar påfølgende kalv", "pris": 150, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1061, "navn": "Honorar rask undersøkelse storfe", "pris": 165, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1062, "navn": "Honorar rask undersøkelse storfe helg", "pris": 0, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1063, "navn": "Honorar sau", "pris": 730, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1064, "navn": "Honorar småfe", "pris": 250, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1065, "navn": "Honorar speneamputasjon", "pris": 690, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1066, "navn": "Honorar storfe", "pris": 170, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1067, "navn": "Honorar storfe", "pris": 730, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1068, "navn": "Honorar storfe helg", "pris": 930, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1069, "navn": "Honorar storfe helg inkl speneprøve", "pris": 1065, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1070, "navn": "Honorar storfe helg kveld", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1071, "navn": "Honorar storfe inkl speneprøve", "pris": 600, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1072, "navn": "Honorar storfe kalving", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1073, "navn": "Honorar storfe kalving kveld", "pris": 1000, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1074, "navn": "Honorar storfe kveld", "pris": 930, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1075, "navn": "Honorar storfe kveld inkl speneprøve", "pris": 1200, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1076, "navn": "Honorar storfe søndag kveld", "pris": 1162, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1077, "navn": "Honorar storfe vakt", "pris": 930, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1078, "navn": "Honorar storfe/ sau", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1079, "navn": "Honorar søye", "pris": 250, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1080, "navn": "Honorar vaksine hest", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1081, "navn": "Hormonbehandling storfe", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1082, "navn": "Hurtigtest kalvediaré", "pris": 401, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1083, "navn": "Innlegg systamex første 5", "pris": 730, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1084, "navn": "Innlegg systamex stk", "pris": 55, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1085, "navn": "Kastrering hannkatt", "pris": 900, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1086, "navn": "Kastrering påfølgende individ", "pris": 175, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1087, "navn": "Kjøring", "pris": 393, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1088, "navn": "Kjøring vakt", "pris": 25, "enhet": "Km", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1089, "navn": "Klinisk undersøkelse hund", "pris": 450, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1090, "navn": "Klinisk undersøkelse hund helg", "pris": 800, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1091, "navn": "Klinisk undersøkelse hund helg 30 min", "pris": 900, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1092, "navn": "Klinisk undersøkelse katt", "pris": 465, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1093, "navn": "Konsultasjon smådyr 60 min", "pris": 1200, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1094, "navn": "Konsultasjon smådyr kveld", "pris": 900, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1095, "navn": "Konsultasjon smådyr kveld 30 min", "pris": 950, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1096, "navn": "Kontorleie oktober - desember", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1097, "navn": "Leie av bil", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1098, "navn": "Lørdagstillegg", "pris": 370, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1099, "navn": "Mastitt 1 kjertel utstyr", "pris": 75, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1100, "navn": "Mastitt honorar ekskludert speneprøve", "pris": 465, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1101, "navn": "Medisiner", "pris": null, "enhet": "", "konto": 3000, "type": "Beløp", "aktiv": true}, {"nr": 1102, "navn": "Nedgivning", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1103, "navn": "Nødhjelp Mattilsynet Skjære", "pris": 1594, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1104, "navn": "Nødslakt storfe", "pris": 925, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1105, "navn": "Nødslaktattest", "pris": 465, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1106, "navn": "Nødslaktattest helg", "pris": 930, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1107, "navn": "Nødslaktattest påfølgende individ", "pris": 250, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1108, "navn": "Rektalhansker", "pris": 120, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1109, "navn": "Rektalhansker Large", "pris": 140, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1110, "navn": "Resepthonorar", "pris": 64, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1111, "navn": "Røntgen buk 2 plan", "pris": 450, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1112, "navn": "Røntgen thorax 3 plan + røntgen svelg", "pris": 650, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1113, "navn": "Schalmvæske", "pris": 120, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1114, "navn": "Se på lam på ruta", "pris": 370, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1115, "navn": "Sedasjon + Oppvåkning hund", "pris": 250, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1116, "navn": "Seksuell helsekontroll", "pris": 320, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1117, "navn": "Sintidsbehandling", "pris": 246, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1118, "navn": "Smertebehandling hund", "pris": 90, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1119, "navn": "Speneprøve", "pris": 150, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1120, "navn": "Speneprøveuttak", "pris": 150, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1121, "navn": "Storfe honorar", "pris": 950, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1122, "navn": "Timespris klinisk arbeid", "pris": 1850, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1123, "navn": "Undersøkelse + bandasjering hest", "pris": 300, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1124, "navn": "Utstyr", "pris": 60, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1125, "navn": "Utstyr/ varer for videresalg", "pris": 0, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1126, "navn": "Vaksinering påfølgende sau, stk", "pris": 7, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1127, "navn": "Vaksinering sau første 10 stk", "pris": 730, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1128, "navn": "Vaksinering storfe første 5", "pris": 730, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1129, "navn": "Vaksinering storfe stk", "pris": 22, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1130, "navn": "Vakttillegg helg", "pris": 730, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1131, "navn": "Vakttillegg helg 100%", "pris": 925, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1132, "navn": "Vakttillegg helg kveld", "pris": 698, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1133, "navn": "Vakttillegg helligdag", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1134, "navn": "Vakttillegg man-fre", "pris": 510, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1135, "navn": "Vakttillegg man-fre", "pris": 510, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1136, "navn": "Vakttillegg natt", "pris": 730, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1137, "navn": "Vakttillegg søndag", "pris": 730, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1138, "navn": "Ventetid ferge", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1139, "navn": "Ventetid skyssbåt", "pris": 0, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1140, "navn": "Væske - og smertebehandling", "pris": 220, "enhet": "", "konto": 3000, "type": "Normal", "aktiv": true}, {"nr": 1141, "navn": "Væskebehandling og utstyr", "pris": 50, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}, {"nr": 1142, "navn": "Væskebehandling Ringer Acetat", "pris": 100, "enhet": "", "konto": 3020, "type": "Normal", "aktiv": true}], "med": [{"navn": "Becoplex", "pris": 114.46}, {"navn": "Borgal 100ml", "pris": 202.6}, {"navn": "Calcikel 7 stk", "pris": 634}, {"navn": "Calcikel stk", "pris": 88.8}, {"navn": "Calcimag 12 stk", "pris": 958}, {"navn": "Calcimag stk", "pris": 80.49}, {"navn": "Dexaject", "pris": 392.8}, {"navn": "Epsomsalt 1 liter", "pris": 273}, {"navn": "Equilis Prequenza Te, vaksine", "pris": 1551}, {"navn": "Finadyne", "pris": 264.8}, {"navn": "Ganutil", "pris": 264.21}, {"navn": "Ku + energi, tuber", "pris": 78}, {"navn": "Ku + kalsium, tuber", "pris": 75}, {"navn": "Ku + kull, tuber", "pris": 96}, {"navn": "Ku + vom, tuber", "pris": 111}, {"navn": "Lidokel", "pris": 67.29}, {"navn": "Magniject 400ml", "pris": 92.16}, {"navn": "Mastipen", "pris": 92}, {"navn": "Melovem 20mg/ml", "pris": 228.92}, {"navn": "Metacam smertestillende mikstur", "pris": 75}, {"navn": "Mineralbolus kvige per stk", "pris": 78}, {"navn": "Navlespray", "pris": 175}, {"navn": "Obionekk", "pris": 2062}, {"navn": "Opticlox øyesalve", "pris": 317}, {"navn": "Oxytocin 10ml", "pris": 30}, {"navn": "Penovet 100ml", "pris": 90}, {"navn": "Receptal", "pris": 128.1}, {"navn": "Repiderma sårspray", "pris": 179}, {"navn": "Ringer Acetat 100ml", "pris": 20}, {"navn": "Selevitan", "pris": 394.4}, {"navn": "Siccalactin 12 stk", "pris": 384.8}, {"navn": "Siccalactin 4 tuber", "pris": 207}, {"navn": "Spasmium", "pris": 395.92}, {"navn": "Specific CIW 300g", "pris": 28}, {"navn": "Systamex bolus stk", "pris": 190}, {"navn": "Tube ku + kalvegel", "pris": 90}, {"navn": "Tube ku + ph", "pris": 90}, {"navn": "Tuber ku + fosfor", "pris": 88}, {"navn": "Vaksine kalv Bovilis bovipast 1 flaske", "pris": 526}, {"navn": "Vaksiner parvo + rødsjuke", "pris": 510}, {"navn": "Vetericyn sårspray", "pris": 269}, {"navn": "Vetocin", "pris": 49.31}, {"navn": "Vetplus Promax 9ml", "pris": 111}, {"navn": "Xysol", "pris": 212}], "vareHdr": ["Varenummer", "Varenavn*", "Varetype", "Enhet", "EAN", "Beskrivelse", "Salgspris 1", "Tilknytninger", "Avgift ved salg", "Avgift ved kjøp", "Konto for varesalg mva høy sats", "Konto for varesalg mva middel sats", "Konto for varesalg mva lav sats", "Konto for varesalg mva-fri innenlands", "Konto for varesalg mva-fri utenlands", "Konto for varesalg utenfor mva-loven", "Konto for varesalg innenlands salg omv. Mva", "Konto for rabatt varesalg mva høy sats", "Konto for rabatt varesalg mva middels sats", "Konto for rabatt varesalg mva lav sats", "Konto for rabatt varesalg mva-fri innenlands", "Konto for rabatt varesalg mva-fri utenlands", "Konto for rabatt varesalg utenfor mva-loven", "Konto for rabatt varesalg innenlands salg omv. Mva", "Konto for varekjøp mva høy sats", "Konto for varekjøp mva middels sats", "Konto for varekjøp mva lav sats", "Konto for varekjøp mva-fri innenlands", "Konto for varekjøp import før mva og tolldekt", "Konto for varekjøp import høy sats (T.O.M. 2016)", "Konto for varekjøp import middels sats (T.O.M. 2016)", "Konto for varekjøp import ikke mva", "Konto for varekjøp innenlands kjøp omv. avg. pl", "Konto for varekjøp innenlands kjøp ikke fradr. Omv", "Konto for rentetillegg", "Konto for rentefradrag", "Bokfør kalkulert vareforbruk og varelager", "Konto for kalk. Vareforbruk", "Konto for kalk. Varelager", "Varen er aktiv"], "vareDef": [100, "Poteter", "Normal", "Kg", null, "Poteter i løsvekt", 20.02, null, "Lav", "Lav", 3000, 3030, 3050, 3100, 3105, 3200, 3107, 3085, 3086, 3050, 3185, 3105, 3285, 3107, 4300, 4330, 7149, 4340, 4345, 4300, 4330, 4385, 1068, 1069, 8155, 8050, "Nei", 4900, 1469, "Ja"]};
+// ================= Kryptering av journal =================
+// Journalnøkkel: tilfeldig AES-GCM 256. Lagres på serveren låst (wrapped) med
+// (1) en nøkkel avledet av journalpassordet (PBKDF2-SHA256, 600 000 runder) og
+// (2) en nøkkel avledet av gjenopprettingsnøkkelen (PBKDF2-SHA256, 100 000 runder).
+// Journaltekst krypteres med AES-GCM og tilfeldig IV: "v1:<iv base64>:<chiffertekst base64>".
+const KRYPTO = {
+  ITER_PASS: 600000, ITER_GJEN: 100000,
+  b64: buf => { const b=new Uint8Array(buf); let s=''; for(let i=0;i<b.length;i++) s+=String.fromCharCode(b[i]); return btoa(s); },
+  unb64: s => Uint8Array.from(atob(s), c=>c.charCodeAt(0)),
+  rnd: n => crypto.getRandomValues(new Uint8Array(n)),
+  async kek(hemmelig, saltB64, iter){
+    const base=await crypto.subtle.importKey('raw', new TextEncoder().encode(hemmelig.normalize('NFC')), 'PBKDF2', false, ['deriveKey']);
+    return crypto.subtle.deriveKey({name:'PBKDF2', salt:KRYPTO.unb64(saltB64), iterations:iter, hash:'SHA-256'}, base, {name:'AES-GCM', length:256}, false, ['wrapKey','unwrapKey']);
+  },
+  async wrap(jn, hemmelig, iter){
+    const salt=KRYPTO.b64(KRYPTO.rnd(16)), iv=KRYPTO.rnd(12);
+    const ct=await crypto.subtle.wrapKey('raw', jn, await KRYPTO.kek(hemmelig, salt, iter), {name:'AES-GCM', iv});
+    return {salt, iter, iv:KRYPTO.b64(iv), ct:KRYPTO.b64(ct)};
+  },
+  async unwrap(w, hemmelig, uttrekkbar){
+    return crypto.subtle.unwrapKey('raw', KRYPTO.unb64(w.ct), await KRYPTO.kek(hemmelig, w.salt, w.iter), {name:'AES-GCM', iv:KRYPTO.unb64(w.iv)}, {name:'AES-GCM'}, !!uttrekkbar, ['encrypt','decrypt']);
+  },
+  nyNokkel: () => crypto.subtle.generateKey({name:'AES-GCM', length:256}, true, ['encrypt','decrypt']),
+  // Gjenopprettingsnøkkel: 20 tilfeldige byte som 32 tegn base32 (uten 0/O/1/I), i grupper på fire
+  nyGjenoppretting(){ const A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; const b=KRYPTO.rnd(32); let s=''; for(let i=0;i<32;i++) s+=A[b[i]%32]; return s.match(/.{4}/g).join('-'); },
+  normGjen: s => String(s||'').toUpperCase().replace(/[^A-Z0-9]/g,'').match(/.{1,4}/g)?.join('-') || '',
+  async krypter(jn, obj){
+    const iv=KRYPTO.rnd(12);
+    const ct=await crypto.subtle.encrypt({name:'AES-GCM', iv}, jn, new TextEncoder().encode(JSON.stringify(obj)));
+    return 'v1:'+KRYPTO.b64(iv)+':'+KRYPTO.b64(ct);
+  },
+  async dekrypter(jn, s){
+    const [v,iv,ct]=String(s).split(':'); if(v!=='v1') throw new Error('Ukjent krypteringsformat');
+    const pt=await crypto.subtle.decrypt({name:'AES-GCM', iv:KRYPTO.unb64(iv)}, jn, KRYPTO.unb64(ct));
+    return JSON.parse(new TextDecoder().decode(pt));
+  }
+};
+// Opplåst nøkkel huskes på denne enheten (ikke-uttrekkbar CryptoKey i IndexedDB) til utlogging
+const NOKKELLAGER = {
+  db(){ return new Promise((ok,feil)=>{ const r=indexedDB.open('vet-oppdrag',1); r.onupgradeneeded=()=>r.result.createObjectStore('nokler'); r.onsuccess=()=>ok(r.result); r.onerror=()=>feil(r.error); }); },
+  async hent(id){ try{ const d=await NOKKELLAGER.db(); return await new Promise(ok=>{ const q=d.transaction('nokler').objectStore('nokler').get(id); q.onsuccess=()=>ok(q.result||null); q.onerror=()=>ok(null); }); }catch(e){ return null; } },
+  async lagre(id,k){ try{ const d=await NOKKELLAGER.db(); await new Promise(ok=>{ const t=d.transaction('nokler','readwrite'); t.objectStore('nokler').put(k,id); t.oncomplete=ok; t.onerror=ok; }); }catch(e){} },
+  async slett(id){ try{ const d=await NOKKELLAGER.db(); await new Promise(ok=>{ const t=d.transaction('nokler','readwrite'); t.objectStore('nokler').delete(id); t.oncomplete=ok; t.onerror=ok; }); }catch(e){} }
+};
+
 'use strict';
 // ================= Konfigurasjon =================
 const SB_URL = 'https://tqevdxcoiotqxascdbxj.supabase.co';
@@ -189,7 +234,7 @@ function lastNedBlob(blob, navn){ const a=document.createElement('a'); a.href=UR
 // ================= Tilstand =================
 let S = {kunder:[], oppdrag:[], maler:[], varer:[], medisiner:[], vakter:[]};
 let UI = {role:'mia', view:'oppdrag', listTab:'apne', current:null, kunde:null, mal:null,
-  sok:{q:'',fra:'',til:'',individ:'',status:'',vare:''},
+  sok:{q:'',fra:'',til:'',individ:'',status:'',vare:'',dhp:false},
   periode:{fra:addDays(-30), til:TODAY}, dhp:{fra:TODAY.slice(0,8)+'01', til:TODAY, vis:false},
   kal:{ym:TODAY.slice(0,7), dag:TODAY}, vq:'', mq:''};
 const save = () => { cacheSave(); scheduleSync(); };
@@ -199,15 +244,18 @@ const kunde = nr => S.kunder.find(k=>k.nr===nr) || {nr,navn:'Ukjent kunde'};
 const aktiveVarer = () => S.varer.filter(v=>v.aktiv!==false && v.navn!=='Medisiner').sort((a,b)=>a.nr-b.nr);
 const medVare = () => S.varer.find(v=>v.navn==='Medisiner') || {nr:1101, navn:'Medisiner'};
 const aktiveMedisiner = () => S.medisiner.filter(m=>m.aktiv!==false).sort((a,b)=>a.navn.localeCompare(b.navn,'nb'));
-const alleMedLinjer = o => (o.dyr||[]).flatMap(d=>d.medisiner||[]);
+const alleMedLinjer = o => (o.dyr||[]).flatMap(d=>d.medisiner||[]).concat(o.flokk||[]);
 const medSum = o => isMia() || kanSkrive() ? alleMedLinjer(o).reduce((s,m)=>s+(+m.antall||0)*(+m.pris||0),0) : (+o.medSum||0);
 const linjeSum = o => (o.linjer||[]).reduce((s,l)=>s+(+l.antall||0)*(+l.pris||0),0);
 const sum = o => linjeSum(o)+medSum(o);
-const STATUS = {bestilt:'Bestilt',utsatt:'Utsatt',fullfort:'Fullført',avlyst:'Avlyst',fakturert:'Fakturert'};
+const STATUS = {bestilt:'Bestilt',flyttet:'Flyttet',utsatt:'Utsatt',fullfort:'Fullført',avlyst:'Avlyst',fakturert:'Fakturert'};
 const statusKey = o => o.fakturert ? 'fakturert' : o.status;
-const pill = o => { const k=statusKey(o); let t=STATUS[k]; if(o.status==='avlyst' && !o.fakturert && o.fakturer) t+=' · faktureres'; return `<span class="pill s-${k}">${t}</span>`; };
+const flyttRetning = o => { if(!o.opprinnelig) return ''; const ny=o.dato+' '+(o.tid||'12:00'), gml=o.opprinnelig.length<=10?o.opprinnelig+' 12:00':o.opprinnelig; return ny>gml?'Utsatt':ny<gml?'Fremskyndet':''; };
+const pill = o => { const k=statusKey(o); let t=STATUS[k]; if(o.status==='flyttet') t=flyttRetning(o)||'Flyttet'; if(o.status==='avlyst' && !o.fakturert && o.fakturer) t+=' · faktureres'; return `<span class="pill s-${k==='flyttet'?'utsatt':k}">${t}</span>`; };
+const harMed = o => alleMedLinjer(o).length>0;
+const dhpPill = o => (isMia() && !apen(o) && harMed(o)) ? (o.dhpTs ? `<span class="pill s-fullfort" title="Rapportert ${fmtTs(o.dhpTs)}">DHP ✓</span>` : `<span class="pill s-utsatt">Ikke rapportert DHP</span>`) : '';
 const fakturerbar = o => !o.fakturert && (o.status==='fullfort' || (o.status==='avlyst' && o.fakturer));
-const apen = o => o.status==='bestilt' || o.status==='utsatt';
+const apen = o => o.status==='bestilt' || o.status==='utsatt' || o.status==='flyttet';
 const oNr = o => o.nr ? 'Oppdrag '+o.nr : 'Nytt oppdrag';
 // Vakt
 const aktiveVakter = () => S.vakter.filter(v=>!v.deleted);
@@ -230,7 +278,7 @@ function seedKunderOppdrag(){
   const v = (n,a=1) => { const x=SEED.varer.find(v=>v.navn===n)||SEED.varer[0]; return {varenr:x.nr,navn:x.navn,antall:a,pris:x.pris||0}; };
   const ts = (days,h) => { const d=new Date(); d.setDate(d.getDate()+days); d.setHours(h,15,0,0); return d.toISOString(); };
   const m = (n,a,days,h) => { const x=SEED.med.find(m=>m.navn===n)||SEED.med[0]; return {id:uid(),navn:x.navn,antall:a,pris:x.pris,tid:ts(days,h)}; };
-  const o = x => Object.assign({id:uid(),tid:'',linjer:[],dyr:[],fakturer:false,fakturert:false,vakt:null,dhpTs:null,
+  const o = x => Object.assign({id:uid(),tid:'',linjer:[],dyr:[],flokk:[],fakturer:false,fakturert:false,vakt:null,dhpTs:null,
     henvendelseTs:ts(-1,8),journalTs:null,ferdigTs:null,fakturertTs:null,henvendelse:''},x);
   const oppdrag = [
     o({kundenr:90001,dato:TODAY,tid:'09:00',status:'bestilt',henvendelse:'Ku med nedsatt matlyst, mistanke om ketose.',henvendelseTs:ts(0,7)}),
@@ -246,6 +294,8 @@ function seedKunderOppdrag(){
       linjer:[v('Grunnhonorar'),v('Kjøring vakt',38),v('Utstyr')],
       dyr:[{id:uid(),art:'Storfe',individ:'NO 22222 1033',diagnose:'Feilstilling, kalvingshjelp',behandling:'Korrigert stilling, levende kalv. Penovet 5 dager.',notat:'',medisiner:[m('Oxytocin 10ml',1,-4,13),m('Penovet 100ml',1,-4,13)]}],
       journalTs:ts(-4,15),ferdigTs:ts(-4,15)}),
+    o({kundenr:90005,dato:addDays(-8),tid:'10:00',status:'fullfort',henvendelse:'Parasittbehandling av sauene før beiteslipp.',henvendelseTs:ts(-9,9),
+      linjer:[v('Grunnhonorar'),v('Kjøring')], flokk:[Object.assign(m('Ganutil',3,-8,10),{art:'Sau',antallDyr:45})], journalTs:ts(-8,12),ferdigTs:ts(-8,12)}),
     o({kundenr:90003,dato:addDays(-3),tid:'09:00',status:'avlyst',fakturer:true,henvendelse:'Sau med diaré.',henvendelseTs:ts(-3,7),linjer:[v('Kjøring')],ferdigTs:ts(-3,10)}),
     o({kundenr:90008,dato:addDays(-2),tid:'15:00',status:'avlyst',fakturer:false,henvendelse:'Helseattest storfe.',henvendelseTs:ts(-3,9),ferdigTs:ts(-2,8)}),
     o({kundenr:90001,dato:addDays(-20),tid:'09:30',status:'fullfort',fakturert:true,fakturertTs:ts(-12,20),henvendelse:'Ketose.',henvendelseTs:ts(-20,7),
@@ -286,8 +336,9 @@ const ICON = {
   kunder:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 010 7M18 14.8c2 .7 3.2 2.4 3.5 5.2"/></svg>',
   meny:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
 };
-const TAB_FOR = {detalj:'oppdrag', kunde:'kunder', eksport:'meny', dhp:'meny', maler:'meny', mal:'meny', varer:'meny', medisiner:'meny'};
+const TAB_FOR = {detalj:'oppdrag', kunde:'kunder', eksport:'meny', dhp:'meny', maler:'meny', mal:'meny', varer:'meny', medisiner:'meny', kopi:'meny'};
 function renderFrame(){
+  const bt=document.getElementById('beta'); if(bt) bt.style.display = ME.medlem && !ME.medlem.live ? '' : 'none';
   const r=document.getElementById('role');
   r.innerHTML = ME.medlem && ME.medlem.testbruker
     ? `<button class="${isMia()?'on':''}" onclick="setRole('mia')">Veterinær</button><button class="${!isMia()?'on':''}" onclick="setRole('erik')">Fakturering</button>`
@@ -314,7 +365,7 @@ function sokRes(){ const t=document.activeElement; const id=t&&t.getAttribute('o
 function oppdragKort(o){
   const k=kunde(o.kundenr);
   return `<div class="card item" onclick="apne('${o.id}')">
-    <div class="row between"><strong class="grow">${esc(k.navn)}</strong>${pill(o)}</div>
+    <div class="row between" style="gap:6px"><strong class="grow">${esc(k.navn)}</strong>${dhpPill(o)}${pill(o)}</div>
     <div class="small muted">${esc(oNr(o))} · ${fmtDate(o.dato)}${o.tid?' kl. '+esc(o.tid):''}${paVakt(o)?' · <span style="color:var(--warn)">vakt</span>':''}</div>
     ${isMia()&&o.henvendelse?`<div class="small" style="margin-top:4px">${esc(o.henvendelse)}</div>`:''}
     ${!apen(o)&&sum(o)>0?`<div class="small muted" style="margin-top:4px">Sum eks. mva: ${kr(sum(o))} kr</div>`:''}
@@ -322,7 +373,7 @@ function oppdragKort(o){
 }
 VIEWS.oppdrag = () => {
   const tab=UI.listTab;
-  let h=`<h1>Oppdrag</h1><div class="seg">
+  let h=`<h1>Oppdrag</h1>${kopiPaminnelse()}<div class="seg">
     <button class="${tab==='apne'?'on':''}" onclick="UI.listTab='apne';render()">Åpne (${S.oppdrag.filter(apen).length})</button>
     <button class="${tab==='ferdig'?'on':''}" onclick="UI.listTab='ferdig';render()">Ferdig behandlet</button></div>`;
   if(tab==='apne'){
@@ -364,7 +415,7 @@ function lagreBestilling(){
   const nr=+document.getElementById('nb-kn').value; if(!nr){ toast('Velg en kunde fra listen'); return; }
   const o={id:uid(),nr:null,kundenr:nr,dato:document.getElementById('nb-d').value||TODAY,tid:document.getElementById('nb-t').value,
     henvendelse:document.getElementById('nb-h').value.trim()||'(ingen beskrivelse)',henvendelseTs:nowTs(),status:'bestilt',
-    linjer:[],dyr:[],fakturer:false,fakturert:false,vakt:null,dhpTs:null,journalTs:null,ferdigTs:null,fakturertTs:null};
+    linjer:[],dyr:[],flokk:[],fakturer:false,fakturert:false,vakt:null,dhpTs:null,journalTs:null,ferdigTs:null,fakturertTs:null,opprinnelig:null};
   S.oppdrag.push(o); save(); closeModal(); UI.listTab='apne';
   if(UI.view!=='kunde' && UI.view!=='kalender') UI.view='oppdrag';
   render(); toast('Oppdrag opprettet');
@@ -386,7 +437,8 @@ VIEWS.detalj = () => {
     <div>Dato</div><div>${editable?`<input type="date" value="${o.dato}" onchange="cur().dato=this.value;save();render()" style="max-width:170px">`:fmtDate(o.dato)}${o.tid?' kl. '+esc(o.tid):''}</div>
     <div>På vakt</div><div>${vaktFelt(o, isMia()&&kanSkrive()&&!o.fakturert)}</div>
     <div>Henvendelse</div><div>${isMia()?esc(o.henvendelse):'<span class="muted">Skjult (journalopplysning)</span>'}<div class="ts">Mottatt ${fmtTs(o.henvendelseTs)}</div></div>
-    ${o.utsattFra?`<div>Utsatt fra</div><div>${fmtDate(o.utsattFra)}</div>`:''}
+    ${o.opprinnelig?`<div>Opprinnelig</div><div>${fmtDate(o.opprinnelig.slice(0,10))}${o.opprinnelig.length>10?' kl. '+esc(o.opprinnelig.slice(11)):''} <span class="ts">· ${flyttRetning(o).toLowerCase()||'flyttet'}</span></div>`:''}
+    ${!o.opprinnelig&&o.utsattFra?`<div>Utsatt fra</div><div>${fmtDate(o.utsattFra)}</div>`:''}
   </div></div>`;
   // Dyr, journal og medisiner
   if(isMia()){
@@ -409,15 +461,29 @@ VIEWS.detalj = () => {
   } else h+=`<div class="muted small">Ingen tjenester eller varer registrert.</div>`;
   if(editable) h+=`<div class="picker" style="margin-top:10px"><input type="search" placeholder="+ Legg til tjeneste eller vare (søk)" oninput="varePick(this.value)" autocomplete="off"><div id="pick-vare"></div></div>`;
   h+=`</div>`;
-  // Medisinsum
-  h+=`<div class="card"><div class="row between"><span>Medisiner <span class="small muted">· faktureres som én linje</span></span><strong>${kr(medSum(o))} kr</strong></div>
-    ${isMia()&&!o.dyr.length&&editable?'<div class="ts" style="margin-top:4px">Medisiner registreres på dyret. Legg til et dyr først.</div>':''}</div>`;
+  // Medisiner til flokk / uten dyr
+  if(isMia()){
+    const fl=o.flokk||[];
+    h+=`<h3>Medisiner til flokk eller uten registrert dyr</h3><div class="card">`;
+    if(editable){
+      h+= fl.map((m,j)=>`<div class="medrad"><div class="row between"><strong class="small">${esc(m.navn)}</strong><span class="row" style="gap:6px"><span class="ts">${kr(m.pris)} kr</span><button class="x" onclick="fjernFlokk(${j})" title="Fjern">×</button></span></div>
+        <div class="grid2" style="gap:8px;margin-top:4px"><label class="ts" style="display:block">Dyreart<select onchange="flokkSet(${j},'art',this.value)" style="padding:6px 8px;margin-top:2px"><option value="">Velg</option>${ARTER.map(a=>`<option ${m.art===a?'selected':''}>${a}</option>`).join('')}</select></label>
+        <label class="ts" style="display:block">Antall dyr<input type="number" min="0" step="1" value="${m.antallDyr??''}" onchange="flokkSet(${j},'antallDyr',this.value)" style="padding:6px 8px;margin-top:2px"></label></div>
+        <div class="medgrid"><label class="ts">Mengde<input type="number" min="0" step="any" value="${m.antall}" onchange="flokkSet(${j},'antall',this.value)"></label>
+        <label class="ts">Gitt<input type="datetime-local" value="${localInput(m.tid||nowTs())}" onchange="flokkSet(${j},'tid',this.value)"></label></div></div>`).join('');
+      h+=`<div class="picker" style="margin-top:6px"><input type="search" placeholder="+ Legg til medisin (søk)" oninput="medPick(this.value,'f')" autocomplete="off"><div id="pick-med-f"></div></div>`;
+    } else {
+      h+= fl.length ? fl.map(m=>`<div class="small" style="padding:3px 0">${esc(m.navn)} × ${m.antall}${m.art||m.antallDyr?` <span class="muted">· ${esc(m.art||'')}${m.antallDyr?' · '+m.antallDyr+' dyr':''}</span>`:''} <span class="ts">${fmtTs(m.tid)}</span></div>`).join('') : '<div class="small muted">Ingen.</div>';
+    }
+    h+=`</div>`;
+  }
+  h+=`<div class="card"><div class="row between"><span>Medisiner <span class="small muted">· faktureres som én linje</span></span><strong>${kr(medSum(o))} kr</strong></div></div>`;
   h+=`<div class="card"><div class="row between"><span>Sum eks. mva</span><span>${kr(sum(o))} kr</span></div>
     <div class="row between small muted"><span>Mva 25 %</span><span>${kr(sum(o)*MVA)} kr</span></div>
     <div class="row between total" style="margin-top:4px"><span>Sum inkl. mva</span><span>${kr(sum(o)*(1+MVA))} kr</span></div></div>`;
   if(isMia() && kanSkrive() && !o.fakturert){
-    if(apen(o)) h+=`<div class="row wrapf noprint" style="margin-top:14px;gap:8px"><button class="btn primary grow" onclick="ferdigDialog()">Ferdig behandlet …</button><button class="btn" onclick="utsettDialog()">Utsett</button></div>`;
-    else h+=`<div class="card" style="background:var(--brand-2);border-color:transparent"><div class="small">Ferdig behandlet ${fmtTs(o.ferdigTs)}. ${fakturerbar(o)?'Oppdraget er klart til fakturering.':'Oppdraget går ikke til fakturering.'}${o.dhpTs?' Rapportert til Dyrehelseportalen '+fmtTs(o.dhpTs)+'.':''}</div>
+    if(apen(o)) h+=`<div class="row wrapf noprint" style="margin-top:14px;gap:8px"><button class="btn primary grow" onclick="ferdigDialog()">Ferdig behandlet …</button><button class="btn" onclick="tidspunktDialog()">Endre tidspunkt</button></div>`;
+    else h+=`<div class="card" style="background:var(--brand-2);border-color:transparent"><div class="small">Ferdig behandlet ${fmtTs(o.ferdigTs)}. ${fakturerbar(o)?'Oppdraget er klart til fakturering.':'Oppdraget går ikke til fakturering.'}${harMed(o)?(o.dhpTs?' Rapportert til Dyrehelseportalen '+fmtTs(o.dhpTs)+'.':' <strong>Ikke rapportert til Dyrehelseportalen.</strong>'):''}</div>
       <div style="margin-top:8px"><button class="btn sm" onclick="gjenapne()">Gjenåpne for endringer</button></div></div>`;
   }
   if(o.fakturert) h+=`<div class="lock" style="margin-top:12px">Fakturert ${fmtTs(o.fakturertTs)} – låst for endringer.</div>`;
@@ -471,9 +537,13 @@ function leggTilVare(nr){ const v=S.varer.find(x=>x.nr===nr); cur().linjer.push(
 function medPick(q,i){
   q=q.trim().toLowerCase(); const el=document.getElementById('pick-med-'+i); if(!q){ el.innerHTML=''; return; }
   const l=aktiveMedisiner().filter(x=>x.navn.toLowerCase().includes(q)).slice(0,10);
-  el.innerHTML=`<div class="list">${l.length?l.map(x=>`<div class="opt" onclick="leggTilMed(${i},'${x.id}')"><span>${esc(x.navn)}</span><span class="muted small">${kr(x.pris)} kr</span></div>`).join(''):'<div class="opt muted">Ingen treff. Legg til medisinen under Meny → Medisinliste.</div>'}</div>`;
+  el.innerHTML=`<div class="list">${l.length?l.map(x=>`<div class="opt" onclick="leggTilMed('${i}','${x.id}')"><span>${esc(x.navn)}</span><span class="muted small">${kr(x.pris)} kr</span></div>`).join(''):'<div class="opt muted">Ingen treff. Legg til medisinen under Meny → Medisinliste.</div>'}</div>`;
 }
-function leggTilMed(i,id){ const x=S.medisiner.find(m=>m.id===id); const d=cur().dyr[i]; d.medisiner=d.medisiner||[]; d.medisiner.push({id:uid(),navn:x.navn,antall:1,pris:x.pris,tid:nowTs()}); touchJournal(); save(); render(); }
+function flokkSet(j,f,v){ const m=cur().flokk[j]; if(f==='tid') m.tid=v?new Date(v).toISOString():nowTs(); else if(f==='art') m.art=v; else if(f==='antallDyr') m.antallDyr = v===''?null:Math.max(0,Math.round(+v)); else m.antall=+v||0; touchJournal(); save(); if(f==='antall') render(); }
+function fjernFlokk(j){ cur().flokk.splice(j,1); touchJournal(); save(); render(); }
+function leggTilMed(i,id){ const x=S.medisiner.find(m=>m.id===id);
+  if(i==='f'){ const o=cur(); o.flokk=o.flokk||[]; const forrige=o.flokk.at(-1); o.flokk.push({id:uid(),navn:x.navn,antall:1,pris:x.pris,tid:nowTs(),art:forrige?forrige.art:'',antallDyr:forrige?forrige.antallDyr:null}); touchJournal(); save(); render(); return; }
+  const d=cur().dyr[+i]; d.medisiner=d.medisiner||[]; d.medisiner.push({id:uid(),navn:x.navn,antall:1,pris:x.pris,tid:nowTs()}); touchJournal(); save(); render(); }
 function ferdigDialog(){
   const o=cur();
   modal(`<h2>Ferdig behandlet</h2>
@@ -488,13 +558,21 @@ function ferdigDialog(){
 function velgFerdig(s){ UI._fs=s; document.getElementById('ch-f').classList.toggle('on',s==='fullfort'); document.getElementById('ch-a').classList.toggle('on',s==='avlyst'); document.getElementById('avl-extra').style.display = s==='avlyst'?'block':'none'; }
 function bekreftFerdig(){ const o=cur(); o.status=UI._fs; o.fakturer = o.status==='avlyst' ? document.getElementById('avl-fak').checked : true; o.ferdigTs=nowTs(); save(); closeModal(); render(); toast(o.status==='fullfort'?'Fullført – klar til fakturering':(o.fakturer?'Avlyst – sendes til fakturering':'Avlyst')); }
 function gjenapne(){ const o=cur(); o.status='bestilt'; o.ferdigTs=null; o.fakturer=false; save(); render(); toast('Oppdraget er åpnet igjen'); }
-function utsettDialog(){
+function tidspunktDialog(){
   const o=cur();
-  modal(`<h2>Utsett oppdrag</h2><label class="f">Ny dato</label><input type="date" id="ut-d" value="${addDays(1)}">
-    <label class="f">Tid (valgfritt)</label><input type="time" id="ut-t" value="${o.tid||''}">
-    <div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="bekreftUtsett()">Utsett</button></div>`);
+  modal(`<h2>Endre tidspunkt</h2><p class="small muted">Flytt oppdraget til et senere eller tidligere tidspunkt.${o.opprinnelig?' Opprinnelig tidspunkt: '+esc(o.opprinnelig)+'.':''}</p>
+    <div class="grid2"><div><label class="f">Dato</label><input type="date" id="ut-d" value="${o.dato}"></div>
+    <div><label class="f">Tid (valgfritt)</label><input type="time" id="ut-t" value="${o.tid||''}"></div></div>
+    <div class="row" style="justify-content:flex-end;gap:8px;margin-top:14px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="bekreftTidspunkt()">Lagre</button></div>`);
 }
-function bekreftUtsett(){ const o=cur(); o.utsattFra=o.dato; o.dato=document.getElementById('ut-d').value||o.dato; o.tid=document.getElementById('ut-t').value; o.status='utsatt'; save(); closeModal(); render(); toast('Oppdraget er flyttet til '+fmtDate(o.dato)); }
+function bekreftTidspunkt(){
+  const o=cur(), d=document.getElementById('ut-d').value||o.dato, tt=document.getElementById('ut-t').value;
+  if(d===o.dato && tt===(o.tid||'')){ closeModal(); return; }
+  if(!o.opprinnelig) o.opprinnelig = o.dato+(o.tid?' '+o.tid:'');
+  o.dato=d; o.tid=tt; o.status='flyttet';
+  if(o.opprinnelig===o.dato+(o.tid?' '+o.tid:'')){ o.opprinnelig=null; o.status='bestilt'; }
+  save(); closeModal(); render(); toast((flyttRetning(o)||'Flyttet')+' til '+fmtDate(o.dato)+(o.tid?' kl. '+o.tid:''));
+}
 
 // ================= Journalmaler =================
 const aktiveMaler = () => S.maler.filter(m=>!m.deleted).sort((a,b)=>a.navn.localeCompare(b.navn,'nb'));
@@ -633,6 +711,7 @@ VIEWS.sok = () => {
     if(f.fra && o.dato<f.fra) return false; if(f.til && o.dato>f.til) return false;
     if(f.status && statusKey(o)!==f.status) return false;
     if(f.vare && !(o.linjer.some(l=>fq(l.navn).includes(fq(f.vare))) || (isMia() && alleMedLinjer(o).some(m=>fq(m.navn).includes(fq(f.vare)))))) return false;
+    if(isMia() && f.dhp && !(harMed(o) && !apen(o) && !o.dhpTs)) return false;
     if(isMia() && f.individ && !o.dyr.some(d=>fq(d.individ+' '+d.diagnose+' '+d.behandling+' '+d.notat).includes(fq(f.individ)))) return false;
     return true;
   }).sort((a,b)=>b.dato.localeCompare(a.dato));
@@ -644,7 +723,8 @@ VIEWS.sok = () => {
     ${isMia()?`<label class="f">Øremerke / individnr. / journaltekst</label><input type="search" value="${esc(f.individ)}" placeholder="F.eks. NO 12345 0417 eller mastitt" oninput="UI.sok.individ=this.value;sokRes()">`:''}
     <div class="grid2"><div><label class="f">Status</label><select onchange="UI.sok.status=this.value;render()"><option value="">Alle</option>${Object.entries(STATUS).map(([k,t])=>`<option value="${k}" ${f.status===k?'selected':''}>${t}</option>`).join('')}</select></div>
     <div><label class="f">Vare, tjeneste${isMia()?' eller medisin':''}</label><input type="search" value="${esc(f.vare)}" placeholder="F.eks. kjøring" oninput="UI.sok.vare=this.value;sokRes()"></div></div>
-    <div style="margin-top:10px"><button class="btn ghost sm" onclick="UI.sok={q:'',fra:'',til:'',individ:'',status:'',vare:''};render()">Nullstill filtre</button></div>
+    ${isMia()?`<label class="check" style="margin-top:10px"><input type="checkbox" ${f.dhp?'checked':''} onchange="UI.sok.dhp=this.checked;render()"> Bare oppdrag som ikke er rapportert til Dyrehelseportalen</label>`:''}
+    <div style="margin-top:10px"><button class="btn ghost sm" onclick="UI.sok={q:'',fra:'',til:'',individ:'',status:'',vare:'',dhp:false};render()">Nullstill filtre</button></div>
   </div>
   <div class="small muted" style="margin:8px 2px">${res.length} treff</div>${res.map(oppdragKort).join('')||'<div class="empty">Ingen oppdrag passer filtrene.</div>'}<div style="height:70px"></div>`;
 };
@@ -655,6 +735,7 @@ VIEWS.kunder = () => {
   const q=(UI.kq||'').toLowerCase();
   const l=S.kunder.filter(k=>!q||(k.navn+' '+k.nr+' '+(k.sted||'')+' '+(k.kontakt||'')+' '+(k.produsentnr||'')).toLowerCase().includes(q));
   return `<h1>Kunder</h1>
+  ${isMia()&&kanSkrive()?`<div class="row wrapf" style="gap:8px;margin-bottom:10px"><label class="btn sm" style="cursor:pointer">Importer kunder fra fil<input type="file" accept=".xlsx,.xls,.csv" style="display:none" onchange="importerKunder(this.files[0]);this.value=''"></label><span class="ts">${S.kunder.length} kunder</span></div>`:''}
   <input type="search" placeholder="Søk kunde" value="${esc(UI.kq||'')}" oninput="UI.kq=this.value;sokRes()" style="margin-bottom:10px">
   ${l.map(k=>{ const n=S.oppdrag.filter(o=>o.kundenr===k.nr).length;
     return `<div class="card item" onclick="visKunde(${k.nr})"><div class="row between"><strong>${esc(k.navn)}</strong><span class="small muted">${n} oppdrag</span></div>
@@ -676,11 +757,12 @@ VIEWS.kunde = () => {
   <h3>Oppdragshistorikk</h3>${os.map(oppdragKort).join('')||'<div class="empty">Ingen oppdrag registrert.</div>'}<div style="height:70px"></div>`;
 };
 function journalUtdrag(nr){
-  const k=kunde(nr); const os=S.oppdrag.filter(o=>o.kundenr===nr && o.dyr.length).sort((a,b)=>a.dato.localeCompare(b.dato));
+  const k=kunde(nr); const os=S.oppdrag.filter(o=>o.kundenr===nr && (o.dyr.length||(o.flokk||[]).length)).sort((a,b)=>a.dato.localeCompare(b.dato));
   let t=`JOURNALUTDRAG\nVeterinær: ${ME.praksis||''}\nDyreeier: ${k.navn} (${k.nr})${k.produsentnr?', produsentnr. '+k.produsentnr:''}, ${k.adresse||''}, ${k.postnr||''} ${k.sted||''}\nUtskrevet: ${new Date().toLocaleString('nb-NO')}\n`;
   os.forEach(o=>{ t+=`\n— ${oNr(o)}, ${fmtNo(o.dato)} —\nHenvendelse: ${fmtTs(o.henvendelseTs)} – ${o.henvendelse}\nJournalført: ${fmtTs(o.journalTs)}\n`;
     o.dyr.forEach(d=>{ t+=`  ${d.art} ${d.individ}\n  Diagnose: ${d.diagnose}\n  Behandling: ${d.behandling}\n`;
-      (d.medisiner||[]).forEach(m=>{ t+=`  Legemiddel: ${m.navn}, mengde ${m.antall}, gitt ${fmtTs(m.tid)}\n`; }); }); });
+      (d.medisiner||[]).forEach(m=>{ t+=`  Legemiddel: ${m.navn}, mengde ${m.antall}, gitt ${fmtTs(m.tid)}\n`; }); });
+    (o.flokk||[]).forEach(m=>{ t+=`  Flokk${m.art?' ('+m.art+(m.antallDyr?', '+m.antallDyr+' dyr':'')+')':''}: ${m.navn}, mengde ${m.antall}, gitt ${fmtTs(m.tid)}\n`; }); });
   if(!os.length) t+='\nIngen journalførte opplysninger.';
   UI._ju=t;
   modal(`<h2>Journalutdrag – ${esc(k.navn)}</h2><p class="small muted">Til innsyn for dyreeier eller Mattilsynet. Egne notater er ikke tatt med.</p>
@@ -696,6 +778,8 @@ VIEWS.meny = () => {
   ${isMia()?item('maler','Journalmaler','Ferdige tekster for vanlige tjenester'):''}
   ${isMia()?item('medisiner','Medisinliste','Se og endre medisiner og priser'):''}
   ${item('varer','Varer og tjenester','Se og endre varer, og lag varefil til Duett')}
+  ${item('kopi','Sikkerhetskopi','Last ned en kopi av alle data'+(SISTE_KOPI?' · siste '+fmtTs(SISTE_KOPI):' · ingen kopi tatt ennå'))}
+  ${isMia()&&kanSkrive()?`<div class="card item" onclick="journalpassordDialog()"><div class="row between"><strong>Journalpassord</strong><span class="muted">›</span></div><div class="small muted">Bytt journalpassord eller lag ny gjenopprettingsnøkkel</div></div>`:''}
   <div class="card"><div class="small muted">Innlogget som ${esc(ME.user.email)}${ME.praksis?' · '+esc(ME.praksis):''}</div><button class="btn sm" style="margin-top:8px" onclick="loggUt()">Logg ut</button></div>
   <div style="height:70px"></div>`;
 };
@@ -840,17 +924,19 @@ function bekreftFakturert(){ const {os}=fakturaData(); const t=nowTs(); os.forEa
 // ================= Rapport til Dyrehelseportalen =================
 function dhpRader(){
   const f=UI.dhp; const rader=[], oppd=new Set();
-  S.oppdrag.filter(o=>o.status!=='bestilt' && o.status!=='utsatt' && o.dato>=f.fra && o.dato<=f.til && (f.vis || !o.dhpTs)).sort((a,b)=>(a.dato+a.tid).localeCompare(b.dato+b.tid)).forEach(o=>{
+  S.oppdrag.filter(o=>!apen(o) && o.dato>=f.fra && o.dato<=f.til && (f.vis || !o.dhpTs)).sort((a,b)=>(a.dato+a.tid).localeCompare(b.dato+b.tid)).forEach(o=>{
     const k=kunde(o.kundenr);
     o.dyr.forEach(d=>(d.medisiner||[]).forEach(m=>{ oppd.add(o.id);
       rader.push({tid:m.tid, dato:iso(new Date(m.tid||oppdragTid(o))), kl:fmtKl(m.tid), kundenr:k.nr, kunde:k.navn, prod:k.produsentnr||'', art:d.art, individ:d.individ||'', legemiddel:m.navn, mengde:m.antall, vakt:paVakt(o)?'Ja':'Nei', nr:o.nr||'', rapportert:!!o.dhpTs, oid:o.id}); }));
+    (o.flokk||[]).forEach(m=>{ oppd.add(o.id);
+      rader.push({tid:m.tid, dato:iso(new Date(m.tid||oppdragTid(o))), kl:fmtKl(m.tid), kundenr:k.nr, kunde:k.navn, prod:k.produsentnr||'', art:m.art||'', individ:m.antallDyr?m.antallDyr+' dyr (flokk)':'Flokk', legemiddel:m.navn, mengde:m.antall, vakt:paVakt(o)?'Ja':'Nei', nr:o.nr||'', rapportert:!!o.dhpTs, oid:o.id}); });
   });
   return {rader, oppd:[...oppd]};
 }
 const DHP_KOL = [['dato','Dato',r=>fmtNo(r.dato)],['kl','Kl.',r=>r.kl],['prod','Produsentnr.',r=>r.prod],['kunde','Dyreeier',r=>r.kunde],['art','Dyreart',r=>r.art],['individ','Individnr.',r=>r.individ],['legemiddel','Legemiddel',r=>r.legemiddel],['mengde','Mengde',r=>String(r.mengde).replace('.',',')],['vakt','På vakt',r=>r.vakt],['nr','Oppdrag',r=>r.nr]];
 VIEWS.dhp = () => {
   const f=UI.dhp, {rader,oppd}=dhpRader();
-  const mangler=rader.filter(r=>!r.prod).length, uIndivid=rader.filter(r=>!r.individ).length;
+  const mangler=rader.filter(r=>!r.prod).length, uIndivid=rader.filter(r=>!r.individ).length, uArt=rader.filter(r=>!r.art).length;
   let h=`<div style="margin-top:12px"><button class="btn ghost" onclick="go('meny')">← Meny</button></div><h1 style="margin-top:4px">Rapport til Dyrehelseportalen</h1>
   <p class="small muted" style="margin-top:-4px">Én rad per legemiddel per dyr. Kolonnen «På vakt» viser om oppdraget var på vakt, for rapportering av kjøring.</p>
   <div class="card"><div class="grid2"><div><label class="f" style="margin-top:0">Fra dato</label><input type="date" value="${f.fra}" onchange="UI.dhp.fra=this.value;render()"></div>
@@ -859,6 +945,7 @@ VIEWS.dhp = () => {
   if(!rader.length) return h+`<div class="empty">Ingen legemidler å rapportere i perioden.</div>`;
   if(mangler) h+=`<div class="banner">${mangler} rader mangler produsentnummer. Legg det inn på kundekortet.</div>`;
   if(uIndivid) h+=`<div class="banner">${uIndivid} rader mangler individnummer på dyret.</div>`;
+  if(uArt) h+=`<div class="banner">${uArt} rader mangler dyreart.</div>`;
   h+=`<div class="card" style="overflow-x:auto;padding:6px 10px"><table class="lines small" style="min-width:640px"><tr>${DHP_KOL.map(c=>`<th>${c[1]}</th>`).join('')}</tr>
     ${rader.map(r=>`<tr style="${r.rapportert?'opacity:.55':''}" class="item" onclick="apne('${r.oid}')">${DHP_KOL.map(c=>`<td>${esc(c[2](r))}</td>`).join('')}</tr>`).join('')}</table></div>
   <div class="row wrapf" style="gap:8px;margin-top:4px"><button class="btn primary" onclick="kopierDhp()">Kopier rapport</button><button class="btn" onclick="merkDhp()">Merk ${oppd.length} oppdrag som rapportert</button></div>
@@ -867,6 +954,233 @@ VIEWS.dhp = () => {
 };
 function kopierDhp(){ const {rader}=dhpRader(); kopierTekst([DHP_KOL.map(c=>c[1]).join('\t'),...rader.map(r=>DHP_KOL.map(c=>c[2](r)).join('\t'))].join('\n')); }
 function merkDhp(){ const {oppd}=dhpRader(); const t=nowTs(); oppd.forEach(id=>{ const o=S.oppdrag.find(x=>x.id===id); if(o && !o.dhpTs) o.dhpTs=t; }); save(); render(); toast(oppd.length+' oppdrag merket som rapportert'); }
+
+// ================= Journalpassord: oppsett, opplåsing og bytte =================
+let JN = null;            // opplåst journalnøkkel (CryptoKey)
+let NOKLER = null;        // raden fra tabellen nokler (de låste kopiene av nøkkelen)
+const nokkelId = () => 'jn-'+ME.user.id+'-'+ME.medlem.praksis_id;
+const wrapFraRad = (r,p) => ({salt:r[p+'_salt'], iter:r[p+'_iter'], iv:r[p+'_iv'], ct:r[p+'_ct']});
+const radFraWrap = (w,p) => ({[p+'_salt']:w.salt, [p+'_iter']:w.iter, [p+'_iv']:w.iv, [p+'_ct']:w.ct});
+
+async function journalnokkel(){
+  // Returnerer true når nøkkelen er klar, ellers vises riktig skjerm
+  const lagret = await NOKKELLAGER.hent(nokkelId()); JN=null;
+  let rad=null, nett=true;
+  try{ const r=await sb.from('nokler').select('*').eq('praksis_id',ME.medlem.praksis_id).maybeSingle(); if(r.error) throw r.error; rad=r.data; }
+  catch(e){ nett=false; }
+  if(nett){ NOKLER=rad; try{ localStorage.setItem('vet5-nokler-'+ME.medlem.praksis_id, JSON.stringify(rad)); }catch(e){} }
+  else { try{ NOKLER=JSON.parse(localStorage.getItem('vet5-nokler-'+ME.medlem.praksis_id)||'null'); }catch(e){} }
+  // Bruk lagret nøkkel bare hvis den hører til gjeldende journalnøkkel (ny nøkkel etter oppstart eller gjenoppretting gir ny «opprettet»)
+  if(lagret && lagret.k && NOKLER && lagret.id===NOKLER.opprettet){ JN=lagret.k; return true; }
+  if(lagret) await NOKKELLAGER.slett(nokkelId());
+  if(!NOKLER){ if(!nett) { loginBody('<p>Ingen kontakt med serveren. Koble til nettet for å sette opp journalpassordet.</p><button class="btn" onclick="fortsett()">Prøv igjen</button>'); return false; } visOpprettJournalpassord(); return false; }
+  visLasOpp(); return false;
+}
+function visOpprettJournalpassord(){
+  loginBody(`<p><strong>Lag journalpassord</strong></p>
+    <p class="small">Journalene krypteres på enheten før de lagres. Bare den som kan journalpassordet eller gjenopprettingsnøkkelen, kan lese dem. Verken Erik, Supabase eller andre kan lese dem.</p>
+    <p class="small">Bruk et annet passord enn det du logger inn med, og minst 12 tegn. Gjerne en setning, for eksempel «Fire kuer på tunet i Follebu».</p>
+    <form onsubmit="event.preventDefault();opprettJournalpassord()">
+    <label class="f">Journalpassord</label><input type="password" id="jp-1" autocomplete="new-password">
+    <label class="f">Gjenta journalpassordet</label><input type="password" id="jp-2" autocomplete="new-password">
+    <button class="btn primary" style="width:100%;margin-top:16px" id="jp-b">Lag journalpassord</button></form>`);
+}
+async function opprettJournalpassord(){
+  const a=document.getElementById('jp-1').value, b=document.getElementById('jp-2').value;
+  if(a.length<12) return loginErr('Journalpassordet må være på minst 12 tegn.');
+  if(a!==b) return loginErr('Passordene er ikke like.');
+  document.getElementById('jp-b').disabled=true; loginErr('Lager nøkler …');
+  const jn=await KRYPTO.nyNokkel(), gjen=KRYPTO.nyGjenoppretting();
+  const rad=Object.assign({praksis_id:ME.medlem.praksis_id}, radFraWrap(await KRYPTO.wrap(jn,a,KRYPTO.ITER_PASS),'pass'), radFraWrap(await KRYPTO.wrap(jn,gjen,KRYPTO.ITER_GJEN),'gjen'));
+  const r=await sb.from('nokler').insert(rad).select().single();
+  if(r.error){ document.getElementById('jp-b').disabled=false; return loginErr(/duplicate|unique/i.test(r.error.message)?'Det finnes allerede et journalpassord. Last siden på nytt.':oversett(r.error.message)); }
+  NOKLER=r.data||rad;
+  JN=await KRYPTO.unwrap(wrapFraRad(rad,'pass'), a, false); await NOKKELLAGER.lagre(nokkelId(), {k:JN, id:NOKLER.opprettet});
+  visGjenopprettingsnokkel(gjen, true);
+}
+function visGjenopprettingsnokkel(gjen, forsteGang){
+  UI._gjen=gjen;
+  loginBody(`<p><strong>Din gjenopprettingsnøkkel</strong></p>
+    <p class="small">Glemmer du journalpassordet, er dette den eneste måten å få lest journalene igjen. Den vises bare nå.</p>
+    <div style="background:#fff;border:2px dashed var(--brand);border-radius:10px;padding:14px;text-align:center;font:600 17px/1.6 ui-monospace,Menlo,Consolas,monospace;letter-spacing:1px;user-select:all">${esc(gjen).replace(/-/g,"-&#8203;")}</div>
+    <ol class="small" style="padding-left:18px;margin:10px 0">
+      <li>Skriv den ut eller skriv den av for hånd, og legg den i en lukket konvolutt på et trygt sted.</li>
+      <li>Lagre den også i passordbehandleren din.</li>
+      <li>Ikke gi den til den som tar vare på sikkerhetskopiene.</li></ol>
+    <div class="row" style="gap:8px"><button class="btn sm" onclick="kopierTekst(UI._gjen)">Kopier</button><button class="btn sm" onclick="skrivUtGjen()">Skriv ut</button></div>
+    <label class="f">Skriv inn de fire siste tegnene for å bekrefte</label><input type="text" id="gj-c" maxlength="4" style="text-transform:uppercase">
+    <button class="btn primary" style="width:100%;margin-top:14px" onclick="bekreftGjen(${forsteGang?'true':'false'})">Jeg har tatt vare på nøkkelen</button>`);
+}
+function skrivUtGjen(){
+  const w=window.open('','_blank'); if(!w){ toast('Utskrift ble blokkert. Bruk Kopier i stedet.'); return; }
+  w.document.write(`<html><head><title>Gjenopprettingsnøkkel – Vet-oppdrag</title></head><body style="font-family:sans-serif;padding:40px"><h2>Gjenopprettingsnøkkel for journal – Vet-oppdrag</h2><p>${esc(ME.praksis||'')}</p><p>Laget ${new Date().toLocaleDateString('nb-NO')}</p><p style="font:600 22px monospace;border:2px dashed #333;padding:16px;letter-spacing:2px">${esc(UI._gjen)}</p><p>Oppbevares i lukket konvolutt på et trygt sted. Brukes hvis journalpassordet er glemt.</p></body></html>`);
+  w.document.close(); w.focus(); w.print();
+}
+function bekreftGjen(forsteGang){
+  const v=(document.getElementById('gj-c').value||'').toUpperCase();
+  if(v!==UI._gjen.slice(-4)) return loginErr('Tegnene stemmer ikke. Se nøye på slutten av nøkkelen.');
+  UI._gjen=null; toast(forsteGang?'Journalpassordet er klart':'Ny gjenopprettingsnøkkel er lagret'); fortsett();
+}
+function visLasOpp(){
+  loginBody(`<p><strong>Lås opp journalen</strong></p><p class="small">Skriv inn journalpassordet. Dette trengs bare én gang på hver enhet.</p>
+    <form onsubmit="event.preventDefault();lasOpp()"><label class="f">Journalpassord</label><input type="password" id="lo-p" autocomplete="current-password">
+    <button class="btn primary" style="width:100%;margin-top:16px" id="lo-b">Lås opp</button></form>
+    <div style="text-align:center;margin-top:12px"><button class="linkbtn" onclick="visGjenoppretting()">Glemt journalpassordet?</button> · <button class="linkbtn" onclick="loggUtNa()">Logg ut</button></div>`);
+  setTimeout(()=>{ const i=document.getElementById('lo-p'); if(i) i.focus(); },50);
+}
+async function lasOpp(){
+  const b=document.getElementById('lo-b'); b.disabled=true; loginErr('Låser opp …');
+  try{ JN=await KRYPTO.unwrap(wrapFraRad(NOKLER,'pass'), document.getElementById('lo-p').value, false); }
+  catch(e){ b.disabled=false; return loginErr('Feil journalpassord.'); }
+  await NOKKELLAGER.lagre(nokkelId(), {k:JN, id:NOKLER.opprettet}); fortsett();
+}
+function visGjenoppretting(){
+  loginBody(`<p><strong>Bruk gjenopprettingsnøkkelen</strong></p><p class="small">Skriv inn gjenopprettingsnøkkelen og lag et nytt journalpassord.</p>
+    <form onsubmit="event.preventDefault();gjenopprettPassord()">
+    <label class="f">Gjenopprettingsnøkkel</label><input type="text" id="gr-k" placeholder="ABCD-EFGH-…" style="text-transform:uppercase" autocomplete="off">
+    <label class="f">Nytt journalpassord (minst 12 tegn)</label><input type="password" id="gr-1" autocomplete="new-password">
+    <label class="f">Gjenta</label><input type="password" id="gr-2" autocomplete="new-password">
+    <button class="btn primary" style="width:100%;margin-top:16px" id="gr-b">Lagre nytt journalpassord</button></form>
+    <div style="text-align:center;margin-top:12px"><button class="linkbtn" onclick="visLasOpp()">Tilbake</button></div>`);
+}
+async function gjenopprettPassord(){
+  const k=KRYPTO.normGjen(document.getElementById('gr-k').value), a=document.getElementById('gr-1').value, b2=document.getElementById('gr-2').value;
+  if(a.length<12) return loginErr('Journalpassordet må være på minst 12 tegn.'); if(a!==b2) return loginErr('Passordene er ikke like.');
+  const b=document.getElementById('gr-b'); b.disabled=true; loginErr('Kontrollerer nøkkelen …');
+  let jn; try{ jn=await KRYPTO.unwrap(wrapFraRad(NOKLER,'gjen'), k, true); }catch(e){ b.disabled=false; return loginErr('Gjenopprettingsnøkkelen stemmer ikke.'); }
+  const ny=radFraWrap(await KRYPTO.wrap(jn,a,KRYPTO.ITER_PASS),'pass');
+  const r=await sb.from('nokler').update(ny).eq('praksis_id',ME.medlem.praksis_id);
+  if(r.error){ b.disabled=false; return loginErr(oversett(r.error.message)); }
+  Object.assign(NOKLER,ny); JN=await KRYPTO.unwrap(wrapFraRad(NOKLER,'pass'), a, false); await NOKKELLAGER.lagre(nokkelId(), {k:JN, id:NOKLER.opprettet});
+  toast('Nytt journalpassord er lagret'); fortsett();
+}
+// Fra Meny → Journalpassord (når appen er i bruk)
+function journalpassordDialog(){
+  modal(`<h2>Journalpassord</h2>
+    <label class="f">Nåværende journalpassord</label><input type="password" id="bp-0" autocomplete="current-password">
+    <div class="ts" style="margin-top:6px">Trengs for begge valgene under.</div>
+    <h3>Bytt journalpassord</h3>
+    <label class="f">Nytt journalpassord (minst 12 tegn)</label><input type="password" id="bp-1" autocomplete="new-password">
+    <label class="f">Gjenta</label><input type="password" id="bp-2" autocomplete="new-password">
+    <div class="row wrapf" style="gap:8px;margin-top:12px"><button class="btn primary" onclick="byttJournalpassord()">Bytt passord</button></div>
+    <h3>Ny gjenopprettingsnøkkel</h3>
+    <p class="small muted">Lager en ny nøkkel og gjør den gamle ugyldig. Bruk dette hvis den gamle kan være kommet på avveie.</p>
+    <button class="btn" onclick="nyGjenNokkel()">Lag ny gjenopprettingsnøkkel</button>
+    <div id="bp-err" class="small" style="color:var(--warn);margin-top:10px"></div>
+    <div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn" onclick="closeModal()">Lukk</button></div>`);
+}
+async function hentUttrekkbar(){
+  try{ return await KRYPTO.unwrap(wrapFraRad(NOKLER,'pass'), document.getElementById('bp-0').value, true); }
+  catch(e){ document.getElementById('bp-err').textContent='Nåværende journalpassord er feil.'; return null; }
+}
+async function byttJournalpassord(){
+  const a=document.getElementById('bp-1').value, b=document.getElementById('bp-2').value, e=document.getElementById('bp-err');
+  if(a.length<12){ e.textContent='Det nye passordet må være på minst 12 tegn.'; return; } if(a!==b){ e.textContent='Passordene er ikke like.'; return; }
+  e.textContent='Lagrer …'; const jn=await hentUttrekkbar(); if(!jn) return;
+  const ny=radFraWrap(await KRYPTO.wrap(jn,a,KRYPTO.ITER_PASS),'pass');
+  const r=await sb.from('nokler').update(ny).eq('praksis_id',ME.medlem.praksis_id); if(r.error){ e.textContent=oversett(r.error.message); return; }
+  Object.assign(NOKLER,ny); closeModal(); toast('Journalpassordet er byttet');
+}
+async function nyGjenNokkel(){
+  const e=document.getElementById('bp-err'); e.textContent='Lager ny nøkkel …';
+  const jn=await hentUttrekkbar(); if(!jn) return;
+  const gjen=KRYPTO.nyGjenoppretting(), ny=radFraWrap(await KRYPTO.wrap(jn,gjen,KRYPTO.ITER_GJEN),'gjen');
+  const r=await sb.from('nokler').update(ny).eq('praksis_id',ME.medlem.praksis_id); if(r.error){ e.textContent=oversett(r.error.message); return; }
+  Object.assign(NOKLER,ny); closeModal(); visGjenopprettingsnokkel(gjen, false);
+}
+
+// ================= Sikkerhetskopi, gjenoppretting og kundeimport =================
+const KOPI_TABELLER = ['kunder','varer','legemidler','maler','vakter','oppdrag','journal','nokler'];
+function kopiPaminnelse(){
+  if(!ME.medlem || !ME.medlem.live || isMia()) return '';
+  const dager = SISTE_KOPI ? (Date.now()-new Date(SISTE_KOPI).getTime())/864e5 : 999;
+  if(dager<30) return '';
+  return `<div class="banner row between" style="gap:10px"><span>${SISTE_KOPI?'Det er over 30 dager siden siste sikkerhetskopi.':'Det er ikke tatt noen sikkerhetskopi ennå.'}</span><button class="btn sm" onclick="go('kopi')">Ta kopi</button></div>`;
+}
+VIEWS.kopi = () => {
+  const vet=kanSkrive() && isMia();
+  return `<div style="margin-top:12px"><button class="btn ghost" onclick="go('meny')">← Meny</button></div><h1 style="margin-top:4px">Sikkerhetskopi</h1>
+  <div class="card"><p style="margin-top:0">Laster ned alle data som én fil: kunder, oppdrag, fakturagrunnlag, varer, medisiner, maler, vakter og journaler.</p>
+    <p class="small muted">Journalene er kryptert i filen og kan bare leses med journalpassordet eller gjenopprettingsnøkkelen. Filen kan derfor oppbevares av den som drifter systemet uten at journalene blir lesbare.</p>
+    <div class="kv" style="margin:10px 0"><div>Siste kopi</div><div>${SISTE_KOPI?fmtTs(SISTE_KOPI):'Ingen kopi tatt ennå'}</div></div>
+    <button class="btn primary" onclick="lastNedKopi()" id="kopi-b">Last ned sikkerhetskopi</button></div>
+  <h3>Rutine</h3><div class="card small">
+    <ol style="margin:0;padding-left:18px"><li>Last ned en kopi minst én gang i måneden.</li><li>Legg filen to steder, for eksempel i en mappe på PC-en og på en ekstern disk.</li>
+    <li>Ta også vare på lesefilen (vet-oppdrag-leser.html) sammen med kopiene. Med den kan journalene leses uten appen og uten internett.</li>
+    <li>Gjenopprettingsnøkkelen oppbevares av veterinæren, ikke sammen med kopiene.</li></ol></div>
+  ${vet?`<h3>Gjenopprett fra sikkerhetskopi</h3><div class="card"><p class="small" style="margin-top:0">Leser inn en sikkerhetskopi og skriver over data med samme nøkler. Brukes hvis databasen er ødelagt eller flyttet til et nytt Supabase-prosjekt. Etterpå må du låse opp med journalpassordet som gjaldt da kopien ble tatt.</p>
+    <label class="btn" style="cursor:pointer">Velg sikkerhetskopi …<input type="file" accept=".json,application/json" style="display:none" onchange="gjenopprettFil(this.files[0]);this.value=''"></label></div>`:''}
+  <div style="height:70px"></div>`;
+};
+async function lastNedKopi(){
+  const b=document.getElementById('kopi-b'); b.disabled=true; b.textContent='Henter data …';
+  try{
+    const tabeller={};
+    for(const t of KOPI_TABELLER){ const r=await sb.from(t).select('*'); if(r.error) throw r.error; tabeller[t]=r.data; }
+    const fil={app:'vet-oppdrag', format:1, tatt:nowTs(), praksis:{id:ME.medlem.praksis_id, navn:ME.praksis}, tattAv:ME.user.email, tabeller};
+    const navn=`vet-oppdrag-sikkerhetskopi-${TODAY}.json`;
+    lastNedBlob(new Blob([JSON.stringify(fil)],{type:'application/json'}), navn);
+    try{ await sb.from('kopier').insert({praksis_id:ME.medlem.praksis_id}); }catch(e){}
+    SISTE_KOPI=fil.tatt; toast('Sikkerhetskopien er lastet ned'); render();
+  }catch(e){ console.error(e); toast('Kunne ikke lage kopi: '+oversett(e.message||e)); b.disabled=false; b.textContent='Last ned sikkerhetskopi'; }
+}
+async function gjenopprettFil(fil){
+  if(!fil) return;
+  let data; try{ data=JSON.parse(await fil.text()); }catch(e){ toast('Filen kunne ikke leses'); return; }
+  if(data.app!=='vet-oppdrag' || !data.tabeller){ toast('Dette er ikke en sikkerhetskopi fra Vet-oppdrag'); return; }
+  UI._gjen_data=data;
+  const n=KOPI_TABELLER.map(t=>`${t}: ${(data.tabeller[t]||[]).length}`).join(' · ');
+  modal(`<h2>Gjenopprette fra sikkerhetskopi?</h2><p class="small">Kopi tatt ${fmtTs(data.tatt)} fra «${esc(data.praksis&&data.praksis.navn||'')}».</p><p class="small muted">${n}</p>
+    <div class="banner">Rader med samme nøkkel som i kopien blir overskrevet. Ingenting slettes. Journalnøkkelen fra kopien tas også i bruk, så du må låse opp med journalpassordet som gjaldt da kopien ble tatt, eller med gjenopprettingsnøkkelen fra den tiden.</div>
+    <label class="check"><input type="checkbox" id="gj-ok"> Jeg forstår, og vil gjenopprette</label>
+    <div class="row" style="justify-content:flex-end;gap:8px;margin-top:12px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="utforGjenoppretting()">Gjenopprett</button></div>`);
+}
+async function utforGjenoppretting(){
+  if(!document.getElementById('gj-ok').checked){ toast('Kryss av for å bekrefte'); return; }
+  const data=UI._gjen_data, p=ME.medlem.praksis_id; closeModal(); toast('Gjenoppretter …');
+  try{
+    for(const t of KOPI_TABELLER){
+      let rader=(data.tabeller[t]||[]).map(r=>{ const x=Object.assign({},r,{praksis_id:p}); delete x.oppdatert; return x; });
+      if(t==='nokler'){ rader=rader.slice(0,1); if(!rader.length) continue; const fins=await sb.from('nokler').select('praksis_id').eq('praksis_id',p).maybeSingle();
+        if(fins.data){ const r=await sb.from('nokler').update(rader[0]).eq('praksis_id',p); if(r.error) throw r.error; continue; } }
+      for(let i=0;i<rader.length;i+=200){ const r=await sb.from(t).upsert(rader.slice(i,i+200)); if(r.error) throw new Error(t+': '+r.error.message); }
+    }
+    try{ localStorage.removeItem('vet5-cache-'+ME.user.id); }catch(e){}
+    await NOKKELLAGER.slett(nokkelId());
+    // Stopp all synkronisering så gamle data i minnet ikke skrives tilbake over kopien
+    ME.medlem=null; JN=null; SYNC.dirty=false;
+    modal(`<h2>Gjenoppretting fullført</h2><p>Appen lastes nå på nytt. Lås opp med journalpassordet som gjaldt da kopien ble tatt.</p>`);
+    setTimeout(()=>location.reload(), 1500);
+  }catch(e){ console.error(e); modal(`<h2>Gjenopprettingen stoppet</h2><p class="small">${esc(oversett(e.message||e))}</p><p class="small muted">Det som ble skrevet før feilen, er beholdt. Ta kontakt med den som drifter systemet før du prøver igjen.</p><div class="row" style="justify-content:flex-end"><button class="btn" onclick="closeModal()">Lukk</button></div>`); }
+}
+// ---------- Import av kunder fra Duett-fil (eller fil med samme kolonner) ----------
+async function importerKunder(fil){
+  if(!fil) return; if(!window.XLSX){ toast('Excel-biblioteket er ikke lastet. Sjekk nettet.'); return; }
+  let rader; try{ const wb=XLSX.read(await fil.arrayBuffer()); rader=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,raw:false,defval:''}); }catch(e){ toast('Filen kunne ikke leses'); return; }
+  const hi=rader.findIndex(r=>r.some(c=>/^kundenummer\*?$/i.test(String(c).trim()))); if(hi<0){ toast('Fant ikke kolonnen «Kundenummer» i filen'); return; }
+  const H=rader[hi].map(c=>String(c).trim().replace(/\*$/,'').toLowerCase());
+  const col = (...navn) => { for(const n of navn){ const i=H.indexOf(n.toLowerCase()); if(i>=0) return i; } return -1; };
+  const c={nr:col('Kundenummer'), navn:col('Kundenavn','Navn'), a1:col('Adresse 1','Adresse'), a2:col('Adresse 2'), pn:col('Postnummer'), ps:col('Poststed','Sted'), t1:col('Telefon 1','Telefon'), mob:col('Mobil'), kontakt:col('Kontaktperson','Kontakt')};
+  const g=(r,i)=> i<0 ? '' : String(r[i]??'').trim();
+  const liste=[];
+  for(const r of rader.slice(hi+1)){
+    const nr=parseInt(g(r,c.nr),10), navn=g(r,c.navn); if(!nr || !navn) continue;
+    let pn=g(r,c.pn); if(/^\d{1,4}$/.test(pn)) pn=pn.padStart(4,'0');
+    liste.push({nr, navn, adresse:[g(r,c.a1),g(r,c.a2)].filter(Boolean).join(', '), postnr:pn, sted:g(r,c.ps), tlf:g(r,c.t1)||g(r,c.mob), kontakt:g(r,c.kontakt)});
+  }
+  if(!liste.length){ toast('Fant ingen kunder i filen'); return; }
+  const nye=liste.filter(k=>!S.kunder.some(x=>x.nr===k.nr)).length;
+  UI._imp=liste;
+  modal(`<h2>Importere kunder?</h2><p>Fant <strong>${liste.length}</strong> kunder i filen: ${nye} nye og ${liste.length-nye} som oppdateres.</p>
+    <p class="small muted">Kunder som finnes fra før, får oppdatert navn, adresse og telefon. Produsentnummer og oppdrag beholdes.${c.ps<0?' Filen har ikke poststed, så det feltet blir stående tomt.':''}</p>
+    <div class="row" style="justify-content:flex-end;gap:8px;margin-top:12px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="bekreftImport()">Importer</button></div>`);
+}
+function bekreftImport(){
+  for(const k of UI._imp){ const x=S.kunder.find(y=>y.nr===k.nr);
+    if(x) Object.assign(x,{navn:k.navn,adresse:k.adresse,postnr:k.postnr,sted:k.sted||x.sted||'',tlf:k.tlf,kontakt:k.kontakt||x.kontakt||''});
+    else S.kunder.push(Object.assign({produsentnr:''},k)); }
+  S.kunder.sort((a,b)=>a.nr-b.nr); const n=UI._imp.length; UI._imp=null; save(); closeModal(); render(); toast(n+' kunder importert');
+}
 
 // ================= Innlogging (Supabase) =================
 const hashType = new URLSearchParams(location.hash.slice(1)).get('type');
@@ -962,11 +1276,14 @@ async function fortsett(){
   let m=null;
   try{
     const {data,error}=await sb.from('medlemmer').select('*').eq('user_id',ME.user.id).maybeSingle(); if(error) throw error; m=data;
-    if(m){ const {data:p}=await sb.from('praksiser').select('navn').eq('id',m.praksis_id).maybeSingle(); m.praksisNavn=p?p.navn:''; }
-    if(m) try{ localStorage.setItem('vet4-medlem-'+ME.user.id, JSON.stringify(m)); }catch(e){}
-  }catch(e){ try{ m=JSON.parse(localStorage.getItem('vet4-medlem-'+ME.user.id)||'null'); }catch(x){} }
+    if(m){ const {data:p}=await sb.from('praksiser').select('navn,live').eq('id',m.praksis_id).maybeSingle(); m.praksisNavn=p?p.navn:''; m.live=!!(p&&p.live); }
+    // Overgang fra test til ekte drift: kast testdata som ligger lagret på denne enheten, så de ikke lastes opp igjen
+    if(m && m.live){ try{ const f=JSON.parse(localStorage.getItem('vet5-medlem-'+ME.user.id)||'null'); if(!f || !f.live) localStorage.removeItem('vet5-cache-'+ME.user.id); }catch(e){} }
+    if(m) try{ localStorage.setItem('vet5-medlem-'+ME.user.id, JSON.stringify(m)); }catch(e){}
+  }catch(e){ try{ m=JSON.parse(localStorage.getItem('vet5-medlem-'+ME.user.id)||'null'); }catch(x){} }
   if(!m) return loginBody(`<p><strong>Kontoen din har ikke tilgang ennå.</strong></p><p class="small muted">Du er logget inn som ${esc(ME.user.email)}, men kontoen er ikke koblet til en praksis. Be administrator kjøre roller.sql med denne e-postadressen.</p><button class="btn" onclick="loggUtNa()">Logg ut</button>`);
   ME.medlem=m; ME.praksis=m.praksisNavn||''; UI.role = m.rolle==='veterinaer' ? 'mia' : 'erik';
+  if(m.rolle==='veterinaer' && !(await journalnokkel())) return;
   loginEl().style.display='none'; cacheLoad(); render(); sync();
 }
 function loggUt(){
@@ -975,7 +1292,8 @@ function loggUt(){
 }
 async function loggUtNa(){
   if(SYNC.dirty){ try{ await sync(); }catch(e){} }
-  if(ME.user) try{ localStorage.removeItem('vet4-cache-'+ME.user.id); localStorage.removeItem('vet4-medlem-'+ME.user.id); }catch(e){}
+  if(ME.user){ try{ localStorage.removeItem('vet5-cache-'+ME.user.id); localStorage.removeItem('vet5-medlem-'+ME.user.id); }catch(e){} if(ME.medlem) await NOKKELLAGER.slett(nokkelId()); }
+  JN=null; NOKLER=null;
   await sb.auth.signOut();
   S={kunder:[],oppdrag:[],maler:[],varer:[],medisiner:[],vakter:[]}; SYNC.base={}; ME.user=null; ME.medlem=null;
   document.getElementById('main').innerHTML=''; document.getElementById('syncbar').innerHTML=''; const fab=document.getElementById('fab'); if(fab) fab.remove(); visLogin();
@@ -984,9 +1302,10 @@ async function loggUtNa(){
 // ================= Lokal kopi =================
 const SYNC = {state:'idle', dirty:false, timer:null, running:false, again:false, last:null, base:{}, feil:''};
 const TOM = () => ({kunder:[],oppdrag:[],maler:[],varer:[],medisiner:[],vakter:[]});
-function cacheSave(){ if(!ME.user) return; try{ localStorage.setItem('vet4-cache-'+ME.user.id, JSON.stringify({S, base:SYNC.base})); }catch(e){} }
+let SISTE_KOPI = null;
+function cacheSave(){ if(!ME.user) return; try{ localStorage.setItem('vet5-cache-'+ME.user.id, JSON.stringify({S, base:SYNC.base})); }catch(e){} }
 function cacheLoad(){
-  try{ const c=JSON.parse(localStorage.getItem('vet4-cache-'+ME.user.id)||'null'); if(c && c.S){ S=Object.assign(TOM(), c.S); SYNC.base=c.base||{}; } }catch(e){}
+  try{ const c=JSON.parse(localStorage.getItem('vet5-cache-'+ME.user.id)||'null'); if(c && c.S){ S=Object.assign(TOM(), c.S); SYNC.base=c.base||{}; } }catch(e){}
   SYNC.dirty = Object.keys(endredeNokler()).length>0;
 }
 
@@ -999,8 +1318,10 @@ function endredeNokler(){ const m=nokler(), out={}; for(const k in m){ if(JSON.s
 const tilKunde = k => ({praksis_id:P(), nr:k.nr, navn:k.navn, kontakt:k.kontakt||null, adresse:k.adresse||null, postnr:k.postnr||null, sted:k.sted||null, tlf:k.tlf||null, produsentnr:k.produsentnr||null});
 const tilOppdrag = o => ({id:o.id, praksis_id:P(), kundenr:o.kundenr, dato:o.dato, tid:o.tid||null, status:o.status, fakturer:!!o.fakturer, fakturert:!!o.fakturert,
   fakturert_ts:o.fakturertTs||null, ferdig_ts:o.ferdigTs||null, henvendelse_ts:o.henvendelseTs||null, utsatt_fra:o.utsattFra||null, linjer:o.linjer||[],
-  med_sum:Math.round(alleMedLinjer(o).reduce((s,m)=>s+(+m.antall||0)*(+m.pris||0),0)*100)/100, vakt:(o.vakt===true||o.vakt===false)?o.vakt:null, dhp_ts:o.dhpTs||null});
-const tilJournal = o => ({oppdrag_id:o.id, praksis_id:P(), henvendelse:o.henvendelse||'', dyr:o.dyr||[], medisiner:[], journal_ts:o.journalTs||null});
+  med_sum:Math.round(alleMedLinjer(o).reduce((s,m)=>s+(+m.antall||0)*(+m.pris||0),0)*100)/100, vakt:(o.vakt===true||o.vakt===false)?o.vakt:null, dhp_ts:o.dhpTs||null, opprinnelig:o.opprinnelig||null});
+const tilJournal = async o => ({oppdrag_id:o.id, praksis_id:P(), henvendelse:null, dyr:[], medisiner:[], journal_ts:o.journalTs||null,
+  kryptert: await KRYPTO.krypter(JN, {henvendelse:o.henvendelse||'', dyr:o.dyr||[], flokk:o.flokk||[]})});
+async function journalKlartekst(j){ if(!j) return null; if(j.kryptert){ const d=await KRYPTO.dekrypter(JN, j.kryptert); return Object.assign({journal_ts:j.journal_ts}, d); } return {journal_ts:j.journal_ts, henvendelse:j.henvendelse, dyr:j.dyr, medisiner:j.medisiner}; }
 const tilMal = m => ({id:m.id, praksis_id:P(), deleted:!!m.deleted, data:{navn:m.navn, tjenester:m.tjenester, diagnose:m.diagnose, behandling:m.behandling, notat:m.notat, medisiner:m.medisiner}});
 const tilVare = v => ({praksis_id:P(), nr:v.nr, navn:v.navn, pris:v.pris, enhet:v.enhet||null, konto:v.konto||3020, type:v.type||'Normal', aktiv:v.aktiv!==false});
 const tilLegemiddel = m => ({id:m.id, praksis_id:P(), navn:m.navn, pris:+m.pris||0, enhet:m.enhet||null, aktiv:m.aktiv!==false});
@@ -1016,8 +1337,8 @@ function fraOppdrag(r,j){
   }
   return {id:r.id, nr:r.nr||null, kundenr:r.kundenr, dato:r.dato, tid:r.tid||'', status:r.status, fakturer:r.fakturer, fakturert:r.fakturert,
     fakturertTs:r.fakturert_ts, ferdigTs:r.ferdig_ts, henvendelseTs:r.henvendelse_ts, utsattFra:r.utsatt_fra||undefined, linjer:r.linjer||[], medSum:+r.med_sum||0,
-    vakt:(r.vakt===true||r.vakt===false)?r.vakt:null, dhpTs:r.dhp_ts||null,
-    henvendelse: j?(j.henvendelse||''):'', dyr, journalTs: j?j.journal_ts:null};
+    vakt:(r.vakt===true||r.vakt===false)?r.vakt:null, dhpTs:r.dhp_ts||null, opprinnelig:r.opprinnelig||null,
+    henvendelse: j?(j.henvendelse||''):'', dyr, flokk: j?(j.flokk||[]):[], journalTs: j?j.journal_ts:null};
 }
 const fraMal = r => Object.assign({id:r.id, deleted:r.deleted}, r.data);
 const fraVare = r => ({nr:r.nr, navn:r.navn, pris:r.pris==null?null:+r.pris, enhet:r.enhet||'', konto:r.konto, type:r.type||'Normal', aktiv:r.aktiv!==false});
@@ -1035,7 +1356,7 @@ async function sync(){
     // 1. Send lokale endringer
     const ch=endredeNokler(), sendt={}, b={k:[],o:[],j:[],m:[],v:[],l:[],w:[],f:[]};
     for(const k in ch){ const x=ch[k], p=k[0];
-      if(vet){ if(p==='k') b.k.push(tilKunde(x)); else if(p==='o'){ b.o.push(tilOppdrag(x)); b.j.push(tilJournal(x)); } else if(p==='m') b.m.push(tilMal(x));
+      if(vet){ if(p==='k') b.k.push(tilKunde(x)); else if(p==='o'){ b.o.push(tilOppdrag(x)); b.j.push(await tilJournal(x)); } else if(p==='m') b.m.push(tilMal(x));
         else if(p==='v') b.v.push(tilVare(x)); else if(p==='l') b.l.push(tilLegemiddel(x)); else if(p==='w') b.w.push(tilVakt(x)); }
       else if(p==='o') b.f.push(x);
       sendt[k]=JSON.stringify(x);
@@ -1056,13 +1377,15 @@ async function sync(){
     // 3. Første gang: legg inn demodata og standardlister for veterinæren
     if(vet){
       let ny=false;
-      if(!rk.length && !ro.length && !S.kunder.length){ const d=seedKunderOppdrag(); S.kunder=d.kunder; S.oppdrag=d.oppdrag; S.vakter=S.vakter.length?S.vakter:seedVakter(); ny=true; }
+      if(!ME.medlem.live && !rk.length && !ro.length && !S.kunder.length){ const d=seedKunderOppdrag(); S.kunder=d.kunder; S.oppdrag=d.oppdrag; S.vakter=S.vakter.length?S.vakter:seedVakter(); ny=true; }
       if(!rv.length && !S.varer.length){ S.varer=seedVarer(); ny=true; }
       if(!rl.length && !S.medisiner.length){ S.medisiner=seedMedisiner(); ny=true; }
       if(!rm.length && !S.maler.length){ S.maler=seedMaler(); ny=true; }
       if(ny){ SYNC.running=false; cacheSave(); return sync(); }
     }
-    const jmap=new Map(rj.map(j=>[j.oppdrag_id,j]));
+    const rjk=await Promise.all(rj.map(async j=>{ try{ return [j.oppdrag_id, await journalKlartekst(j)]; }catch(e){ console.error('Kunne ikke dekryptere', j.oppdrag_id, e); return [j.oppdrag_id, {journal_ts:j.journal_ts, henvendelse:'⚠ Journalen kunne ikke dekrypteres', dyr:[], flokk:[]}]; } }));
+    const jmap=new Map(rjk);
+    try{ const rk2=await sb.from('kopier').select('tatt').order('tatt',{ascending:false}).limit(1); if(!rk2.error && rk2.data && rk2.data[0]) SISTE_KOPI=rk2.data[0].tatt; }catch(e){}
     const remote={};
     rk.forEach(r=>remote['k:'+r.nr]=fraKunde(r));
     ro.forEach(r=>remote['o:'+r.id]=fraOppdrag(r, vet?jmap.get(r.id):null));
