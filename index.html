@@ -2,7 +2,7 @@
 <html lang="nb">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Vet-oppdrag</title>
 <meta name="theme-color" content="#2f5d50">
 <link rel="manifest" href="manifest.webmanifest">
@@ -134,6 +134,102 @@ nav.tabs button{font-size:11.5px}
 .medgrid{display:grid;grid-template-columns:90px 1fr;gap:8px;margin-top:4px}
 .medgrid input{padding:6px 8px;margin-top:2px;min-width:0}
 .medgrid label{display:block}
+/* ===== Alternativ A «Arbeidsdagen» ===== */
+/* Felt: 16 px hindrer at iPhone zoomer inn når et felt får fokus */
+input[type=text],input[type=date],input[type=time],input[type=number],input[type=search],input[type=password],input[type=email],input[type=tel],input[type=datetime-local],select,textarea{font-size:16px;min-height:44px}
+input[type=password],input[type=email],input[type=tel],input[type=datetime-local]{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:#fff}
+textarea{min-height:76px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--brand);outline-offset:0;border-color:var(--brand)}
+input.tom{border-color:var(--warn);background:var(--warn-2)}
+
+/* Trykkflater på minst 44 piksler */
+.btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-align:center}
+.btn.sm{min-height:40px;padding:7px 12px;font-size:14px}
+.btn.stor{min-height:52px;font-size:16px}
+.btn.ikon{min-width:44px;padding:0 10px}
+.btn.ghost{padding:8px 10px}
+a.btn{text-decoration:none;color:var(--ink)}
+a.btn.primary{color:#fff}
+.x{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;font-size:22px;padding:0}
+.chip{min-height:40px;padding:8px 14px;font-size:14px;display:inline-flex;align-items:center}
+.chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.seg button{min-height:40px;font-size:14px}
+.linkbtn{font-size:15px;padding:11px 6px;margin:-11px -6px;min-height:0}
+.syncbar .linkbtn{font-size:12px;padding:6px 4px;margin:-6px -4px}
+label.f{font-size:13px}
+.ts{font-size:13px}
+.picker .opt{min-height:44px;align-items:center;padding:10px 12px}
+.tilbake{margin-top:10px}
+
+/* Bunnmeny med pluss-knapp i midten */
+nav.tabs{padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs button{min-height:56px;font-size:12px}
+nav.tabs button.tabny{color:#fff}
+.tabny span{width:52px;height:52px;border-radius:50%;background:var(--brand);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(47,93,80,.35);margin-top:-14px}
+header.top{padding-top:env(safe-area-inset-top)}
+.wrap{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+body.bred .wrap,body.bred .top-in,body.bred .syncbar,body.bred nav.tabs .in{max-width:1100px}
+a{color:var(--brand)}
+.sub .pris-lenke{font-size:13px;font-weight:600;color:var(--muted);text-decoration:underline dotted;text-underline-offset:3px;padding:10px 4px;margin:-10px -4px}
+.toast{bottom:calc(92px + env(safe-area-inset-bottom))}
+.modal{padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+
+/* Lister med rader */
+.list0{padding:0;overflow:hidden}
+.rad{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:10px 14px;border:0;border-top:1px solid var(--line);background:none;text-align:left;font:inherit;color:inherit}
+button.rad{cursor:pointer}
+button.rad:hover{background:#faf8f3}
+.list0>.rad:first-child{border-top:0}
+.rad .tid{min-width:48px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--brand);font-size:14px}
+.rad .sub{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+.pil{color:#b5ae9f;flex:none}
+.blk{display:block}
+.lbl{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:700;margin:0}
+.tall{background:var(--warn);color:#fff;border-radius:99px;font-size:12px;font-weight:700;padding:1px 8px}
+.varsel{color:var(--warn);font-weight:600}
+.sub.varsel{color:var(--warn)}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.2px}
+button.card{display:block;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer}
+
+/* I dag */
+.gj{border-color:#e6cbb4}
+.gjhode{padding:10px 14px 6px}
+.neste{border:2px solid var(--brand);box-shadow:0 2px 10px rgba(47,93,80,.12)}
+.neste h2{font-size:21px;margin:2px 0 4px}
+.s-pabegynt{background:#fdf0d5;color:#8a5a00}
+
+/* Besøket */
+body.besok nav.tabs{display:none}
+.handling{position:fixed;left:0;right:0;bottom:0;z-index:8;background:var(--card);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -4px 14px rgba(0,0,0,.05)}
+.handling .in{max-width:760px;margin:0 auto;display:flex;gap:8px}
+.handling .btn{min-height:52px;font-size:16px}
+/* Skjul den faste knappen mens tastaturet er oppe */
+@media (hover:none) and (pointer:coarse){body.besok:has(main input:focus, main textarea:focus) .handling{display:none}}
+.dyrkort{padding:12px 14px}
+.dyrkort .endre{color:var(--brand);font-weight:600;font-size:14px}
+.tidl{color:var(--blue)}
+.dyr.aapen{border:2px solid var(--brand);background:#fff;padding:12px}
+.sg{display:inline-flex;flex-wrap:wrap;background:var(--grey-2);border-radius:10px;padding:3px;gap:2px}
+.sg button{border:0;background:transparent;min-height:40px;padding:6px 12px;border-radius:8px;font-weight:600;color:var(--muted);cursor:pointer;font-size:14px}
+.sg button.on{background:var(--brand);color:#fff}
+.valgt{border:1px solid var(--brand);background:var(--brand-2);border-radius:10px;padding:8px 12px;min-height:48px}
+.tilleggsrad{display:flex;flex-wrap:wrap;gap:8px;padding:10px 14px 0;border-top:1px solid var(--line)}
+.linje{align-items:center}
+.linje .antall{display:flex;flex-direction:column;align-items:center;gap:2px;flex:none}
+.linje .antall input{width:76px;text-align:center;font-weight:700}
+.linje .pris{width:96px;min-height:36px;padding:4px 8px;display:inline-block}
+.sel-liten{width:auto;max-width:100%;padding:6px 10px}
+.medgrid{grid-template-columns:96px 1fr}
+.kv{font-size:15px;gap:6px 14px;grid-template-columns:auto minmax(0,1fr)}
+.kv>div{min-width:0;overflow-wrap:anywhere}
+.kv select{width:100%;max-width:100%}
+.grid2>*,.grid3>*,.medgrid>*{min-width:0}
+img,table{max-width:100%}
+
+/* Fakturering på stor skjerm */
+.fakt{display:block}
+@media(min-width:900px){body.bred .fakt{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:10px;align-items:start}body.bred .fakt .card{margin:0}}
+@media print{.handling{display:none!important}}
 </style>
 </head>
 <body>
@@ -215,6 +311,8 @@ const addDays = (n, from) => { const d = from ? new Date(from+'T12:00') : new Da
 const TODAY = iso(new Date());
 const nowTs = () => new Date().toISOString();
 const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// Tekst som argument i onclick="…": JSON-streng, deretter HTML-escapet, så anførselstegn i data ikke bryter koden
+const js = s => esc(JSON.stringify(String(s??'')));
 const kr = n => (Number(n)||0).toLocaleString('nb-NO',{minimumFractionDigits:2,maximumFractionDigits:2});
 const toDate = s => { const [y,m,d]=s.split('-'); return new Date(+y,+m-1,+d); };
 const fmtDate = s => s ? toDate(s).toLocaleDateString('nb-NO',{weekday:'short',day:'numeric',month:'short',year:'numeric'}) : '';
@@ -233,7 +331,8 @@ function lastNedBlob(blob, navn){ const a=document.createElement('a'); a.href=UR
 
 // ================= Tilstand =================
 let S = {kunder:[], oppdrag:[], maler:[], varer:[], medisiner:[], vakter:[]};
-let UI = {role:'mia', view:'oppdrag', listTab:'apne', current:null, kunde:null, mal:null,
+let UI = {role:'mia', view:'idag', listTab:'apne', current:null, kunde:null, mal:null,
+  fane:'info', fra:null, retur:null, dyrApen:null, prisApen:null, nb:null, fd:null, kundeFra:null, kq:'',
   sok:{q:'',fra:'',til:'',individ:'',status:'',vare:'',dhp:false},
   periode:{fra:addDays(-30), til:TODAY}, dhp:{fra:TODAY.slice(0,8)+'01', til:TODAY, vis:false},
   kal:{ym:TODAY.slice(0,7), dag:TODAY}, vq:'', mq:''};
@@ -251,11 +350,22 @@ const sum = o => linjeSum(o)+medSum(o);
 const STATUS = {bestilt:'Bestilt',flyttet:'Flyttet',utsatt:'Utsatt',fullfort:'Fullført',avlyst:'Avlyst',fakturert:'Fakturert'};
 const statusKey = o => o.fakturert ? 'fakturert' : o.status;
 const flyttRetning = o => { if(!o.opprinnelig) return ''; const ny=o.dato+' '+(o.tid||'12:00'), gml=o.opprinnelig.length<=10?o.opprinnelig+' 12:00':o.opprinnelig; return ny>gml?'Utsatt':ny<gml?'Fremskyndet':''; };
-const pill = o => { const k=statusKey(o); let t=STATUS[k]; if(o.status==='flyttet') t=flyttRetning(o)||'Flyttet'; if(o.status==='avlyst' && !o.fakturert && o.fakturer) t+=' · faktureres'; return `<span class="pill s-${k==='flyttet'?'utsatt':k}">${t}</span>`; };
+const pill = o => { if(pabegynt(o)) return '<span class="pill s-pabegynt">Påbegynt</span>'; const k=statusKey(o); let t=STATUS[k]; if(o.status==='flyttet') t=flyttRetning(o)||'Flyttet'; if(o.status==='avlyst' && !o.fakturert && o.fakturer) t+=' · faktureres'; return `<span class="pill s-${k==='flyttet'?'utsatt':k}">${t}</span>`; };
 const harMed = o => alleMedLinjer(o).length>0;
 const dhpPill = o => (isMia() && !apen(o) && harMed(o)) ? (o.dhpTs ? `<span class="pill s-fullfort" title="Rapportert ${fmtTs(o.dhpTs)}">DHP ✓</span>` : `<span class="pill s-utsatt">Ikke rapportert DHP</span>`) : '';
 const fakturerbar = o => !o.fakturert && (o.status==='fullfort' || (o.status==='avlyst' && o.fakturer));
 const apen = o => o.status==='bestilt' || o.status==='utsatt' || o.status==='flyttet';
+// Påbegynt: åpent besøk der noe allerede er registrert. Alt lagres fortløpende, så besøket kan fullføres senere.
+const pabegynt = o => apen(o) && !o.fakturert && ((o.dyr||[]).length>0 || (o.flokk||[]).length>0 || (o.linjer||[]).length>0);
+// Eldre format hadde «medisiner til flokk» i en egen liste. Gjøres om til grupper uten øremerker.
+function migrerFlokk(o){
+  if(!o || !(o.flokk||[]).length) return o;
+  o.dyr=o.dyr||[]; const g={};
+  o.flokk.forEach(m=>{ const k=(m.art||'')+'|'+(m.antallDyr??'');
+    if(!g[k]){ g[k]={id:'g-'+(m.id||uid()), art:m.art||'Annet', gruppe:true, antall:m.antallDyr??null, individ:'', diagnose:'', behandling:'', notat:'', medisiner:[]}; o.dyr.push(g[k]); }
+    g[k].medisiner.push({id:m.id||uid(), navn:m.navn, antall:m.antall, pris:m.pris, tid:m.tid}); });
+  o.flokk=[]; return o;
+}
 const oNr = o => o.nr ? 'Oppdrag '+o.nr : 'Nytt oppdrag';
 // Vakt
 const aktiveVakter = () => S.vakter.filter(v=>!v.deleted);
@@ -295,7 +405,14 @@ function seedKunderOppdrag(){
       dyr:[{id:uid(),art:'Storfe',individ:'NO 22222 1033',diagnose:'Feilstilling, kalvingshjelp',behandling:'Korrigert stilling, levende kalv. Penovet 5 dager.',notat:'',medisiner:[m('Oxytocin 10ml',1,-4,13),m('Penovet 100ml',1,-4,13)]}],
       journalTs:ts(-4,15),ferdigTs:ts(-4,15)}),
     o({kundenr:90005,dato:addDays(-8),tid:'10:00',status:'fullfort',henvendelse:'Parasittbehandling av sauene før beiteslipp.',henvendelseTs:ts(-9,9),
-      linjer:[v('Grunnhonorar'),v('Kjøring')], flokk:[Object.assign(m('Ganutil',3,-8,10),{art:'Sau',antallDyr:45})], journalTs:ts(-8,12),ferdigTs:ts(-8,12)}),
+      linjer:[v('Grunnhonorar'),v('Kjøring')],
+      dyr:[{id:uid(),art:'Sau',gruppe:true,antall:45,individ:'',diagnose:'Parasittbehandling før beiteslipp',behandling:'Ganutil drenk til hele flokken.',notat:'',medisiner:[m('Ganutil',3,-8,10)]}],
+      journalTs:ts(-8,12),ferdigTs:ts(-8,12)}),
+    o({kundenr:90006,dato:addDays(-30),tid:'08:30',status:'fullfort',fakturert:true,fakturertTs:ts(-25,20),henvendelse:'To kyr med høyt celletall.',henvendelseTs:ts(-31,15),
+      linjer:[v('Grunnhonorar'),v('Kjøring'),v('Speneprøve',2)],
+      dyr:[{id:uid(),art:'Storfe',individ:'NO 34567 0211',diagnose:'Subklinisk mastitt',behandling:'Speneprøve tatt. Avventer svar.',notat:'',medisiner:[]},
+           {id:uid(),art:'Storfe',individ:'NO 34567 0214',diagnose:'Klinisk mastitt, høyre fram',behandling:'Mastipen intramammært, 3 dager.',notat:'',medisiner:[m('Mastipen',3,-30,9)]}],
+      journalTs:ts(-30,11),ferdigTs:ts(-30,11),dhpTs:ts(-28,9)}),
     o({kundenr:90003,dato:addDays(-3),tid:'09:00',status:'avlyst',fakturer:true,henvendelse:'Sau med diaré.',henvendelseTs:ts(-3,7),linjer:[v('Kjøring')],ferdigTs:ts(-3,10)}),
     o({kundenr:90008,dato:addDays(-2),tid:'15:00',status:'avlyst',fakturer:false,henvendelse:'Helseattest storfe.',henvendelseTs:ts(-3,9),ferdigTs:ts(-2,8)}),
     o({kundenr:90001,dato:addDays(-20),tid:'09:30',status:'fullfort',fakturert:true,fakturertTs:ts(-12,20),henvendelse:'Ketose.',henvendelseTs:ts(-20,7),
@@ -318,7 +435,7 @@ function seedMaler(){
     m('Melkefeber',[1054,1055,1056,1057,1051,1052,1053],'Melkefeber (hypokalsemi)','Funn: ligger/står, temp __ °C, __.\nBehandling: __.\nRespons på behandling: __.\nTilbakeholdelsestid: __. Eier informert.',['Calcimag stk']),
     m('Ketose',[1061],'Ketose','Funn: nedsatt matlyst, melkenedgang, __. Ketontest: __.\nBehandling: __.\nRåd til eier: __.',['Ku + energi, tuber']),
     m('Kalvingshjelp',[1072,1073,1047],'Kalvingshjelp – __ (feilstilling/trang fødselsvei/__)','Funn ved undersøkelse: __.\nTiltak: __.\nKalv: levende/død, __.\nKu etter kalving: __.\nTilbakeholdelsestid: __.',['Oxytocin 10ml','Penovet 100ml']),
-    m('Drektighetsundersøkelse',[1014,1015],'Drektighetsundersøkelse','Metode: rektal/ultralyd.\nAntall undersøkt: __. Drektige: __. Tomme: __.\nIndivider: __.',[]),
+    Object.assign(m('Drektighetsundersøkelse',[1014,1015],'Drektighetsundersøkelse','Metode: rektal/ultralyd.',[]),{resultat:['Drektig','Ikke drektig']}),
     m('Vaksinering storfe',[1128,1129],'Vaksinering','Vaksine: __, batch: __.\nAntall dyr: __.\nNeste dose / revaksinering: __.',['Vaksine kalv Bovilis bovipast 1 flaske']),
     m('Vaksinering sau',[1127,1126],'Vaksinering','Vaksine: __, batch: __.\nAntall dyr: __.\nNeste dose / revaksinering: __.',[]),
     m('Diaré kalv',[1013,1082],'Diaré kalv – __','Allmenntilstand: __. Dehydrering: __ %. Temp: __ °C.\nHurtigtest: __.\nBehandling: __.\nRåd til eier: __.',[]),
@@ -329,240 +446,514 @@ function seedMaler(){
 }
 
 // ================= Ramme og navigasjon =================
+const IK = {
+  tlf:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h4l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>',
+  nav:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8z"/></svg>',
+  mer:'<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>',
+  pil:'<svg class="pil" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>',
+  ok:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2f6b3a" stroke-width="2.4" aria-hidden="true" style="flex:none"><path d="M5 12l5 5 9-10"/></svg>',
+  varsel:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a4541d" stroke-width="2.4" aria-hidden="true" style="flex:none"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg>',
+  pluss:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>'
+};
 const ICON = {
+  idag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg>',
   oppdrag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>',
   kalender:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>',
-  sok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>',
   kunder:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 010 7M18 14.8c2 .7 3.2 2.4 3.5 5.2"/></svg>',
-  meny:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
+  meny:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+  eksport:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>'
 };
-const TAB_FOR = {detalj:'oppdrag', kunde:'kunder', eksport:'meny', dhp:'meny', maler:'meny', mal:'meny', varer:'meny', medisiner:'meny', kopi:'meny'};
+const faner = () => isMia()
+  ? [['idag','I dag'],['kalender','Kalender'],['ny','Ny bestilling'],['kunder','Kunder'],['meny','Mer']]
+  : [['eksport','Fakturering'],['oppdrag','Oppdrag'],['kunder','Kunder'],['meny','Mer']];
+function aktivFane(){
+  const v=UI.view, r=UI.retur;
+  if(v==='detalj') return isMia() ? (['kunder','kunde','sok'].includes(UI.fra)?'kunder':UI.fra==='kalender'?'kalender':['dhp','eksport','meny'].includes(UI.fra)?'meny':'idag') : (UI.fra==='kunde'||UI.fra==='kunder'?'kunder':UI.fra==='oppdrag'?'oppdrag':'eksport');
+  if(v==='oppdrag') return isMia() ? (r==='meny'?'meny':'idag') : 'oppdrag';
+  if(v==='kunde' || v==='sok') return r==='meny' ? 'meny' : 'kunder';
+  if(v==='eksport') return isMia() ? 'meny' : 'eksport';
+  if(v==='kalender') return isMia() ? 'kalender' : 'meny';
+  if(['dhp','maler','mal','varer','medisiner','kopi'].includes(v)) return 'meny';
+  return v;
+}
 function renderFrame(){
   const bt=document.getElementById('beta'); if(bt) bt.style.display = ME.medlem && !ME.medlem.live ? '' : 'none';
   const r=document.getElementById('role');
   r.innerHTML = ME.medlem && ME.medlem.testbruker
     ? `<button class="${isMia()?'on':''}" onclick="setRole('mia')">Veterinær</button><button class="${!isMia()?'on':''}" onclick="setRole('erik')">Fakturering</button>`
     : `<span class="small muted" style="padding:5px 10px">${isMia()?'Veterinær':'Fakturering'}</span>`;
-  const tabs=[['oppdrag','Oppdrag'],['kalender','Kalender'],['sok','Søk'],['kunder','Kunder'],['meny','Meny']];
-  const aktiv = TAB_FOR[UI.view] || UI.view;
-  document.getElementById('tabs').innerHTML = tabs.map(([k,t])=>`<button class="${aktiv===k?'on':''}" onclick="go('${k}')">${ICON[k]}${t}</button>`).join('');
+  const a=aktivFane();
+  document.getElementById('tabs').innerHTML = faner().map(([k,t])=> k==='ny'
+    ? (kanSkrive() ? `<button class="tabny" onclick="nyBestilling()" aria-label="Ny bestilling"><span>${IK.pluss}</span></button>` : '')
+    : `<button class="${a===k?'on':''}" onclick="go('${k}')"${a===k?' aria-current="page"':''}>${ICON[k]}${t}</button>`).join('');
 }
-function setRole(r){ UI.role=r; if(!isMia() && ['maler','mal','medisiner','dhp'].includes(UI.view)) UI.view='meny'; render(); toast(r==='mia'?'Visning: veterinær':'Visning: fakturering (bare i test)'); }
-function go(v){ UI.view=v; UI.current=null; render(); window.scrollTo(0,0); }
+function setRole(r){ lagreNa(); UI.role=r; UI.view = r==='mia' ? 'idag' : 'eksport'; UI.current=null; UI.retur=null; render(); toast(r==='mia'?'Visning: veterinær':'Visning: fakturering (bare i test)'); }
+function go(v, fra){ lagreNa(); UI.view=v; UI.current=null; UI.dyrApen=null; UI.retur=fra||null; render(); window.scrollTo(0,0); }
+const FRA_NAVN = {idag:'I dag', kunde:'Kunden', kunder:'Kunder', kalender:'Kalender', sok:'Søk', eksport:'Fakturering', dhp:'Rapport', meny:'Mer', maler:'Maler', kopi:'Sikkerhetskopi'};
+const fraNavn = v => v==='oppdrag' ? (isMia()?'Alle oppdrag':'Oppdrag') : (FRA_NAVN[v]||'Tilbake');
+const tilbakeKnapp = std => { const v=UI.retur||std; return `<div class="noprint tilbake"><button class="linkbtn" onclick="go('${v}')">← ${fraNavn(v)}</button></div>`; };
 const VIEWS = {};
 function render(){
   if(!ME.medlem) return;
+  if(!isMia() && ['maler','mal','medisiner','dhp','idag'].includes(UI.view)) UI.view='eksport';
   renderFrame(); renderSync();
-  if(!isMia() && ['maler','mal','medisiner','dhp'].includes(UI.view)) UI.view='meny';
-  document.getElementById('main').innerHTML = (VIEWS[UI.view]||VIEWS.oppdrag)();
-  const fab=document.getElementById('fab'); if(fab) fab.remove();
-  if(isMia() && UI.view==='oppdrag') document.body.insertAdjacentHTML('beforeend','<button id="fab" class="btn primary fab" onclick="nyBestilling()">+ Ny bestilling</button>');
+  const main=document.getElementById('main');
+  main.innerHTML = (VIEWS[UI.view]||VIEWS.idag)();
+  document.body.classList.toggle('bred', UI.view==='eksport');
+  const gml=document.getElementById('handling'); if(gml) gml.remove();
+  const o = UI.view==='detalj' ? cur() : null;
+  const besok = !!(o && isMia() && kanSkrive() && apen(o) && !o.fakturert);
+  document.body.classList.toggle('besok', besok);
+  if(besok) document.body.insertAdjacentHTML('beforeend', handlingslinje(o));
 }
 function sokRes(){ const t=document.activeElement; const id=t&&t.getAttribute('oninput'); const pos=t&&t.selectionStart;
   render(); if(id){ const el=[...document.querySelectorAll('input')].find(e=>e.getAttribute('oninput')===id); if(el){ el.focus(); try{el.setSelectionRange(pos,pos)}catch(e){} } } }
 
-// ================= Oppdragsliste =================
+// Lagring mens Mia skriver: et halvt sekund etter siste tastetrykk, og med en gang når appen legges i bakgrunnen
+let LAGRE_T=null;
+function lagreSnart(){ clearTimeout(LAGRE_T); LAGRE_T=setTimeout(()=>{ LAGRE_T=null; save(); },500); }
+function lagreNa(){ if(LAGRE_T){ clearTimeout(LAGRE_T); LAGRE_T=null; save(); } }
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') lagreNa(); });
+window.addEventListener('pagehide', lagreNa);
+
+// ================= Felles hjelpere for besøk =================
+const adresseTekst = k => [k.adresse, [k.postnr,k.sted].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+const telLenke = t => 'tel:'+String(t||'').replace(/[^\d+]/g,'');
+const kartLenke = k => 'https://maps.apple.com/?daddr='+encodeURIComponent(adresseTekst(k));
+const kontaktKnapper = k =>
+  (k.tlf ? `<a class="btn grow" href="${telLenke(k.tlf)}">${IK.tlf}Ring</a>` : `<button class="btn grow" disabled>${IK.tlf}Ring</button>`) +
+  (adresseTekst(k) ? `<a class="btn grow" href="${kartLenke(k)}" target="_blank" rel="noopener">${IK.nav}Naviger</a>` : `<button class="btn grow" disabled>${IK.nav}Naviger</button>`);
+const fmtDag = s => s ? toDate(s).toLocaleDateString('nb-NO',{weekday:'long',day:'numeric',month:'long'}) : '';
+const fmtKort = s => s ? toDate(s).toLocaleDateString('nb-NO', s.slice(0,4)===TODAY.slice(0,4) ? {day:'numeric',month:'short'} : {day:'numeric',month:'short',year:'numeric'}) : '';
+const stor = s => s ? s.charAt(0).toUpperCase()+s.slice(1) : s;
+const fmtTall = n => String(+n||0).replace('.',',');
+const kortTekst = (s,n=22) => { s=String(s||'').replace(/\s+/g,' ').trim(); return s.length>n ? s.slice(0,n-1)+'…' : s; };
+// Øremerke kreves for storfe, sau og geit. Hund, katt og andre dyr kan stå uten.
+const ID_ARTER = ['Storfe','Sau','Geit'];
+const erTomId = v => { v=String(v||'').trim(); return !v || /^[A-Za-z]{2}\s*\d{2,6}$/.test(v); };
+const manglerId = d => !d.gruppe && ID_ARTER.includes(d.art) && erTomId(d.individ);
+const kortId = id => { const p=String(id||'').trim().split(/\s+/); return p.length>1 ? p.at(-1) : String(id||''); };
+// En leser som skriver et elektronisk nummer etter gårdsprefikset, gir «NO 12345 578000012345678»: behold bare nummeret
+const normId = v => { const m=String(v||'').match(/^\s*[A-Za-z]{2}\s*\d{2,6}\s+(\d{12,})\s*$/); return m ? m[1] : v; };
+const FLERTALL = {Storfe:'storfe',Sau:'sauer',Geit:'geiter',Gris:'griser',Hest:'hester',Alpakka:'alpakkaer',Hund:'hunder',Katt:'katter'};
+const artFlertall = (art,n) => n===1 ? 'dyr' : (FLERTALL[art] || 'dyr');
+const malResultat = m => !m ? null : Array.isArray(m.resultat) ? (m.resultat.length ? m.resultat : null) : (/drektig/i.test(m.navn||'') ? ['Drektig','Ikke drektig'] : null);
+function rangert(liste, q, tekst){
+  q=q.trim().toLowerCase(); if(!q) return [];
+  const sc = x => { const t=tekst(x).toLowerCase(); if(t.startsWith(q)) return 0; if(t.split(/[\s,.\-\/()+]+/).some(w=>w.startsWith(q))) return 1; return t.includes(q) ? 2 : 9; };
+  return liste.map(x=>[sc(x),x]).filter(p=>p[0]<9).sort((a,b)=>a[0]-b[0]).map(p=>p[1]);
+}
+function gardPrefiks(kundenr){
+  const c={};
+  S.oppdrag.filter(o=>o.kundenr===kundenr).forEach(o=>(o.dyr||[]).forEach(d=>{ const m=String(d.individ||'').trim().match(/^([A-Za-z]{2})\s*(\d{3,6})\s+\S/); if(m){ const p=m[1].toUpperCase()+' '+m[2]; c[p]=(c[p]||0)+1; } }));
+  return Object.keys(c).sort((a,b)=>c[b]-c[a])[0] || '';
+}
+function kjenteDyr(kundenr, unntak){
+  const m={};
+  S.oppdrag.filter(o=>o.kundenr===kundenr && o.id!==unntak).forEach(o=>(o.dyr||[]).forEach(d=>{ if(d.gruppe || erTomId(d.individ)) return; const x=m[d.individ]; if(!x || o.dato>x.dato) m[d.individ]={individ:d.individ, art:d.art, dato:o.dato, diagnose:d.diagnose||''}; }));
+  return Object.values(m).sort((a,b)=>b.dato.localeCompare(a.dato));
+}
+function tidligereFor(o, individ){
+  const l=S.oppdrag.filter(x=>x.kundenr===o.kundenr && x.id!==o.id && x.dato<=o.dato).flatMap(x=>(x.dyr||[]).filter(d=>d.individ===individ && d.diagnose).map(d=>({dato:x.dato, diagnose:d.diagnose}))).sort((a,b)=>b.dato.localeCompare(a.dato)).slice(0,2);
+  return l.length ? 'Tidligere: '+l.map(x=>kortTekst(x.diagnose,26).toLowerCase()+' '+fmtKort(x.dato)).join(', ') : '';
+}
+// Dyreart for nytt dyr: samme som forrige dyr på besøket, ellers gjettet fra henvendelsen, ellers siste dyr på gården
+const ART_ORD = [['Hund',/hund|valp/],['Katt',/katt/],['Hest',/hest|føll|ponni/],['Sau',/sau|søye|lamming|(^|[^a-zæøå])lam(b|me)?\b|vær\b/],['Geit',/geit|(^|[^a-zæøå])kje\b/],['Gris',/gris|purke/],['Alpakka',/alpakka|lama\b/],['Storfe',/(^|[^a-zæøå])kua?\b|kyr|kalv|kvige|okse|storfe|melkeku/]];
+const artFraTekst = t => { t=String(t||'').toLowerCase(); const f=ART_ORD.find(([,r])=>r.test(t)); return f ? f[0] : null; };
+const sistArt = o => { const s=(o.dyr||[]).at(-1); if(s) return s.art; const t=artFraTekst(o.henvendelse); if(t) return t; const k=kjenteDyr(o.kundenr,o.id)[0]; return k ? k.art : 'Storfe'; };
+const vareNavn = n => S.varer.find(v=>v.navn===n && v.aktiv!==false);
+// Varer med enhet (for eksempel km) får samme antall som sist hos samme kunde
+function sistAntall(kundenr, nr){
+  const l=S.oppdrag.filter(o=>o.kundenr===kundenr).sort((a,b)=>b.dato.localeCompare(a.dato)).flatMap(o=>(o.linjer||[]).filter(x=>x.varenr===nr && +x.antall>0));
+  return l.length ? +l[0].antall : 0;
+}
+const nyLinje = (v,o) => ({varenr:v.nr, navn:v.navn, antall: v.enhet ? sistAntall(o.kundenr, v.nr) : 1, pris:v.pris||0});
+const grunnhonorarNavn = o => { const d=toDate(o.dato).getDay(); return d===6 ? 'Grunnhonorar helg' : d===0 ? 'Grunnhonorar søndag' : 'Grunnhonorar'; };
+function standardTjenester(o){
+  if((o.linjer||[]).length) return;
+  const g=vareNavn(grunnhonorarNavn(o))||vareNavn('Grunnhonorar'), kj=vareNavn(paVakt(o)?'Kjøring vakt':'Kjøring');
+  [g,kj].filter(Boolean).forEach(v=>o.linjer.push(nyLinje(v,o)));
+}
+const kjFeil = o => { const har=n=>(o.linjer||[]).some(l=>l.navn===n); return paVakt(o) ? (har('Kjøring') && !har('Kjøring vakt')) : (har('Kjøring vakt') && !har('Kjøring')); };
+function byttKjoring(){
+  const o=cur(), fra=paVakt(o)?'Kjøring':'Kjøring vakt', til=vareNavn(paVakt(o)?'Kjøring vakt':'Kjøring'); if(!til) return;
+  const i=o.linjer.findIndex(l=>l.navn===fra); if(i<0) return;
+  o.linjer[i]=nyLinje(til,o); save(); render(); toast('Byttet til '+til.navn.toLowerCase());
+}
+const STANDARD_FAV = ['Grunnhonorar','Kjøring','Kjøring vakt','Utstyr','Timespris klinisk arbeid'];
+function mestBrukteVarer(n, unntatt){
+  const c={}; S.oppdrag.forEach(o=>(o.linjer||[]).forEach(l=>{ c[l.varenr]=(c[l.varenr]||0)+1; }));
+  const l=aktiveVarer().filter(v=>c[v.nr] && !unntatt.has(v.nr)).sort((a,b)=>c[b.nr]-c[a.nr]).slice(0,n);
+  STANDARD_FAV.forEach(navn=>{ const v=vareNavn(navn); if(l.length<n && v && !unntatt.has(v.nr) && !l.includes(v)) l.push(v); });
+  return l;
+}
+// «Drektighetsundersøkelse første 5 stk» + «Drektighetsundersøkelse stk»: den første varen én gang, deretter én per dyr
+const vareNokkel = s => String(s||'').toLowerCase().replace(/påfølgende/g,' ').replace(/[,.]/g,' ').replace(/\s+/g,' ').trim();
+function stykkRegel(m){
+  if(!m) return null;
+  const vs=(m.tjenester||[]).map(nr=>S.varer.find(v=>v.nr===nr)).filter(Boolean);
+  for(const f of vs){
+    const t=f.navn.match(/^(.*?)\s*første\s+(\d+)(\s*stk\.?)?\s*$/i); if(!t) continue;
+    const base=vareNokkel(t[1]), s=vs.find(v=>v!==f && vareNokkel(v.navn)===base+' stk');
+    if(s) return {forste:f, n:+t[2], stk:s};
+  }
+  return null;
+}
+const antallMedMal = (o,id) => (o.dyr||[]).filter(d=>d.mal===id).reduce((s,d)=>s+(d.gruppe?(+d.antall||0):1),0);
+function oppdaterStykkTjenester(o, m){
+  const r=stykkRegel(m); if(!r) return;
+  const n=antallMedMal(o,m.id);
+  const sett=(v,a)=>{ const i=o.linjer.findIndex(l=>l.varenr===v.nr); if(a<=0){ if(i>=0) o.linjer.splice(i,1); return; } if(i>=0) o.linjer[i].antall=a; else o.linjer.push({varenr:v.nr,navn:v.navn,antall:a,pris:v.pris||0}); };
+  sett(r.forste, n>0?1:0); sett(r.stk, Math.max(0,n-r.n));
+}
+function sjekk(o){
+  const ut=[], dyr=o.dyr||[], fl=n=>n===1?'registrering':'registreringer';
+  const utenId=dyr.filter(manglerId).length; if(utenId) ut.push({t:`${utenId} dyr mangler øremerke`, fane:'behandling'});
+  const utenDiag=dyr.filter(d=>!(d.diagnose||'').trim()).length; if(utenDiag) ut.push({t:`${utenDiag} ${fl(utenDiag)} mangler diagnose`, fane:'behandling'});
+  const grUten=dyr.filter(d=>d.gruppe && !(+d.antall>0)).length; if(grUten) ut.push({t:`${grUten===1?'En gruppe':grUten+' grupper'} mangler antall dyr`, fane:'behandling'});
+  const tomme=dyr.filter(d=>/__/.test((d.diagnose||'')+(d.behandling||''))).length; if(tomme) ut.push({t:`Tomme felt (__) fra malen i ${tomme} ${fl(tomme)}`, fane:'behandling'});
+  const linjer=o.linjer||[];
+  if(!linjer.length) ut.push({t:'Ingen tjenester eller varer er lagt inn', fane:'avslutt'});
+  linjer.filter(l=>!(+l.antall>0)).forEach(l=>ut.push({t:`${l.navn}: antall mangler`, fane:'avslutt'}));
+  linjer.filter(l=>+l.antall>0 && !(+l.pris>0)).forEach(l=>ut.push({t:`${l.navn} har ingen pris`, fane:'avslutt'}));
+  if(kjFeil(o)) ut.push({t: paVakt(o) ? 'Besøket er på vakt, men har vanlig kjøring' : 'Besøket er ikke på vakt, men har kjøring vakt', fane:'avslutt'});
+  return ut;
+}
+function vaktNa(){ const t=Date.now(); return aktiveVakter().find(v=>new Date(v.fra).getTime()<=t && t<new Date(v.til).getTime()); }
+function gjoremal(){
+  const ut=[];
+  const urap=S.oppdrag.filter(o=>!apen(o) && !o.dhpTs && harMed(o));
+  if(urap.length){
+    const meds=urap.flatMap(alleMedLinjer), n=meds.length;
+    const eldste=meds.map(m=>m.tid?iso(new Date(m.tid)):'').filter(Boolean).sort()[0] || urap.map(o=>o.dato).sort()[0];
+    const frist=addDays(7,eldste);
+    ut.push({tittel:`Rapporter ${n} ${n===1?'legemiddel':'legemidler'} til Dyrehelseportalen`, under: frist<TODAY ? `Fristen gikk ut ${fmtDag(frist)}` : `Frist ${fmtDag(frist)}`, varsel: frist<=addDays(2), gjor:`apneDhp('${eldste}')`});
+  }
+  S.oppdrag.filter(o=>pabegynt(o) && o.dato<TODAY).sort((a,b)=>a.dato.localeCompare(b.dato)).forEach(o=>ut.push({tittel:`Påbegynt besøk: ${kunde(o.kundenr).navn}`, under:`${stor(fmtDag(o.dato))} · trykk for å fortsette`, gjor:`apne('${o.id}','behandling')`}));
+  const mangler=S.oppdrag.filter(o=>!apen(o) && o.status!=='avlyst' && !o.fakturert && !o.dhpTs && (o.dyr||[]).some(manglerId));
+  if(mangler.length){
+    const n=mangler.reduce((s,o)=>s+o.dyr.filter(manglerId).length,0), f=mangler[0];
+    ut.push({tittel:`${n} dyr mangler øremerke`, under:`${kunde(f.kundenr).navn}, ${fmtDag(f.dato)}${mangler.length>1?` og ${mangler.length-1} oppdrag til`:''}`, gjor:`apne('${f.id}','behandling')`});
+  }
+  const fors=S.oppdrag.filter(o=>apen(o) && !pabegynt(o) && o.dato<TODAY);
+  if(fors.length) ut.push({tittel:`${fors.length} oppdrag fra tidligere dager er ikke avsluttet`, under:`Det eldste er fra ${fmtDag(fors.map(o=>o.dato).sort()[0])}`, gjor:`go('oppdrag','idag')`});
+  return ut;
+}
+function apneDhp(fra){ UI.dhp={fra, til:TODAY, vis:false}; go('dhp','idag'); }
+
+// ================= I dag =================
+const tidSort = (a,b) => (a.tid||'99').localeCompare(b.tid||'99');
+function radOppdrag(o, visDato){
+  const k=kunde(o.kundenr);
+  const under = visDato ? esc(oNr(o))+(isMia()&&o.henvendelse?' · '+esc(o.henvendelse):'') : (isMia()?esc(o.henvendelse||''):esc(oNr(o)));
+  return `<button class="rad" onclick="apne('${o.id}')"><span class="tid">${visDato?esc(fmtKort(o.dato)):esc(o.tid||'–')}</span><span class="grow"><strong class="blk">${esc(k.navn)}</strong><span class="sub">${under}</span></span>${(pabegynt(o)||o.status!=='bestilt')?pill(o):''}${IK.pil}</button>`;
+}
+VIEWS.idag = () => {
+  const open=S.oppdrag.filter(apen);
+  const idag=open.filter(o=>o.dato===TODAY).sort(tidSort), imorgen=open.filter(o=>o.dato===addDays(1)).sort(tidSort);
+  const neste=idag.find(pabegynt) || idag[0], resten=idag.filter(o=>o!==neste);
+  const g=gjoremal(), v=vaktNa(), ferdige=S.oppdrag.filter(o=>o.dato===TODAY && !apen(o)).length;
+  let h=`<h1 style="margin-bottom:0">I dag</h1><div class="small muted" style="margin-bottom:12px">${esc(stor(fmtDag(TODAY)))} · ${v?'På vakt til '+esc(fmtKort(iso(new Date(v.til))))+' kl. '+fmtKl(v.til):'Ikke på vakt'}</div>`;
+  if(g.length) h+=`<section class="card gj list0"><div class="row between gjhode"><h2 class="lbl">Gjøremål</h2><span class="tall">${g.length}</span></div>${g.map(x=>`<button class="rad" onclick="${x.gjor}"><span class="grow"><strong class="blk">${esc(x.tittel)}</strong><span class="sub${x.varsel?' varsel':''}">${esc(x.under)}</span></span>${IK.pil}</button>`).join('')}</section>`;
+  if(neste){
+    const k=kunde(neste.kundenr), p=pabegynt(neste);
+    h+=`<section class="card neste"><p class="lbl" style="color:var(--brand)">${p?'Pågår':'Neste'}${neste.tid?' · kl. '+esc(neste.tid):''}</p><h2>${esc(k.navn)}</h2>
+      <div>${esc(neste.henvendelse||'')}</div><div class="small muted" style="margin-top:4px">${esc(adresseTekst(k))}${k.kontakt?' · '+esc(k.kontakt):''}</div>
+      <div class="row" style="gap:8px;margin-top:12px">${kontaktKnapper(k)}</div>
+      <button class="btn primary stor" style="width:100%;margin-top:8px" onclick="startBesok('${neste.id}')">${p?'Fortsett besøket':'Start besøk'}</button>
+      <button class="btn ghost" style="width:100%;margin-top:4px" onclick="apne('${neste.id}')">Se oppdraget</button></section>`;
+  } else h+=`<div class="empty">${ferdige?`Alle dagens besøk er avsluttet (${ferdige}).`:'Ingen besøk i dag.'}${kanSkrive()?' Trykk på pluss-knappen når telefonen ringer.':''}</div>`;
+  if(resten.length) h+=`<h3>Senere i dag</h3><div class="card list0">${resten.map(o=>radOppdrag(o)).join('')}</div>`;
+  if(imorgen.length) h+=`<h3>I morgen</h3><div class="card list0">${imorgen.map(o=>radOppdrag(o)).join('')}</div>`;
+  h+=`<button class="btn" style="width:100%;margin-top:16px" onclick="go('oppdrag','idag')">Alle oppdrag</button>`;
+  return h+'<div style="height:40px"></div>';
+};
+function startBesok(id){
+  const o=S.oppdrag.find(x=>x.id===id); if(!o) return;
+  if(kanSkrive() && apen(o) && !o.fakturert && !(o.linjer||[]).length){ standardTjenester(o); save(); }
+  apne(id,'behandling');
+}
+
+// ================= Alle oppdrag =================
 function oppdragKort(o){
   const k=kunde(o.kundenr);
-  return `<div class="card item" onclick="apne('${o.id}')">
-    <div class="row between" style="gap:6px"><strong class="grow">${esc(k.navn)}</strong>${dhpPill(o)}${pill(o)}</div>
-    <div class="small muted">${esc(oNr(o))} · ${fmtDate(o.dato)}${o.tid?' kl. '+esc(o.tid):''}${paVakt(o)?' · <span style="color:var(--warn)">vakt</span>':''}</div>
-    ${isMia()&&o.henvendelse?`<div class="small" style="margin-top:4px">${esc(o.henvendelse)}</div>`:''}
-    ${!apen(o)&&sum(o)>0?`<div class="small muted" style="margin-top:4px">Sum eks. mva: ${kr(sum(o))} kr</div>`:''}
-  </div>`;
+  return `<button class="card item kort" onclick="apne('${o.id}')">
+    <span class="row between" style="gap:6px"><strong class="grow">${esc(k.navn)}</strong>${dhpPill(o)}${pill(o)}</span>
+    <span class="small muted blk">${esc(oNr(o))} · ${fmtDate(o.dato)}${o.tid?' kl. '+esc(o.tid):''}${paVakt(o)?' · <span style="color:var(--warn)">vakt</span>':''}</span>
+    ${isMia()&&o.henvendelse?`<span class="small blk" style="margin-top:4px">${esc(o.henvendelse)}</span>`:''}
+    ${!apen(o)&&sum(o)>0?`<span class="small muted blk" style="margin-top:4px">Sum eks. mva: ${kr(sum(o))} kr</span>`:''}
+  </button>`;
 }
 VIEWS.oppdrag = () => {
   const tab=UI.listTab;
-  let h=`<h1>Oppdrag</h1>${kopiPaminnelse()}<div class="seg">
+  let h=`${isMia()?tilbakeKnapp('idag'):''}<h1${isMia()?' style="margin-top:2px"':''}>${isMia()?'Alle oppdrag':'Oppdrag'}</h1><div class="seg">
     <button class="${tab==='apne'?'on':''}" onclick="UI.listTab='apne';render()">Åpne (${S.oppdrag.filter(apen).length})</button>
-    <button class="${tab==='ferdig'?'on':''}" onclick="UI.listTab='ferdig';render()">Ferdig behandlet</button></div>`;
+    <button class="${tab==='ferdig'?'on':''}" onclick="UI.listTab='ferdig';render()">Avsluttet</button></div>`;
   if(tab==='apne'){
-    const open=S.oppdrag.filter(apen).sort((a,b)=>(a.dato+a.tid).localeCompare(b.dato+b.tid));
+    const open=S.oppdrag.filter(apen).sort((a,b)=>(a.dato+(a.tid||'')).localeCompare(b.dato+(b.tid||'')));
     let any=false;
-    for(const [t,f] of [['Forsinket',o=>o.dato<TODAY],['I dag',o=>o.dato===TODAY],['Kommende',o=>o.dato>TODAY]]){
+    for(const [t,f] of [['Fra tidligere dager',o=>o.dato<TODAY],['I dag',o=>o.dato===TODAY],['Kommende',o=>o.dato>TODAY]]){
       const l=open.filter(f); if(!l.length) continue; any=true; h+=`<h3>${t}</h3>`+l.map(oppdragKort).join(''); }
-    if(!any) h+=`<div class="empty">Ingen åpne oppdrag.${isMia()?' Trykk «Ny bestilling» når telefonen ringer.':''}</div>`;
+    if(!any) h+=`<div class="empty">Ingen åpne oppdrag.</div>`;
   } else {
     const done=S.oppdrag.filter(o=>!apen(o)).sort((a,b)=>b.dato.localeCompare(a.dato));
-    h+= done.length ? done.map(oppdragKort).join('') : '<div class="empty">Ingen ferdig behandlede oppdrag ennå.</div>';
+    h+= done.length ? done.map(oppdragKort).join('') : '<div class="empty">Ingen avsluttede oppdrag ennå.</div>';
   }
-  return h+'<div style="height:70px"></div>';
+  return h+'<div style="height:40px"></div>';
 };
-function apne(id){ UI.current=id; UI.view='detalj'; render(); window.scrollTo(0,0); }
+function apne(id, fane){ lagreNa(); if(UI.view!=='detalj') UI.fra=UI.view; UI.current=id; UI.view='detalj'; UI.fane=fane||'info'; UI.dyrApen=null; UI.prisApen=null; render(); window.scrollTo(0,0); }
+function tilbake(){ lagreNa(); UI.view=UI.fra||(isMia()?'idag':'oppdrag'); UI.current=null; UI.dyrApen=null; render(); window.scrollTo(0,0); }
 
 // ================= Ny bestilling =================
+function sisteKunder(n){
+  const sett=new Set(), ut=[];
+  S.oppdrag.slice().sort((a,b)=>(b.henvendelseTs||b.dato||'').localeCompare(a.henvendelseTs||a.dato||'')).forEach(o=>{ if(!sett.has(o.kundenr) && S.kunder.some(k=>k.nr===o.kundenr)){ sett.add(o.kundenr); ut.push(kunde(o.kundenr)); } });
+  return ut.slice(0,n);
+}
 function nyBestilling(kundenr, dato){
-  modal(`<h2>Ny bestilling</h2>
+  if(!kanSkrive()) return;
+  const d=dato||TODAY;
+  UI.nb={kundenr:kundenr||null, dato:d, tid:'', tekst:'', velgDato: d!==TODAY && d!==addDays(1)};
+  visNyBestilling();
+}
+function visNyBestilling(){
+  const s=UI.nb, valgt=s.kundenr?kunde(s.kundenr):null, siste=sisteKunder(5);
+  modal(`<div class="row between"><h2 style="margin:0">Ny bestilling</h2><button class="linkbtn" onclick="UI.nb=null;closeModal()">Avbryt</button></div>
     <label class="f">Kunde</label>
-    <div class="picker"><input type="search" id="nb-k" placeholder="Søk navn, kundenr eller sted" oninput="kundePick(this.value)" autocomplete="off"><div id="nb-kl"></div></div>
-    <input type="hidden" id="nb-kn">
-    <div class="grid2"><div><label class="f">Dato</label><input type="date" id="nb-d" value="${dato||TODAY}"></div>
-    <div><label class="f">Tid (valgfritt)</label><input type="time" id="nb-t"></div></div>
-    <label class="f">Hva gjelder henvendelsen?</label><textarea id="nb-h" placeholder="F.eks. ku med høy feber, ønsker besøk i dag"></textarea>
-    <p class="ts">Tidspunktet for henvendelsen lagres automatisk (journalforskriften).</p>
-    <div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn" onclick="closeModal()">Avbryt</button>
-    <button class="btn primary" onclick="lagreBestilling()">Opprett oppdrag</button></div>`);
-  if(kundenr) velgKunde(kundenr); else setTimeout(()=>document.getElementById('nb-k').focus(),50);
+    ${valgt ? `<div class="valgt row between"><span><strong>${esc(valgt.navn)}</strong> <span class="ts">${valgt.nr}${valgt.sted?' · '+esc(valgt.sted):''}</span></span><button class="linkbtn" onclick="UI.nb.kundenr=null;visNyBestilling()">Bytt</button></div>`
+    : `${siste.length?`<div class="row wrapf" style="gap:8px;margin-bottom:8px">${siste.map(k=>`<button class="chip" onclick="UI.nb.kundenr=${k.nr};visNyBestilling()">${esc(k.navn)}</button>`).join('')}</div>`:''}
+       <div class="picker"><input type="search" id="nb-k" placeholder="Søk navn, sted eller kundenummer" oninput="kundePick(this.value)" autocomplete="off"><div id="nb-kl"></div></div>`}
+    <label class="f">Når</label>
+    <div class="row wrapf" style="gap:8px">${[['I dag',TODAY],['I morgen',addDays(1)]].map(([t,d])=>`<button class="chip${s.dato===d&&!s.velgDato?' on':''}" onclick="UI.nb.dato='${d}';UI.nb.velgDato=false;visNyBestilling()">${t}</button>`).join('')}<button class="chip${s.velgDato?' on':''}" onclick="UI.nb.velgDato=true;visNyBestilling()">Velg dato</button></div>
+    <div class="grid2" style="margin-top:4px">${s.velgDato?`<div><label class="f" for="nb-d">Dato</label><input type="date" id="nb-d" value="${s.dato}" onchange="UI.nb.dato=this.value||TODAY"></div>`:''}<div><label class="f" for="nb-t">Klokkeslett (valgfritt)</label><input type="time" id="nb-t" value="${s.tid}" onchange="UI.nb.tid=this.value"></div></div>
+    <label class="f" for="nb-h">Hva gjelder det?</label><textarea id="nb-h" oninput="UI.nb.tekst=this.value" placeholder="F.eks. ku med høy feber, ønsker besøk i dag">${esc(s.tekst)}</textarea>
+    <p class="ts" style="margin:6px 0 0">Tidspunktet for henvendelsen lagres automatisk. Trykk mikrofonen på tastaturet for å snakke inn teksten.</p>
+    <button class="btn primary stor" style="width:100%;margin-top:12px" onclick="lagreBestilling()">Opprett oppdrag</button>`);
 }
 function kundePick(q){
-  q=q.trim().toLowerCase(); const el=document.getElementById('nb-kl'); document.getElementById('nb-kn').value='';
-  if(!q){ el.innerHTML=''; return; }
-  const l=S.kunder.filter(k=>(k.navn+' '+k.nr+' '+(k.sted||'')+' '+(k.kontakt||'')).toLowerCase().includes(q)).slice(0,8);
-  el.innerHTML = `<div class="list">${l.length?l.map(k=>`<div class="opt" onclick="velgKunde(${k.nr})"><span>${esc(k.navn)}</span><span class="muted small">${k.nr} · ${esc(k.sted||'')}</span></div>`).join(''):'<div class="opt muted">Ingen treff. Nye kunder opprettes i Duett og lastes inn derfra.</div>'}</div>`;
+  const el=document.getElementById('nb-kl'); if(!q.trim()){ el.innerHTML=''; return; }
+  const l=rangert(S.kunder, q, k=>k.navn+' '+k.nr+' '+(k.sted||'')+' '+(k.kontakt||'')).slice(0,8);
+  el.innerHTML=`<div class="list">${l.length?l.map(k=>`<div class="opt" onclick="velgKunde(${k.nr})"><span>${esc(k.navn)}</span><span class="muted small">${k.nr} · ${esc(k.sted||'')}</span></div>`).join(''):'<div class="opt muted">Ingen treff.</div>'}</div>`;
 }
-function velgKunde(nr){ const k=kunde(nr); document.getElementById('nb-k').value=k.navn+' ('+nr+')'; document.getElementById('nb-kn').value=nr; document.getElementById('nb-kl').innerHTML=''; }
-function lagreBestilling(){
-  const nr=+document.getElementById('nb-kn').value; if(!nr){ toast('Velg en kunde fra listen'); return; }
-  const o={id:uid(),nr:null,kundenr:nr,dato:document.getElementById('nb-d').value||TODAY,tid:document.getElementById('nb-t').value,
-    henvendelse:document.getElementById('nb-h').value.trim()||'(ingen beskrivelse)',henvendelseTs:nowTs(),status:'bestilt',
+function velgKunde(nr){ UI.nb.kundenr=nr; visNyBestilling(); }
+function nyttOppdrag(kundenr, dato, tid, tekst){
+  const n={id:uid(),nr:null,kundenr,dato,tid:tid||'',henvendelse:tekst,henvendelseTs:nowTs(),status:'bestilt',
     linjer:[],dyr:[],flokk:[],fakturer:false,fakturert:false,vakt:null,dhpTs:null,journalTs:null,ferdigTs:null,fakturertTs:null,opprinnelig:null};
-  S.oppdrag.push(o); save(); closeModal(); UI.listTab='apne';
-  if(UI.view!=='kunde' && UI.view!=='kalender') UI.view='oppdrag';
+  S.oppdrag.push(n); return n;
+}
+function lagreBestilling(){
+  const s=UI.nb; if(!s.kundenr){ toast('Velg en kunde'); return; }
+  const t=document.getElementById('nb-t'); if(t) s.tid=t.value;
+  const d=document.getElementById('nb-d'); if(d && d.value) s.dato=d.value;
+  nyttOppdrag(s.kundenr, s.dato||TODAY, s.tid, (s.tekst||'').trim()||'(ingen beskrivelse)');
+  UI.nb=null; save(); closeModal(); UI.listTab='apne';
+  if(!['kunde','kalender','oppdrag'].includes(UI.view)){ UI.view='idag'; UI.current=null; }
   render(); toast('Oppdrag opprettet');
 }
 
-// ================= Oppdragsdetalj =================
+// ================= Besøket =================
 const cur = () => S.oppdrag.find(o=>o.id===UI.current);
 VIEWS.detalj = () => {
   const o=cur(); if(!o) return '<div class="empty">Fant ikke oppdraget.</div>';
-  const k=kunde(o.kundenr);
-  const editable = isMia() && kanSkrive() && !o.fakturert && apen(o);
-  let h=`<div class="noprint" style="margin-top:12px"><button class="btn ghost" onclick="go('oppdrag')">← Oppdrag</button></div>
-  <div class="row between wrapf" style="margin:6px 0 2px"><h1 style="margin:0" class="grow">${esc(k.navn)}</h1>${pill(o)}</div>
-  <div class="small muted" style="margin-bottom:10px">${esc(oNr(o))}</div>
-  <div class="card"><div class="kv">
-    <div>Kunde</div><div><a href="#" onclick="visKunde(${k.nr});return false">${k.nr}</a>${k.kontakt?' · '+esc(k.kontakt):''}</div>
-    <div>Adresse</div><div>${esc(k.adresse||'')}, ${esc(k.postnr||'')} ${esc(k.sted||'')}</div>
-    <div>Telefon</div><div>${esc(k.tlf||'')}</div>
-    <div>Dato</div><div>${editable?`<input type="date" value="${o.dato}" onchange="cur().dato=this.value;save();render()" style="max-width:170px">`:fmtDate(o.dato)}${o.tid?' kl. '+esc(o.tid):''}</div>
-    <div>På vakt</div><div>${vaktFelt(o, isMia()&&kanSkrive()&&!o.fakturert)}</div>
-    <div>Henvendelse</div><div>${isMia()?esc(o.henvendelse):'<span class="muted">Skjult (journalopplysning)</span>'}<div class="ts">Mottatt ${fmtTs(o.henvendelseTs)}</div></div>
-    ${o.opprinnelig?`<div>Opprinnelig</div><div>${fmtDate(o.opprinnelig.slice(0,10))}${o.opprinnelig.length>10?' kl. '+esc(o.opprinnelig.slice(11)):''} <span class="ts">· ${flyttRetning(o).toLowerCase()||'flyttet'}</span></div>`:''}
-    ${!o.opprinnelig&&o.utsattFra?`<div>Utsatt fra</div><div>${fmtDate(o.utsattFra)}</div>`:''}
-  </div></div>`;
-  // Dyr, journal og medisiner
-  if(isMia()){
-    h+=`<h3>Dyr, journal og medisiner</h3>`;
-    if(!o.dyr.length && !editable) h+=`<div class="lock">Ingen journalførte dyr på dette oppdraget.</div>`;
-    o.dyr.forEach((d,i)=>{ h+= editable ? dyrRediger(o,d,i) : dyrVis(d); });
-    if(editable) h+=`<button class="btn sm" onclick="nyttDyr()">+ Legg til dyr</button>`;
-    h+=`<div class="ts" style="margin-top:6px">Sist journalført: ${fmtTs(o.journalTs)}</div>`;
-  } else {
-    h+=`<h3>Journal</h3><div class="lock">🔒 Journalopplysninger (dyr, diagnose, behandling, notater og medisiner) er bare tilgjengelig for veterinæren.</div>`;
-  }
-  // Tjenester og varer
-  h+=`<h3>Tjenester og varer</h3><div class="card">`;
-  if(o.linjer.length){
-    h+=`<table class="lines"><tr><th>Vare</th><th class="right">Antall</th><th class="right">Pris</th><th class="right">Sum</th>${editable?'<th></th>':''}</tr>`+
-    o.linjer.map((l,i)=>`<tr><td>${esc(l.navn)}<div class="ts">${l.varenr}</div></td>
-      <td class="right">${editable?`<input type="number" min="0" step="any" value="${l.antall}" onchange="linjeSet(${i},'antall',this.value)">`:l.antall}</td>
-      <td class="right">${editable?`<input type="number" min="0" step="any" value="${l.pris}" onchange="linjeSet(${i},'pris',this.value)">`:kr(l.pris)}</td>
-      <td class="right">${kr(l.antall*l.pris)}</td>${editable?`<td><button class="x" onclick="fjernLinje(${i})" title="Fjern">×</button></td>`:''}</tr>`).join('')+`</table>`;
-  } else h+=`<div class="muted small">Ingen tjenester eller varer registrert.</div>`;
-  if(editable) h+=`<div class="picker" style="margin-top:10px"><input type="search" placeholder="+ Legg til tjeneste eller vare (søk)" oninput="varePick(this.value)" autocomplete="off"><div id="pick-vare"></div></div>`;
-  h+=`</div>`;
-  // Medisiner til flokk / uten dyr
-  if(isMia()){
-    const fl=o.flokk||[];
-    h+=`<h3>Medisiner til flokk eller uten registrert dyr</h3><div class="card">`;
-    if(editable){
-      h+= fl.map((m,j)=>`<div class="medrad"><div class="row between"><strong class="small">${esc(m.navn)}</strong><span class="row" style="gap:6px"><span class="ts">${kr(m.pris)} kr</span><button class="x" onclick="fjernFlokk(${j})" title="Fjern">×</button></span></div>
-        <div class="grid2" style="gap:8px;margin-top:4px"><label class="ts" style="display:block">Dyreart<select onchange="flokkSet(${j},'art',this.value)" style="padding:6px 8px;margin-top:2px"><option value="">Velg</option>${ARTER.map(a=>`<option ${m.art===a?'selected':''}>${a}</option>`).join('')}</select></label>
-        <label class="ts" style="display:block">Antall dyr<input type="number" min="0" step="1" value="${m.antallDyr??''}" onchange="flokkSet(${j},'antallDyr',this.value)" style="padding:6px 8px;margin-top:2px"></label></div>
-        <div class="medgrid"><label class="ts">Mengde<input type="number" min="0" step="any" value="${m.antall}" onchange="flokkSet(${j},'antall',this.value)"></label>
-        <label class="ts">Gitt<input type="datetime-local" value="${localInput(m.tid||nowTs())}" onchange="flokkSet(${j},'tid',this.value)"></label></div></div>`).join('');
-      h+=`<div class="picker" style="margin-top:6px"><input type="search" placeholder="+ Legg til medisin (søk)" oninput="medPick(this.value,'f')" autocomplete="off"><div id="pick-med-f"></div></div>`;
-    } else {
-      h+= fl.length ? fl.map(m=>`<div class="small" style="padding:3px 0">${esc(m.navn)} × ${m.antall}${m.art||m.antallDyr?` <span class="muted">· ${esc(m.art||'')}${m.antallDyr?' · '+m.antallDyr+' dyr':''}</span>`:''} <span class="ts">${fmtTs(m.tid)}</span></div>`).join('') : '<div class="small muted">Ingen.</div>';
-    }
-    h+=`</div>`;
-  }
-  h+=`<div class="card"><div class="row between"><span>Medisiner <span class="small muted">· faktureres som én linje</span></span><strong>${kr(medSum(o))} kr</strong></div></div>`;
-  h+=`<div class="card"><div class="row between"><span>Sum eks. mva</span><span>${kr(sum(o))} kr</span></div>
-    <div class="row between small muted"><span>Mva 25 %</span><span>${kr(sum(o)*MVA)} kr</span></div>
-    <div class="row between total" style="margin-top:4px"><span>Sum inkl. mva</span><span>${kr(sum(o)*(1+MVA))} kr</span></div></div>`;
-  if(isMia() && kanSkrive() && !o.fakturert){
-    if(apen(o)) h+=`<div class="row wrapf noprint" style="margin-top:14px;gap:8px"><button class="btn primary grow" onclick="ferdigDialog()">Ferdig behandlet …</button><button class="btn" onclick="tidspunktDialog()">Endre tidspunkt</button></div>`;
-    else h+=`<div class="card" style="background:var(--brand-2);border-color:transparent"><div class="small">Ferdig behandlet ${fmtTs(o.ferdigTs)}. ${fakturerbar(o)?'Oppdraget er klart til fakturering.':'Oppdraget går ikke til fakturering.'}${harMed(o)?(o.dhpTs?' Rapportert til Dyrehelseportalen '+fmtTs(o.dhpTs)+'.':' <strong>Ikke rapportert til Dyrehelseportalen.</strong>'):''}</div>
-      <div style="margin-top:8px"><button class="btn sm" onclick="gjenapne()">Gjenåpne for endringer</button></div></div>`;
-  }
-  if(o.fakturert) h+=`<div class="lock" style="margin-top:12px">Fakturert ${fmtTs(o.fakturertTs)} – låst for endringer.</div>`;
-  return h+'<div style="height:70px"></div>';
+  if(!isMia()) return detaljFakturering(o);
+  const k=kunde(o.kundenr), ed=kanSkrive() && !o.fakturert && apen(o), fane=UI.fane||'info', n=(o.dyr||[]).length;
+  let h=`<div class="noprint tilbake"><button class="linkbtn" onclick="tilbake()">← ${fraNavn(UI.fra||'idag')}</button></div>
+    <div class="row between" style="gap:8px;margin-top:2px"><h1 style="margin:0" class="grow">${esc(k.navn)}</h1>${pill(o)}</div>
+    <div class="small muted">${esc(oNr(o))} · ${fmtDateKort(o.dato)}${o.tid?' kl. '+esc(o.tid):''} · ${paVakt(o)?'på vakt':'ikke på vakt'}</div>
+    <div class="row noprint" style="gap:8px;margin:10px 0 12px">${kontaktKnapper(k)}${ed?`<button class="btn ikon" aria-label="Flere valg: flytt, ny kontroll, avlys" onclick="besokMeny()">${IK.mer}</button>`:''}</div>
+    <div class="seg noprint" role="tablist">${[['info','Info'],['behandling','Behandling'+(n?' · '+n:'')],['avslutt','Avslutt']].map(([f,t])=>`<button role="tab" aria-selected="${fane===f}" class="${fane===f?'on':''}" onclick="byttFane('${f}')">${t}</button>`).join('')}</div>`;
+  h += fane==='info' ? faneInfo(o,k,ed) : fane==='behandling' ? faneBehandling(o,k,ed) : faneAvslutt(o,k,ed);
+  return h+'<div style="height:60px"></div>';
 };
-function vaktFelt(o, kanEndre){
-  const auto=autoVakt(o), manuell=(o.vakt===true||o.vakt===false);
-  const tekst = paVakt(o) ? 'Ja' : 'Nei';
-  if(!kanEndre) return `${tekst}<span class="ts"> · ${manuell?'satt manuelt':'fra kalenderen'}</span>`;
-  return `<select style="width:auto;padding:5px 8px" onchange="settVakt(this.value)">
-    <option value="auto" ${!manuell?'selected':''}>Fra kalenderen (${auto?'Ja':'Nei'})</option>
-    <option value="ja" ${o.vakt===true?'selected':''}>Ja</option><option value="nei" ${o.vakt===false?'selected':''}>Nei</option></select>`;
+function byttFane(f){ lagreNa(); UI.fane=f; UI.dyrApen=null; UI.prisApen=null; render(); window.scrollTo(0,0); }
+function handlingslinje(o){
+  const f=UI.fane||'info';
+  const knapp = f==='info' ? `<button class="btn primary grow" onclick="startBesok('${o.id}')">${pabegynt(o)?'Til behandlingen':'Start behandling'}</button>`
+    : f==='behandling' ? `<button class="btn primary grow" onclick="byttFane('avslutt')">Videre til avslutning</button>`
+    : `<button class="btn primary grow" onclick="fullforBesok()">Fullfør besøket</button>`;
+  return `<div id="handling" class="handling"><div class="in">${knapp}</div></div>`;
 }
-function settVakt(v){ cur().vakt = v==='ja' ? true : v==='nei' ? false : null; save(); render(); }
+const gruppeTekst = d => `${d.antall?d.antall+' ':''}${(d.antall===1?'':FLERTALL[d.art])||d.art||'dyr'}`;
+const oppsummer = x => { const d=(x.dyr||[]).map(d=>(d.gruppe?gruppeTekst(d):kortId(d.individ)||d.art)+': '+(d.diagnose||'uten diagnose')); return d.length ? d.slice(0,2).join(' · ')+(d.length>2?` · +${d.length-2}`:'') : (x.henvendelse||STATUS[x.status]); };
+function faneInfo(o,k,ed){
+  const tidl=S.oppdrag.filter(x=>x.kundenr===o.kundenr && x.id!==o.id && !apen(x) && x.dato<=TODAY).sort((a,b)=>b.dato.localeCompare(a.dato)).slice(0,3);
+  return `<div class="card"><div class="kv">
+      <div>Henvendelse</div><div>${esc(o.henvendelse)}<div class="ts">Mottatt ${fmtTs(o.henvendelseTs)}</div></div>
+      <div>Tidspunkt</div><div>${fmtDate(o.dato)}${o.tid?' kl. '+esc(o.tid):''}${o.opprinnelig?`<div class="ts">Opprinnelig ${fmtDate(o.opprinnelig.slice(0,10))}${o.opprinnelig.length>10?' kl. '+esc(o.opprinnelig.slice(11)):''} · ${(flyttRetning(o)||'flyttet').toLowerCase()}</div>`:(o.utsattFra?`<div class="ts">Utsatt fra ${fmtDate(o.utsattFra)}</div>`:'')}${ed?`<div><button class="linkbtn" onclick="tidspunktDialog()">Flytt</button></div>`:''}</div>
+      <div>På vakt</div><div>${vaktFelt(o, ed)}</div>
+      <div>Kunde</div><div><button class="linkbtn" onclick="visKunde(${k.nr})">${esc(k.navn)} (${k.nr})</button>${k.kontakt?'<br>'+esc(k.kontakt):''}</div>
+      <div>Adresse</div><div>${esc(adresseTekst(k))||'–'}</div>
+      <div>Telefon</div><div>${esc(k.tlf||'–')}</div>
+      <div>Produsentnr.</div><div>${esc(k.produsentnr||'–')}</div>
+    </div></div>
+    ${tidl.length?`<h3>Tidligere på gården</h3><div class="card list0">${tidl.map(x=>`<button class="rad" onclick="apne('${x.id}')"><span class="tid">${esc(fmtKort(x.dato))}</span><span class="grow sub" style="color:var(--ink);font-size:14px;margin:0">${esc(oppsummer(x))}</span>${IK.pil}</button>`).join('')}</div>`:''}`;
+}
+function faneBehandling(o,k,ed){
+  const dyr=o.dyr||[];
+  let h='';
+  if(!dyr.length) h+=`<div class="empty" style="padding:18px">Ingen dyr er registrert ennå.</div>`;
+  dyr.forEach((d,i)=>{ h += !ed ? dyrVis(d) : (UI.dyrApen===d.id ? dyrRediger(o,d,i) : dyrKort(o,d,i)); });
+  if(ed) h+=`<div class="row" style="gap:8px;margin-top:10px"><button class="btn grow" onclick="nyttDyr()">+ Ett dyr</button><button class="btn grow" onclick="flereDyr()">+ Flere dyr</button></div>
+    <p class="ts" style="margin-top:8px">«Flere dyr» passer når mange dyr får samme behandling, med eller uten øremerker. En øremerkeleser i tastaturmodus skriver nummeret rett inn i feltet.</p>`;
+  if(o.journalTs) h+=`<div class="ts" style="margin-top:6px">Sist journalført ${fmtTs(o.journalTs)}</div>`;
+  return h;
+}
+function dyrKort(o,d,i){
+  const meds=(d.medisiner||[]).map(m=>`${esc(m.navn)} × ${fmtTall(m.antall)}`).join(', ');
+  const tittel = d.gruppe ? `${esc(d.art)} · ${d.antall?d.antall+' dyr':'<span class="varsel">antall mangler</span>'}`
+    : `${esc(d.art)}${manglerId(d)?' · <span class="varsel">øremerke mangler</span>':erTomId(d.individ)?'':` · <span class="mono">${esc(d.individ)}</span>`}`;
+  const tidl = (!d.gruppe && !erTomId(d.individ)) ? tidligereFor(o, d.individ) : '';
+  return `<button class="card dyrkort" onclick="UI.dyrApen='${d.id}';render()">
+    <span class="row between" style="gap:8px"><strong class="grow">${tittel}</strong>${d.gruppe?'<span class="pill s-avlyst">Gruppe</span>':''}<span class="endre">Endre</span></span>
+    <span class="blk">${esc(d.diagnose)||'<span class="muted">Ingen diagnose ennå</span>'}${d.resultat?` · <strong>${esc(d.resultat)}</strong>`:''}</span>
+    ${meds?`<span class="small muted blk">${meds}</span>`:''}
+    ${tidl?`<span class="small tidl blk">${esc(tidl)}</span>`:''}
+  </button>`;
+}
 function dyrVis(d){
-  return `<div class="dyr"><div class="row between"><strong>${esc(d.art)}${d.individ?' · '+esc(d.individ):''}</strong>${d.individ?`<a class="small" href="#" onclick="dyrHistorikk('${esc(d.individ)}');return false">Historikk</a>`:''}</div>
-    <div class="kv" style="margin-top:6px"><div>Diagnose</div><div>${esc(d.diagnose)||'–'}</div><div>Behandling</div><div style="white-space:pre-wrap">${esc(d.behandling)||'–'}</div>${d.notat?`<div>Notater</div><div>${esc(d.notat)}</div>`:''}
-    <div>Medisiner</div><div>${(d.medisiner||[]).map(m=>`${esc(m.navn)} × ${m.antall} <span class="ts">${fmtTs(m.tid)}</span>`).join('<br>')||'–'}</div></div></div>`;
+  const tittel = d.gruppe ? `${esc(d.art)} · ${d.antall?d.antall+' dyr':'antall ikke oppgitt'} (gruppe)` : `${esc(d.art)}${d.individ?' · '+esc(d.individ):''}`;
+  return `<div class="dyr"><div class="row between"><strong>${tittel}</strong>${!d.gruppe&&!erTomId(d.individ)?`<button class="linkbtn" onclick="dyrHistorikk(${js(d.individ)})">Historikk</button>`:''}</div>
+    <div class="kv" style="margin-top:6px"><div>Diagnose</div><div>${esc(d.diagnose)||'–'}</div>${d.resultat?`<div>Resultat</div><div>${esc(d.resultat)}</div>`:''}<div>Behandling</div><div style="white-space:pre-wrap">${esc(d.behandling)||'–'}</div>${d.notat?`<div>Notater</div><div>${esc(d.notat)}</div>`:''}
+    <div>Medisiner</div><div>${(d.medisiner||[]).map(m=>`${esc(m.navn)} × ${fmtTall(m.antall)} <span class="ts">${fmtTs(m.tid)}</span>`).join('<br>')||'–'}</div></div></div>`;
 }
 function dyrRediger(o,d,i){
-  const med=d.medisiner||[];
-  return `<div class="dyr">
+  const med=d.medisiner||[], opts=d.gruppe?null:malResultat(malById(d.mal));
+  const kj=(!d.gruppe && erTomId(d.individ)) ? kjenteDyr(o.kundenr,o.id).filter(x=>!(o.dyr||[]).some(y=>y.individ===x.individ)).slice(0,4) : [];
+  return `<div class="dyr aapen">
+    <div class="row between"><strong>${d.gruppe?'Gruppe uten øremerker':'Dyr'}</strong><button class="btn sm" onclick="lagreNa();UI.dyrApen=null;render()">Ferdig</button></div>
     ${malVelger(o,i)}
-    <div class="grid2"><div><label class="f">Dyreart</label><select onchange="dyrSet(${i},'art',this.value)">${ARTER.map(a=>`<option ${d.art===a?'selected':''}>${a}</option>`).join('')}</select></div>
-    <div><label class="f">Individnr. / øremerke</label><input type="text" value="${esc(d.individ)}" onchange="dyrSet(${i},'individ',this.value)" placeholder="NO 12345 0001"></div></div>
-    <label class="f">Diagnose</label><input type="text" value="${esc(d.diagnose)}" onchange="dyrSet(${i},'diagnose',this.value)">
-    <label class="f">Behandling</label><textarea onchange="dyrSet(${i},'behandling',this.value)">${esc(d.behandling)}</textarea>
-    <label class="f">Egne notater</label><textarea onchange="dyrSet(${i},'notat',this.value)" style="min-height:50px">${esc(d.notat)}</textarea>
-    <label class="f">Medisiner gitt til dette dyret</label>
-    ${med.map((m,j)=>`<div class="medrad"><div class="row between"><strong class="small">${esc(m.navn)}</strong><span class="row" style="gap:6px"><span class="ts">${kr(m.pris)} kr</span><button class="x" onclick="fjernMed(${i},${j})" title="Fjern">×</button></span></div>
-      <div class="medgrid"><label class="ts">Mengde<input type="number" min="0" step="any" value="${m.antall}" onchange="medSet(${i},${j},'antall',this.value)"></label>
+    <div class="grid2"><div><label class="f" for="art-${d.id}">Dyreart</label><select id="art-${d.id}" onchange="dyrSet(${i},'art',this.value);render()">${ARTER.map(a=>`<option ${d.art===a?'selected':''}>${a}</option>`).join('')}</select></div>
+    <div>${d.gruppe ? `<label class="f" for="ant-${d.id}">Antall dyr</label><input type="number" id="ant-${d.id}" inputmode="numeric" min="0" value="${d.antall??''}" oninput="dyrAntall(${i},this.value)">`
+      : `<label class="f" for="ind-${d.id}">${ID_ARTER.includes(d.art)?'Øremerke':'ID (valgfritt)'}</label><input type="text" id="ind-${d.id}" value="${esc(d.individ)}" oninput="dyrSetLive(${i},'individ',this.value,this)" placeholder="${ID_ARTER.includes(d.art)?'NO 12345 0001':'Navn eller chipnummer'}" autocapitalize="characters" autocomplete="off" spellcheck="false">`}</div></div>
+    ${kj.length?`<div class="row wrapf" style="gap:6px;margin-top:8px"><span class="ts" style="width:100%">Behandlet her før:</span>${kj.map(x=>`<button class="chip" onclick="velgKjent(${i},${js(x.individ)},${js(x.art)})">${esc(kortId(x.individ))} · ${esc(kortTekst(x.diagnose,18).toLowerCase())} ${esc(fmtKort(x.dato))}</button>`).join('')}</div>`:''}
+    ${opts?`<label class="f">Resultat</label><div class="sg">${opts.map(v=>`<button class="${d.resultat===v?'on':''}" onclick="settResultat(${i},${js(v)})">${esc(v)}</button>`).join('')}</div>`:''}
+    <label class="f" for="dia-${d.id}">Diagnose</label><input type="text" id="dia-${d.id}" value="${esc(d.diagnose)}" oninput="dyrSetLive(${i},'diagnose',this.value)">
+    <label class="f" for="beh-${d.id}">Behandling</label><textarea id="beh-${d.id}" oninput="dyrSetLive(${i},'behandling',this.value)">${esc(d.behandling)}</textarea>
+    <label class="f" for="not-${d.id}">Egne notater</label><textarea id="not-${d.id}" oninput="dyrSetLive(${i},'notat',this.value)" style="min-height:50px">${esc(d.notat)}</textarea>
+    <label class="f">${d.gruppe?'Medisiner til gruppen, mengde totalt':'Medisiner gitt til dette dyret'}</label>
+    ${med.map((m,j)=>`<div class="medrad"><div class="row between"><strong class="small grow">${esc(m.navn)}</strong><span class="ts">${kr(m.pris)} kr</span><button class="x" onclick="fjernMed(${i},${j})" aria-label="Fjern ${esc(m.navn)}">×</button></div>
+      <div class="medgrid"><label class="ts">Mengde<input type="number" min="0" step="any" inputmode="decimal" value="${m.antall}" oninput="medSetLive(${i},${j},this.value)"></label>
       <label class="ts">Gitt<input type="datetime-local" value="${localInput(m.tid||nowTs())}" onchange="medSet(${i},${j},'tid',this.value)"></label></div></div>`).join('')}
-    <div class="picker" style="margin-top:6px"><input type="search" placeholder="+ Legg til medisin (søk)" oninput="medPick(this.value,${i})" autocomplete="off"><div id="pick-med-${i}"></div></div>
-    <div class="row between" style="margin-top:8px"><span class="ts">${d.individ?`<a href="#" onclick="dyrHistorikk('${esc(d.individ)}');return false">Se historikk for dette dyret</a>`:''}</span><button class="btn ghost sm warn" onclick="fjernDyr(${i})">Fjern dyr</button></div>
+    <div class="picker" style="margin-top:6px"><input type="search" placeholder="+ Legg til medisin (søk)" oninput="medPick(this.value,${i})" autocomplete="off" aria-label="Legg til medisin"><div id="pick-med-${i}"></div></div>
+    <div class="row between" style="margin-top:10px">${!d.gruppe&&!erTomId(d.individ)?`<button class="linkbtn" onclick="dyrHistorikk(${js(d.individ)})">Historikk for dyret</button>`:'<span></span>'}<button class="btn ghost sm warn" onclick="fjernDyr(${i})">Fjern</button></div>
   </div>`;
 }
 function touchJournal(){ cur().journalTs=nowTs(); }
-function dyrSet(i,f,v){ cur().dyr[i][f]=v; touchJournal(); save(); }
-function nyttDyr(){ cur().dyr.push({id:uid(),art:'Storfe',individ:'',diagnose:'',behandling:'',notat:'',medisiner:[]}); touchJournal(); save(); render(); }
-function fjernDyr(i){ modal(`<h2>Fjerne dyret?</h2><p class="small muted">Journal og medisiner for dette dyret på oppdraget fjernes.</p><div class="row" style="justify-content:flex-end;gap:8px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="cur().dyr.splice(${i},1);touchJournal();save();closeModal();render()">Fjern</button></div>`); }
-function linjeSet(i,f,v){ cur().linjer[i][f]=+v||0; save(); render(); }
-function fjernLinje(i){ cur().linjer.splice(i,1); save(); render(); }
-function medSet(i,j,f,v){ const m=cur().dyr[i].medisiner[j]; if(f==='tid') m.tid = v ? new Date(v).toISOString() : nowTs(); else m.antall=+v||0; touchJournal(); save(); if(f!=='tid') render(); }
+function dyrSet(i,f,v){ const d=cur().dyr[i]; if(!d) return; d[f]=v; touchJournal(); save(); }
+function dyrSetLive(i,f,v,el){ const d=cur().dyr[i]; if(!d) return; if(f==='individ'){ const n=normId(v); if(n!==v){ v=n; if(el) el.value=n; } } d[f]=v; touchJournal(); lagreSnart(); }
+function settResultat(i,v){ const d=cur().dyr[i]; d.resultat = d.resultat===v ? null : v; touchJournal(); save(); render(); }
+function dyrAntall(i,v){ const o=cur(), d=o.dyr[i]; if(!d) return; d.antall = v==='' ? null : Math.max(0,Math.round(+v)); if(d.mal) oppdaterStykkTjenester(o, malById(d.mal)); touchJournal(); lagreSnart(); }
+function velgKjent(i,individ,art){ const d=cur().dyr[i]; d.individ=individ; d.art=art||d.art; touchJournal(); save(); render(); }
+function nyttDyr(){
+  lagreNa();
+  const o=cur(), art=sistArt(o), p=ID_ARTER.includes(art)?gardPrefiks(o.kundenr):'';
+  const d={id:uid(),art,individ:p?p+' ':'',diagnose:'',behandling:'',notat:'',medisiner:[]};
+  o.dyr.push(d); UI.dyrApen=d.id; touchJournal(); save(); render();
+  setTimeout(()=>{ const el=document.getElementById('ind-'+d.id); if(el){ el.scrollIntoView({block:'center'}); el.focus(); const L=el.value.length; try{ el.setSelectionRange(L,L); }catch(e){} } },60);
+}
+function fjernDyr(i){ modal(`<h2>Fjerne registreringen?</h2><p class="small muted">Journal og medisiner for ${cur().dyr[i].gruppe?'gruppen':'dyret'} på dette oppdraget fjernes.</p><div class="row" style="justify-content:flex-end;gap:8px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="bekreftFjernDyr(${i})">Fjern</button></div>`); }
+function bekreftFjernDyr(i){ const o=cur(), d=o.dyr.splice(i,1)[0]; if(d && d.mal){ const m=malById(d.mal); if(m) oppdaterStykkTjenester(o,m); } UI.dyrApen=null; touchJournal(); save(); closeModal(); render(); }
+function medSetLive(i,j,v){ const m=cur().dyr[i].medisiner[j]; m.antall=+String(v).replace(',','.')||0; touchJournal(); lagreSnart(); }
+function medSet(i,j,f,v){ const m=cur().dyr[i].medisiner[j]; if(f==='tid') m.tid = v ? new Date(v).toISOString() : nowTs(); else m.antall=+v||0; touchJournal(); save(); }
 function fjernMed(i,j){ cur().dyr[i].medisiner.splice(j,1); touchJournal(); save(); render(); }
+function medPick(q,i){
+  const el=document.getElementById('pick-med-'+i); if(!q.trim()){ el.innerHTML=''; return; }
+  const l=rangert(aktiveMedisiner(), q, x=>x.navn).slice(0,10);
+  el.innerHTML=`<div class="list">${l.length?l.map(x=>`<div class="opt" onclick="leggTilMed('${i}','${x.id}')"><span>${esc(x.navn)}</span><span class="muted small">${kr(x.pris)} kr</span></div>`).join(''):'<div class="opt muted">Ingen treff. Legg til medisinen under Mer → Medisinliste.</div>'}</div>`;
+}
+function leggTilMed(i,id){
+  const x=S.medisiner.find(m=>m.id===id); if(!x) return;
+  if(i==='fd'){ if(!UI.fd.meds.some(m=>m.navn===x.navn)) UI.fd.meds.push({navn:x.navn,antall:1,pris:x.pris}); visFlereDyr(); return; }
+  const d=cur().dyr[+i]; d.medisiner=d.medisiner||[];
+  d.medisiner.push({id:uid(),navn:x.navn,antall:1,pris:x.pris,tid:nowTs()}); touchJournal(); save(); render();
+}
+function dyrHistorikk(ind){
+  lagreNa();
+  const l=S.oppdrag.flatMap(o=>(o.dyr||[]).filter(d=>!d.gruppe && d.individ===ind).map(d=>({o,d}))).sort((a,b)=>b.o.dato.localeCompare(a.o.dato));
+  const f=l[0];
+  modal(`<div class="row between"><h2 style="margin:0" class="mono">${esc(ind)}</h2><button class="linkbtn" onclick="closeModal()">Lukk</button></div>
+    <p class="small muted">${f?esc(f.d.art)+' · '+esc(kunde(f.o.kundenr).navn)+' · ':''}${l.length} ${l.length===1?'registrering':'registreringer'}</p>
+    <div class="card list0" style="margin:0">${l.map(({o,d})=>`<button class="rad" onclick="closeModal();apne('${o.id}','behandling')"><span class="tid">${esc(fmtKort(o.dato))}</span><span class="grow"><strong class="blk">${esc(d.diagnose||'Uten diagnose')}${d.resultat?' · '+esc(d.resultat):''}</strong><span class="sub">${esc((d.medisiner||[]).map(m=>m.navn+' × '+fmtTall(m.antall)).join(', ')||kortTekst(d.behandling,70))}</span></span>${IK.pil}</button>`).join('')||'<div class="empty">Ingen registreringer.</div>'}</div>`);
+}
+
+// Avslutt
+function faneAvslutt(o,k,ed){
+  if(!ed){
+    let s='';
+    if(o.fakturert) s+=`<div class="lock" style="margin-bottom:12px">Fakturert ${fmtTs(o.fakturertTs)}. Oppdraget er låst for endringer.</div>`;
+    else if(!apen(o)) s+=`<div class="card" style="background:var(--brand-2);border-color:transparent"><div class="small">${o.status==='avlyst'?'Avlyst':'Fullført'} ${fmtTs(o.ferdigTs)}. ${fakturerbar(o)?'Klar til fakturering.':'Går ikke til fakturering.'}${harMed(o)?(o.dhpTs?' Rapportert til Dyrehelseportalen '+fmtTs(o.dhpTs)+'.':' <strong>Ikke rapportert til Dyrehelseportalen.</strong>'):''}</div>${kanSkrive()?`<button class="btn sm" style="margin-top:8px" onclick="gjenapne()">Åpne igjen for endringer</button>`:''}</div>`;
+    return s+tjenesterLes(o)+sumKort(o);
+  }
+  let h=`<h3>Tjenester og varer</h3><div class="card list0">`;
+  if(!o.linjer.length) h+=`<div style="padding:12px 14px"><div class="small muted">Ingen tjenester er lagt inn.</div><button class="btn sm" style="margin-top:8px" onclick="leggStandard()">Legg til grunnhonorar og ${paVakt(o)?'kjøring vakt':'kjøring'}</button></div>`;
+  h+=o.linjer.map((l,i)=>{ const v=S.varer.find(x=>x.nr===l.varenr), enh=((v&&v.enhet)||'').toLowerCase();
+    const fri = !v || v.pris==null || !(+v.pris>0) || v.type==='Beløp' || +l.pris!==+v.pris || UI.prisApen===i;
+    const pris = fri ? `à <input class="pris" type="number" min="0" step="any" inputmode="decimal" value="${l.pris}" oninput="linjePrisLive(${i},this.value)" aria-label="Pris for ${esc(l.navn)}"> kr${enh?' per '+esc(enh):''}`
+      : `<button class="linkbtn pris-lenke" onclick="UI.prisApen=${i};render()" aria-label="Endre prisen for ${esc(l.navn)}">à ${kr(l.pris)} kr${enh?' per '+esc(enh):''}</button>`;
+    return `<div class="rad linje"><span class="grow"><strong class="blk">${esc(l.navn)}</strong><span class="sub">${pris} · sum <span id="ls-${i}">${kr(l.antall*l.pris)} kr</span></span></span>
+      <label class="antall"><input type="number" min="0" step="any" inputmode="decimal" value="${l.antall}" class="${+l.antall>0?'':'tom'}" oninput="linjeSetLive(${i},this.value)" aria-label="Antall ${esc(l.navn)}"><span class="ts">${esc(enh||'stk')}</span></label>
+      <button class="x" onclick="fjernLinje(${i})" aria-label="Fjern ${esc(l.navn)}">×</button></div>`; }).join('');
+  if(kjFeil(o)) h+=`<div class="rad" style="background:#fdf6ef">${IK.varsel}<span class="grow small">${paVakt(o)?'Besøket er på vakt, men har vanlig kjøring.':'Besøket er ikke på vakt, men har kjøring vakt.'}</span><button class="btn sm" onclick="byttKjoring()">Bytt</button></div>`;
+  const fav=mestBrukteVarer(4, new Set(o.linjer.map(l=>l.varenr)));
+  h+=`<div class="tilleggsrad">${fav.map(v=>`<button class="chip" onclick="leggTilVare(${v.nr})">+ ${esc(v.navn)}</button>`).join('')}</div>
+    <div class="picker" style="padding:8px 14px 12px"><input type="search" placeholder="Søk etter annen vare eller tjeneste" oninput="varePick(this.value)" autocomplete="off" aria-label="Søk etter vare eller tjeneste"><div id="pick-vare"></div></div></div>`;
+  h+=sumKort(o);
+  const s=sjekk(o);
+  h+=`<h3>Sjekk før du avslutter</h3><div class="card list0">${s.length ? s.map(x=>`<button class="rad" onclick="byttFane('${x.fane}')">${IK.varsel}<span class="grow">${esc(x.t)}</span>${IK.pil}</button>`).join('') : `<div class="rad">${IK.ok}<span class="grow">Alt ser komplett ut</span></div>`}</div>`;
+  h+=`<div class="row" style="gap:8px;margin-top:12px"><button class="btn grow" onclick="avlysDialog()">Avlys</button><button class="btn grow" onclick="tidspunktDialog()">Flytt</button><button class="btn grow" onclick="nyKontrollDialog()">Ny kontroll</button></div>`;
+  return h;
+}
+function tjenesterLes(o){
+  return `<h3>Tjenester og varer</h3><div class="card">${o.linjer.length?`<table class="lines"><tr><th>Vare</th><th class="right">Antall</th><th class="right">Sum</th></tr>${o.linjer.map(l=>`<tr><td>${esc(l.navn)}</td><td class="right">${fmtTall(l.antall)}</td><td class="right">${kr(l.antall*l.pris)}</td></tr>`).join('')}</table>`:'<div class="small muted">Ingen tjenester eller varer.</div>'}</div>`;
+}
+function sumKort(o){
+  const n=alleMedLinjer(o).length;
+  return `<div class="card"><div class="row between"><span>Medisiner${n?` · ${n} ${n===1?'linje':'linjer'}`:''} <span class="small muted">· én linje på fakturaen</span></span><span>${kr(medSum(o))} kr</span></div>
+    <div class="row between total" style="margin-top:6px;padding-top:6px;border-top:1px solid var(--line)"><span>Sum eks. mva</span><span id="sum-eks">${kr(sum(o))} kr</span></div>
+    <div class="row between small muted"><span>Inkl. mva</span><span id="sum-inkl">${kr(sum(o)*(1+MVA))} kr</span></div></div>`;
+}
+function linjeSetLive(i,v){ const l=cur().linjer[i]; if(!l) return; l.antall=+String(v).replace(',','.')||0; lagreSnart(); oppdaterSum(); }
+function linjePrisLive(i,v){ const l=cur().linjer[i]; if(!l) return; l.pris=+String(v).replace(',','.')||0; lagreSnart(); oppdaterSum(); }
+function oppdaterSum(){
+  const o=cur(); if(!o) return;
+  o.linjer.forEach((l,i)=>{ const el=document.getElementById('ls-'+i); if(el) el.textContent=kr(l.antall*l.pris)+' kr'; });
+  const a=document.getElementById('sum-eks'), b=document.getElementById('sum-inkl'); if(a) a.textContent=kr(sum(o))+' kr'; if(b) b.textContent=kr(sum(o)*(1+MVA))+' kr';
+}
+function fjernLinje(i){ cur().linjer.splice(i,1); UI.prisApen=null; save(); render(); }
+function leggStandard(){ standardTjenester(cur()); save(); render(); }
 function varePick(q){
-  q=q.trim().toLowerCase(); const el=document.getElementById('pick-vare'); if(!q){ el.innerHTML=''; return; }
-  const l=aktiveVarer().filter(x=>x.navn.toLowerCase().includes(q)||String(x.nr).includes(q)).slice(0,10);
+  const el=document.getElementById('pick-vare'); if(!q.trim()){ el.innerHTML=''; return; }
+  const l=rangert(aktiveVarer(), q, x=>x.navn+' '+x.nr).slice(0,10);
   el.innerHTML=`<div class="list">${l.length?l.map(x=>`<div class="opt" onclick="leggTilVare(${x.nr})"><span>${esc(x.navn)}</span><span class="muted small">${x.pris!=null?kr(x.pris)+' kr':''}${x.enhet?' / '+esc(x.enhet):''}</span></div>`).join(''):'<div class="opt muted">Ingen treff</div>'}</div>`;
 }
-function leggTilVare(nr){ const v=S.varer.find(x=>x.nr===nr); cur().linjer.push({varenr:v.nr,navn:v.navn,antall:1,pris:v.pris||0}); save(); render(); }
-function medPick(q,i){
-  q=q.trim().toLowerCase(); const el=document.getElementById('pick-med-'+i); if(!q){ el.innerHTML=''; return; }
-  const l=aktiveMedisiner().filter(x=>x.navn.toLowerCase().includes(q)).slice(0,10);
-  el.innerHTML=`<div class="list">${l.length?l.map(x=>`<div class="opt" onclick="leggTilMed('${i}','${x.id}')"><span>${esc(x.navn)}</span><span class="muted small">${kr(x.pris)} kr</span></div>`).join(''):'<div class="opt muted">Ingen treff. Legg til medisinen under Meny → Medisinliste.</div>'}</div>`;
+function leggTilVare(nr){ const v=S.varer.find(x=>x.nr===nr), o=cur(); if(!v) return; const l=o.linjer.find(x=>x.varenr===nr); if(l && !v.enhet) l.antall=(+l.antall||0)+1; else if(!l) o.linjer.push(nyLinje(v,o)); save(); render(); }
+function fullforBesok(){
+  lagreNa(); const s=sjekk(cur());
+  if(s.length){ modal(`<h2>Fullføre besøket?</h2><p class="small">Dette mangler fortsatt:</p><ul class="small" style="padding-left:18px">${s.map(x=>`<li>${esc(x.t)}</li>`).join('')}</ul><p class="small muted">Du kan fylle ut resten senere. Fullførte oppdrag kan åpnes igjen til de er fakturert.</p><div class="row" style="justify-content:flex-end;gap:8px;margin-top:12px"><button class="btn" onclick="closeModal()">Gå tilbake</button><button class="btn primary" onclick="closeModal();bekreftFullfor()">Fullfør likevel</button></div>`); return; }
+  bekreftFullfor();
 }
-function flokkSet(j,f,v){ const m=cur().flokk[j]; if(f==='tid') m.tid=v?new Date(v).toISOString():nowTs(); else if(f==='art') m.art=v; else if(f==='antallDyr') m.antallDyr = v===''?null:Math.max(0,Math.round(+v)); else m.antall=+v||0; touchJournal(); save(); if(f==='antall') render(); }
-function fjernFlokk(j){ cur().flokk.splice(j,1); touchJournal(); save(); render(); }
-function leggTilMed(i,id){ const x=S.medisiner.find(m=>m.id===id);
-  if(i==='f'){ const o=cur(); o.flokk=o.flokk||[]; const forrige=o.flokk.at(-1); o.flokk.push({id:uid(),navn:x.navn,antall:1,pris:x.pris,tid:nowTs(),art:forrige?forrige.art:'',antallDyr:forrige?forrige.antallDyr:null}); touchJournal(); save(); render(); return; }
-  const d=cur().dyr[+i]; d.medisiner=d.medisiner||[]; d.medisiner.push({id:uid(),navn:x.navn,antall:1,pris:x.pris,tid:nowTs()}); touchJournal(); save(); render(); }
-function ferdigDialog(){
-  const o=cur();
-  modal(`<h2>Ferdig behandlet</h2>
-    <label class="choice on" id="ch-f" onclick="velgFerdig('fullfort')"><input type="radio" name="fs" checked><div><strong>Fullført</strong><div class="small muted">Oppdraget ble utført og går til fakturering.</div></div></label>
-    <label class="choice" id="ch-a" onclick="velgFerdig('avlyst')"><input type="radio" name="fs"><div><strong>Avlyst</strong><div class="small muted">Oppdraget ble ikke utført.</div></div></label>
-    <div id="avl-extra" style="display:none;margin:4px 0 8px 4px"><label class="check"><input type="checkbox" id="avl-fak"> Send likevel til fakturering (f.eks. kjøring eller tid brukt)</label>
-    <div class="ts" style="margin-top:4px">Det som er registrert under tjenester og varer blir fakturert.</div></div>
-    ${!o.linjer.length && !alleMedLinjer(o).length?'<div class="banner">Det er ikke registrert noen tjenester eller varer på oppdraget.</div>':''}
-    <div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="bekreftFerdig()">Bekreft</button></div>`);
-  UI._fs='fullfort';
+function bekreftFullfor(){ const o=cur(); o.status='fullfort'; o.fakturer=true; o.ferdigTs=nowTs(); save(); toast('Fullført og klar til fakturering'); tilbake(); }
+function avlysDialog(){
+  modal(`<h2>Avlyse besøket?</h2><p class="small muted">Oppdraget ble ikke utført.</p>
+    <label class="check" style="margin:8px 0"><input type="checkbox" id="avl-fak"> Send likevel til fakturering, for eksempel kjøring eller tid brukt</label>
+    <div class="ts">Det som står under tjenester og varer, blir fakturert.</div>
+    <div class="row" style="justify-content:flex-end;gap:8px;margin-top:14px"><button class="btn" onclick="closeModal()">Tilbake</button><button class="btn primary" onclick="bekreftAvlys()">Avlys</button></div>`);
 }
-function velgFerdig(s){ UI._fs=s; document.getElementById('ch-f').classList.toggle('on',s==='fullfort'); document.getElementById('ch-a').classList.toggle('on',s==='avlyst'); document.getElementById('avl-extra').style.display = s==='avlyst'?'block':'none'; }
-function bekreftFerdig(){ const o=cur(); o.status=UI._fs; o.fakturer = o.status==='avlyst' ? document.getElementById('avl-fak').checked : true; o.ferdigTs=nowTs(); save(); closeModal(); render(); toast(o.status==='fullfort'?'Fullført – klar til fakturering':(o.fakturer?'Avlyst – sendes til fakturering':'Avlyst')); }
+function bekreftAvlys(){ const o=cur(); o.status='avlyst'; o.fakturer=document.getElementById('avl-fak').checked; o.ferdigTs=nowTs(); save(); closeModal(); toast(o.fakturer?'Avlyst – sendes til fakturering':'Avlyst'); tilbake(); }
 function gjenapne(){ const o=cur(); o.status='bestilt'; o.ferdigTs=null; o.fakturer=false; save(); render(); toast('Oppdraget er åpnet igjen'); }
+function besokMeny(){
+  modal(`<h2>${esc(kunde(cur().kundenr).navn)}</h2><div style="display:flex;flex-direction:column;gap:8px">
+    <button class="btn" onclick="closeModal();tidspunktDialog()">Flytt til et annet tidspunkt</button>
+    <button class="btn" onclick="closeModal();nyKontrollDialog()">Ny kontroll</button>
+    <button class="btn warn" onclick="closeModal();avlysDialog()">Avlys besøket</button>
+    <button class="btn ghost" onclick="closeModal()">Lukk</button></div>`);
+}
 function tidspunktDialog(){
   const o=cur();
-  modal(`<h2>Endre tidspunkt</h2><p class="small muted">Flytt oppdraget til et senere eller tidligere tidspunkt.${o.opprinnelig?' Opprinnelig tidspunkt: '+esc(o.opprinnelig)+'.':''}</p>
-    <div class="grid2"><div><label class="f">Dato</label><input type="date" id="ut-d" value="${o.dato}"></div>
-    <div><label class="f">Tid (valgfritt)</label><input type="time" id="ut-t" value="${o.tid||''}"></div></div>
+  modal(`<h2>Flytt oppdraget</h2><p class="small muted">Til et senere eller tidligere tidspunkt.${o.opprinnelig?' Opprinnelig: '+esc(o.opprinnelig)+'.':''}</p>
+    <div class="row wrapf" style="gap:8px">${[['I dag',TODAY],['I morgen',addDays(1)],['Om en uke',addDays(7,o.dato)]].map(([t,d])=>`<button class="chip" onclick="document.getElementById('ut-d').value='${d}'">${t}</button>`).join('')}</div>
+    <div class="grid2" style="margin-top:6px"><div><label class="f" for="ut-d">Dato</label><input type="date" id="ut-d" value="${o.dato}"></div>
+    <div><label class="f" for="ut-t">Klokkeslett (valgfritt)</label><input type="time" id="ut-t" value="${o.tid||''}"></div></div>
     <div class="row" style="justify-content:flex-end;gap:8px;margin-top:14px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="bekreftTidspunkt()">Lagre</button></div>`);
 }
 function bekreftTidspunkt(){
@@ -573,33 +964,149 @@ function bekreftTidspunkt(){
   if(o.opprinnelig===o.dato+(o.tid?' '+o.tid:'')){ o.opprinnelig=null; o.status='bestilt'; }
   save(); closeModal(); render(); toast((flyttRetning(o)||'Flyttet')+' til '+fmtDate(o.dato)+(o.tid?' kl. '+o.tid:''));
 }
+function nyKontrollDialog(){
+  const o=cur(), diag=[...new Set((o.dyr||[]).map(d=>d.diagnose).filter(Boolean))].slice(0,2).join(', ');
+  modal(`<h2>Ny kontroll</h2><p class="small muted">${esc(kunde(o.kundenr).navn)}. Lager et nytt oppdrag på samme kunde.</p>
+    <div class="row wrapf" style="gap:8px">${[3,7,14].map(n=>`<button class="chip" onclick="document.getElementById('nk-d').value='${addDays(n)}'">Om ${n} dager</button>`).join('')}</div>
+    <div class="grid2" style="margin-top:6px"><div><label class="f" for="nk-d">Dato</label><input type="date" id="nk-d" value="${addDays(7)}"></div><div><label class="f" for="nk-t">Klokkeslett (valgfritt)</label><input type="time" id="nk-t"></div></div>
+    <label class="f" for="nk-h">Hva gjelder det?</label><textarea id="nk-h">${esc('Kontroll'+(diag?' etter '+diag.toLowerCase():'')+'.')}</textarea>
+    <div class="row" style="justify-content:flex-end;gap:8px;margin-top:14px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="lagreKontroll()">Opprett kontroll</button></div>`);
+}
+function lagreKontroll(){
+  const o=cur(), n=nyttOppdrag(o.kundenr, document.getElementById('nk-d').value||addDays(7), document.getElementById('nk-t').value, document.getElementById('nk-h').value.trim()||'Kontroll.');
+  save(); closeModal(); render(); toast('Kontroll lagt inn '+fmtDateKort(n.dato));
+}
+function vaktFelt(o, kanEndre){
+  const auto=autoVakt(o), manuell=(o.vakt===true||o.vakt===false);
+  if(!kanEndre) return `${paVakt(o)?'Ja':'Nei'}<span class="ts"> · ${manuell?'satt manuelt':'fra vaktkalenderen'}</span>`;
+  return `<select style="width:auto;max-width:100%" onchange="settVakt(this.value)" aria-label="På vakt">
+    <option value="auto" ${!manuell?'selected':''}>Fra vaktkalenderen (${auto?'ja':'nei'})</option>
+    <option value="ja" ${o.vakt===true?'selected':''}>På vakt</option><option value="nei" ${o.vakt===false?'selected':''}>Ikke på vakt</option></select>`;
+}
+function settVakt(v){ cur().vakt = v==='ja' ? true : v==='nei' ? false : null; save(); render(); }
+
+// Fakturarollen ser oppdraget uten journal
+function detaljFakturering(o){
+  const k=kunde(o.kundenr);
+  return `<div class="tilbake"><button class="linkbtn" onclick="tilbake()">← ${fraNavn(UI.fra||'oppdrag')}</button></div>
+    <div class="row between wrapf" style="margin:2px 0"><h1 style="margin:0" class="grow">${esc(k.navn)}</h1>${pill(o)}</div>
+    <div class="small muted" style="margin-bottom:10px">${esc(oNr(o))}</div>
+    <div class="card"><div class="kv"><div>Kunde</div><div>${k.nr}${k.kontakt?' · '+esc(k.kontakt):''}</div><div>Adresse</div><div>${esc(adresseTekst(k))}</div><div>Telefon</div><div>${esc(k.tlf||'')}</div>
+      <div>Dato</div><div>${fmtDate(o.dato)}${o.tid?' kl. '+esc(o.tid):''}</div><div>På vakt</div><div>${paVakt(o)?'Ja':'Nei'}</div></div></div>
+    <div class="lock">Journalopplysninger er bare tilgjengelige for veterinæren.</div>
+    ${tjenesterLes(o)}${sumKort(o)}${o.fakturert?`<div class="lock" style="margin-top:12px">Fakturert ${fmtTs(o.fakturertTs)} – låst for endringer.</div>`:''}<div style="height:40px"></div>`;
+}
+
+// ================= Flere dyr på én gang =================
+const topMaler = n => { const c={}; S.oppdrag.forEach(o=>(o.dyr||[]).forEach(d=>{ if(d.mal) c[d.mal]=(c[d.mal]||0)+1; })); return aktiveMaler().filter(m=>c[m.id]).sort((a,b)=>c[b.id]-c[a.id]).slice(0,n); };
+function flereDyr(){
+  lagreNa();
+  const o=cur(), art=sistArt(o);
+  UI.fd={modus:'id', malId:'', art, diagnose:'', behandling:'', meds:[], prefiks:ID_ARTER.includes(art)?gardPrefiks(o.kundenr):'', tekst:'', antall:'', res:{}};
+  visFlereDyr();
+}
+function visFlereDyr(){
+  const f=UI.fd, o=cur(), m=malById(f.malId);
+  const forslag=[...new Map([...foreslatteMaler(o), ...topMaler(3)].map(x=>[x.id,x])).values()].slice(0,4);
+  const chips=[{id:'',navn:'Ingen mal'}, ...forslag, ...(m && !forslag.some(x=>x.id===m.id) ? [m] : [])];
+  modal(`<div class="row between"><h2 style="margin:0">Legg til flere dyr</h2><button class="linkbtn" onclick="UI.fd=null;closeModal()">Avbryt</button></div>
+    <p class="small muted" style="margin:2px 0 10px">${esc(kunde(o.kundenr).navn)} · samme behandling på alle. Enkeltdyr kan endres etterpå.</p>
+    <div class="seg" role="tablist">${[['id','Med øremerker'],['antall','Bare antall']].map(([v,t])=>`<button role="tab" aria-selected="${f.modus===v}" class="${f.modus===v?'on':''}" onclick="UI.fd.modus='${v}';visFlereDyr()">${t}</button>`).join('')}</div>
+    <label class="f">Mal</label>
+    <div class="row wrapf" style="gap:8px">${chips.map(x=>`<button class="chip${f.malId===x.id?' on':''}" onclick="fdMal('${x.id}')">${esc(x.navn)}</button>`).join('')}
+      <select class="sel-liten" onchange="if(this.value)fdMal(this.value)" aria-label="Velg en annen mal"><option value="">Annen mal …</option>${aktiveMaler().map(x=>`<option value="${x.id}">${esc(x.navn)}</option>`).join('')}</select></div>
+    <div class="grid2"><div><label class="f" for="fd-art">Dyreart</label><select id="fd-art" onchange="UI.fd.art=this.value;fdOppdater()">${ARTER.map(a=>`<option ${f.art===a?'selected':''}>${a}</option>`).join('')}</select></div>
+      <div>${f.modus==='antall'?`<label class="f" for="fd-antall">Antall dyr</label><div class="row" style="gap:6px"><button class="btn ikon" onclick="fdSteg(-1)" aria-label="Ett dyr færre">−</button><input type="number" inputmode="numeric" min="0" id="fd-antall" value="${esc(f.antall)}" oninput="UI.fd.antall=this.value;fdOppdater()" style="text-align:center;font-weight:700;min-width:0"><button class="btn ikon" onclick="fdSteg(1)" aria-label="Ett dyr til">+</button></div>`:''}</div></div>
+    <label class="f" for="fd-dia">Diagnose</label><input type="text" id="fd-dia" value="${esc(f.diagnose)}" oninput="UI.fd.diagnose=this.value">
+    <label class="f" for="fd-beh">Behandling</label><textarea id="fd-beh" oninput="UI.fd.behandling=this.value" style="min-height:64px">${esc(f.behandling)}</textarea>
+    <label class="f">${f.modus==='id'?'Medisin, mengde per dyr':'Medisin, mengde totalt for gruppen'}</label>
+    ${f.meds.map((x,j)=>`<div class="medrad row between" style="gap:8px"><strong class="small grow">${esc(x.navn)}</strong><input type="number" min="0" step="any" inputmode="decimal" value="${x.antall}" oninput="UI.fd.meds[${j}].antall=+String(this.value).replace(',','.')||0" style="width:90px" aria-label="Mengde ${esc(x.navn)}"><button class="x" onclick="UI.fd.meds.splice(${j},1);visFlereDyr()" aria-label="Fjern ${esc(x.navn)}">×</button></div>`).join('')}
+    <div class="picker"><input type="search" placeholder="+ Legg til medisin (søk)" oninput="medPick(this.value,'fd')" autocomplete="off" aria-label="Legg til medisin"><div id="pick-med-fd"></div></div>
+    ${f.modus==='id'?`<label class="f" for="fd-ider">Øremerker, ett per linje</label>
+      <div class="row" style="gap:8px;align-items:center"><input type="text" value="${esc(f.prefiks)}" oninput="UI.fd.prefiks=this.value;fdOppdater()" placeholder="NO 12345" style="max-width:150px" aria-label="Felles start på øremerkene" autocapitalize="characters" spellcheck="false"><span class="ts">+ de siste sifrene på hver linje</span></div>
+      <textarea id="fd-ider" oninput="UI.fd.tekst=this.value;fdOppdater()" placeholder="0412&#10;0415" style="min-height:96px;margin-top:6px" class="mono" autocapitalize="characters" spellcheck="false">${esc(f.tekst)}</textarea>
+      <div class="ts">Skann med øremerkeleser eller skriv. Hele nummer og elektroniske nummer lagres som de er.</div>`:''}
+    <div id="fd-res"></div>
+    <div id="fd-tj" class="ts" style="margin-top:8px"></div>
+    <button class="btn primary stor" id="fd-ok" style="width:100%;margin-top:12px" onclick="fdLagre()">Legg til</button>`);
+  fdOppdater();
+}
+function fdMal(id){
+  const f=UI.fd, m=malById(id); f.malId=id;
+  if(m){ f.diagnose=m.diagnose||''; f.behandling=m.behandling||''; f.meds=(m.medisiner||[]).map(x=>{ const med=S.medisiner.find(y=>y.navn===x.navn && y.aktiv!==false); return med ? {navn:med.navn, antall:x.antall||1, pris:med.pris} : null; }).filter(Boolean); }
+  visFlereDyr();
+}
+function fdSteg(d){ const f=UI.fd; f.antall=String(Math.max(0,(+f.antall||0)+d)); const el=document.getElementById('fd-antall'); if(el) el.value=f.antall; fdOppdater(); }
+function fdIder(){
+  const f=UI.fd, p=String(f.prefiks||'').trim().toUpperCase().replace(/\s+/g,' '), sett=new Set();
+  return String(f.tekst||'').split(/[\n,;]+/).map(s=>s.trim().replace(/\s+/g,' ')).filter(Boolean)
+    .map(s=> (/^[A-Za-z]/.test(s) || /^\d{12,}$/.test(s) || !p) ? s.toUpperCase() : p+' '+s)
+    .filter(id=>!sett.has(id) && sett.add(id));
+}
+const fdNye = () => { const o=cur(); return fdIder().filter(id=>!(o.dyr||[]).some(d=>d.individ===id)); };
+const fdAntall = () => UI.fd.modus==='id' ? fdNye().length : Math.max(0, Math.round(+UI.fd.antall||0));
+function fdOppdater(){
+  const f=UI.fd; if(!f) return;
+  const nye=f.modus==='id'?fdNye():[], n=fdAntall(), m=malById(f.malId), opts=f.modus==='id' ? malResultat(m) : null;
+  const finnes = f.modus==='id' ? fdIder().length-nye.length : 0;
+  const resEl=document.getElementById('fd-res');
+  if(resEl) resEl.innerHTML = (finnes?`<div class="ts varsel" style="margin-top:6px">${finnes} av øremerkene er allerede registrert på besøket og hoppes over.</div>`:'') + (opts && n ? `<div class="row between" style="margin-top:12px"><span class="lbl">Resultat per dyr</span><button class="linkbtn" onclick="fdAlle(${js(opts[0])})">Sett alle til ${esc(opts[0].toLowerCase())}</button></div>
+    <div class="card list0" style="margin:6px 0 0">${nye.map(id=>`<div class="rad"><span class="grow mono" style="font-weight:700">${esc(kortId(id))}</span><span class="sg">${opts.map(v=>`<button class="${f.res[id]===v?'on':''}" onclick="fdRes(${js(id)},${js(v)})">${esc(v)}</button>`).join('')}</span></div>`).join('')}</div>` : '');
+  const tj=document.getElementById('fd-tj');
+  if(tj){ const r=stykkRegel(m); if(r && n){ const tot=antallMedMal(cur(),m.id)+n; tj.textContent=`Legges på besøket: ${r.forste.navn}${tot>r.n?` og ${tot-r.n} × ${r.stk.navn}`:''}.`; } else tj.textContent=''; }
+  const ok=document.getElementById('fd-ok');
+  if(ok){ const harRes = opts ? nye.filter(id=>f.res[id]).length : 0; ok.disabled=!n; ok.textContent = n ? `Legg til ${n} ${artFlertall(f.art,n)}${opts?` · ${harRes} av ${n} har resultat`:''}` : 'Legg til'; }
+}
+function fdRes(id,v){ UI.fd.res[id] = UI.fd.res[id]===v ? undefined : v; fdOppdater(); }
+function fdAlle(v){ fdNye().forEach(id=>UI.fd.res[id]=v); fdOppdater(); }
+function fdLagre(){
+  const f=UI.fd, o=cur(), n=fdAntall();
+  if(!n){ toast(f.modus==='id'?'Skriv eller skann minst ett øremerke':'Skriv inn antall dyr'); return; }
+  const m=malById(f.malId), tid=nowTs();
+  const meds = () => f.meds.map(x=>({id:uid(), navn:x.navn, antall:Math.round((+x.antall||0)*1000)/1000, pris:x.pris, tid}));
+  o.dyr=o.dyr||[];
+  if(f.modus==='id') fdNye().forEach(id=>o.dyr.push({id:uid(), art:f.art, individ:id, diagnose:f.diagnose, behandling:f.behandling, notat:'', mal:f.malId||null, resultat:f.res[id]||null, medisiner:meds()}));
+  else o.dyr.push({id:uid(), art:f.art, gruppe:true, antall:n, individ:'', diagnose:f.diagnose, behandling:f.behandling, notat:'', mal:f.malId||null, medisiner:meds()});
+  if(m) oppdaterStykkTjenester(o,m);
+  const art=f.art; UI.fd=null; UI.dyrApen=null; touchJournal(); save(); closeModal(); render(); toast(`${n} ${artFlertall(art,n)} lagt til`);
+}
 
 // ================= Journalmaler =================
 const aktiveMaler = () => S.maler.filter(m=>!m.deleted).sort((a,b)=>a.navn.localeCompare(b.navn,'nb'));
 const malById = id => S.maler.find(m=>m.id===id);
-const foreslatteMaler = o => { const nr=new Set(o.linjer.map(l=>l.varenr)); return aktiveMaler().filter(m=>m.tjenester.some(t=>nr.has(t))); };
+// Forslag ut fra tjenester på oppdraget og ord i henvendelsen («Drektighetsundersøkelse, 6 kyr» → malen Drektighetsundersøkelse)
+const IKKE_MALORD = new Set(['storfe','kalv','kalver','sau','sauer','geit','geiter','gris','hest','hund','katt','alpakka']);
+const foreslatteMaler = o => {
+  const nr=new Set((o.linjer||[]).map(l=>l.varenr)), h=String(o.henvendelse||'').toLowerCase();
+  const ord = m => String(m.navn||'').toLowerCase().split(/[^a-zæøå]+/).filter(w=>w.length>=5 && !IKKE_MALORD.has(w));
+  return aktiveMaler().filter(m => (m.tjenester||[]).some(t=>nr.has(t)) || ord(m).some(w=>h.includes(w.slice(0,5))));
+};
 function malVelger(o,i){
-  const fs=foreslatteMaler(o), alle=aktiveMaler();
-  return `<div class="row wrapf" style="gap:6px;align-items:center;margin-bottom:2px">
-    ${fs.length?`<span class="small muted">Foreslått mal:</span>${fs.map(m=>`<button class="chip" onclick="brukMal(${i},'${m.id}')">${esc(m.navn)}</button>`).join('')}`:''}
-    <select style="width:auto;max-width:100%;padding:5px 8px;font-size:13px" onchange="if(this.value)brukMal(${i},this.value)">
-      <option value="">${fs.length?'Annen mal …':'Bruk journalmal …'}</option>${alle.map(m=>`<option value="${m.id}">${esc(m.navn)}</option>`).join('')}</select></div>`;
+  const d=o.dyr[i], fs=foreslatteMaler(o).filter(m=>m.id!==d.mal).slice(0,3), alle=aktiveMaler(), brukt=d.mal?malById(d.mal):null;
+  return `<div class="row wrapf" style="gap:6px;align-items:center;margin:8px 0 2px">
+    ${brukt?`<span class="small muted">Mal: <strong style="color:var(--ink)">${esc(brukt.navn)}</strong></span>`:''}
+    ${fs.length?`<span class="small muted">${brukt?'Annen:':'Foreslått mal:'}</span>${fs.map(m=>`<button class="chip" onclick="brukMal(${i},'${m.id}')">${esc(m.navn)}</button>`).join('')}`:''}
+    <select class="sel-liten" onchange="if(this.value)brukMal(${i},this.value)" aria-label="Velg journalmal">
+      <option value="">${fs.length||brukt?'Annen mal …':'Bruk journalmal …'}</option>${alle.map(m=>`<option value="${m.id}">${esc(m.navn)}</option>`).join('')}</select></div>`;
 }
 function brukMal(i,id){
   const o=cur(), d=o.dyr[i], m=malById(id); if(!m) return;
-  const join=(a,b)=> !b ? a : (a && a.trim() ? a.trim()+'\n'+b : b);
+  const join=(a,b)=> !b ? a : (a && a.trim() ? (a.includes(b.trim()) ? a : a.trim()+'\n'+b) : b);
   d.diagnose = d.diagnose && d.diagnose.trim() ? d.diagnose : m.diagnose;
   d.behandling = join(d.behandling, m.behandling); d.notat = join(d.notat, m.notat);
   d.medisiner=d.medisiner||[]; let n=0;
-  m.medisiner.forEach(x=>{ const med=S.medisiner.find(y=>y.navn===x.navn && y.aktiv!==false); if(!med) return;
+  (m.medisiner||[]).forEach(x=>{ const med=S.medisiner.find(y=>y.navn===x.navn && y.aktiv!==false); if(!med) return;
     if(!d.medisiner.find(y=>y.navn===x.navn)){ d.medisiner.push({id:uid(),navn:med.navn,antall:x.antall||1,pris:med.pris,tid:nowTs()}); n++; } });
+  // Husk malen på dyret: gir resultatknapper og riktig antall av tjenester som «første 5 stk» + «stk»
+  const gml=d.mal; d.mal=m.id; if(!malResultat(m)) d.resultat=null;
+  if(gml && gml!==m.id){ const gm=malById(gml); if(gm) oppdaterStykkTjenester(o,gm); }
+  oppdaterStykkTjenester(o,m);
   touchJournal(); save(); render(); toast(`Mal «${m.navn}» brukt`+(n?` · ${n} medisin${n>1?'er':''} lagt til`:''));
 }
-VIEWS.maler = () => `<div style="margin-top:12px"><button class="btn ghost" onclick="go('meny')">← Meny</button></div><h1 style="margin-top:4px">Journalmaler</h1>
+VIEWS.maler = () => `${tilbakeKnapp('meny')}<h1 style="margin-top:2px">Journalmaler</h1>
   <p class="small muted" style="margin-top:-4px">En mal fyller ut diagnose og behandling på et dyr og foreslår medisiner. Koble malen til tjenester, så foreslås den når tjenesten legges på oppdraget.</p>
   <button class="btn primary" onclick="nyMal()" style="margin-bottom:12px">+ Ny mal</button>
-  ${aktiveMaler().map(m=>`<div class="card item" onclick="redigerMal('${m.id}')"><div class="row between"><strong>${esc(m.navn)}</strong><span class="small muted">${m.tjenester.length} tjenester · ${m.medisiner.length} medisiner</span></div>
-    <div class="small muted" style="margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(m.diagnose)}</div></div>`).join('')||'<div class="empty">Ingen maler ennå.</div>'}`;
+  ${aktiveMaler().length?`<div class="card list0">${aktiveMaler().map(m=>`<button class="rad" onclick="redigerMal('${m.id}')"><span class="grow"><strong class="blk">${esc(m.navn)}</strong><span class="sub">${m.tjenester.length} tjenester · ${m.medisiner.length} medisiner${malResultat(m)?' · resultat: '+esc(malResultat(m).join(' / ').toLowerCase()):''}</span></span>${IK.pil}</button>`).join('')}</div>`:'<div class="empty">Ingen maler ennå.</div>'}`;
 function nyMal(){ const m={id:uid(),navn:'Ny mal',tjenester:[],diagnose:'',behandling:'',notat:'',medisiner:[],deleted:false}; S.maler.push(m); save(); redigerMal(m.id); }
 function redigerMal(id){ UI.mal=id; UI.view='mal'; render(); window.scrollTo(0,0); }
 const curMal = () => malById(UI.mal);
@@ -607,13 +1114,16 @@ function malSet(f,v){ curMal()[f]=v; save(); }
 VIEWS.mal = () => {
   const m=curMal(); if(!m||m.deleted) return '<div class="empty">Fant ikke malen.</div>';
   const vare = nr => S.varer.find(v=>v.nr===nr);
-  return `<div style="margin-top:12px"><button class="btn ghost" onclick="go('maler')">← Maler</button></div>
+  const res=malResultat(m);
+  return `<div class="tilbake"><button class="linkbtn" onclick="go('maler')">← Maler</button></div>
   <div class="card">
     <label class="f" style="margin-top:0">Navn på malen</label><input type="text" value="${esc(m.navn)}" onchange="malSet('navn',this.value)">
     <label class="f">Diagnose</label><input type="text" value="${esc(m.diagnose)}" onchange="malSet('diagnose',this.value)">
     <label class="f">Behandling (journaltekst)</label><textarea style="min-height:130px" onchange="malSet('behandling',this.value)">${esc(m.behandling)}</textarea>
     <label class="f">Egne notater (valgfritt)</label><textarea style="min-height:50px" onchange="malSet('notat',this.value)">${esc(m.notat)}</textarea>
-    <div class="ts" style="margin-top:6px">Tips: Bruk __ der du skal fylle inn noe på stedet.</div></div>
+    <div class="ts" style="margin-top:6px">Tips: Bruk __ der du skal fylle inn noe på stedet. Sjekklisten før avslutning minner om felt som ikke er fylt ut.</div>
+    <label class="f">Resultat per dyr (valgfritt)</label><input type="text" value="${esc(res?res.join(', '):'')}" placeholder="F.eks. Drektig, Ikke drektig" onchange="malSet('resultat', this.value.split(',').map(x=>x.trim()).filter(Boolean))">
+    <div class="ts" style="margin-top:4px">Skill valgene med komma. Da får hvert dyr knapper for resultatet, også når mange dyr legges inn samtidig.</div></div>
   <h3>Koblet til tjenester</h3><div class="card">
     <div class="chips">${m.tjenester.map(nr=>{const v=vare(nr);return `<span class="chip x">${esc(v?v.navn:nr)} <button class="x" style="font-size:15px;padding:0 0 0 4px" onclick="malFjernTj(${nr})">×</button></span>`}).join('')||'<span class="small muted">Ingen tjenester koblet til.</span>'}</div>
     <div class="picker"><input type="search" placeholder="+ Koble til tjeneste (søk)" oninput="malPick(this.value,'tj')" autocomplete="off"><div id="mpick-tj"></div></div></div>
@@ -654,9 +1164,9 @@ VIEWS.kalender = () => {
   const dag=UI.kal.dag, os=(perDag[dag]||[]).sort((a,b)=>(a.tid||'').localeCompare(b.tid||''));
   const a=new Date(dag+'T00:00').getTime(), b=a+864e5;
   const vs=aktiveVakter().filter(v=>new Date(v.fra).getTime()<b && new Date(v.til).getTime()>a).sort((p,q)=>p.fra.localeCompare(q.fra));
-  return `<h1>Kalender</h1>
+  return `${UI.retur?tilbakeKnapp('meny'):''}<h1${UI.retur?' style="margin-top:2px"':''}>Kalender</h1>
   <div class="card" style="padding:10px">
-    <div class="row between" style="margin-bottom:8px"><button class="btn ghost" onclick="kalMnd(-1)">‹</button><strong>${MND[m-1][0].toUpperCase()+MND[m-1].slice(1)} ${y}</strong><button class="btn ghost" onclick="kalMnd(1)">›</button></div>
+    <div class="row between" style="margin-bottom:8px"><button class="btn ghost" onclick="kalMnd(-1)" aria-label="Forrige måned">‹</button><strong>${MND[m-1][0].toUpperCase()+MND[m-1].slice(1)} ${y}</strong><button class="btn ghost" onclick="kalMnd(1)" aria-label="Neste måned">›</button></div>
     <div class="kgrid">${['ma','ti','on','to','fr','lø','sø'].map(x=>`<div class="kh">${x}</div>`).join('')}${cells}</div>
     <div class="row wrapf small muted" style="gap:14px;margin-top:8px"><span><span class="kleg vakt"></span> Vakt</span><span><span class="kleg n">2</span> Antall oppdrag</span>
       <button class="linkbtn" style="margin-left:auto" onclick="UI.kal.ym=TODAY.slice(0,7);UI.kal.dag=TODAY;render()">I dag</button></div>
@@ -669,7 +1179,7 @@ VIEWS.kalender = () => {
   <h3>Oppdrag</h3>
   ${os.map(oppdragKort).join('')||'<div class="small muted" style="margin:0 2px 8px">Ingen oppdrag denne dagen.</div>'}
   ${isMia()&&kanSkrive()?`<button class="btn sm" onclick="nyBestilling(null,'${dag}')">+ Ny bestilling denne dagen</button>`:''}
-  <div style="height:80px"></div>`;
+  <div style="height:40px"></div>`;
 };
 function kalMnd(n){ const [y,m]=UI.kal.ym.split('-').map(Number); const d=new Date(y,m-1+n,1); UI.kal.ym=d.getFullYear()+'-'+pad(d.getMonth()+1); render(); }
 function nyVaktDialog(dag){
@@ -710,12 +1220,12 @@ VIEWS.sok = () => {
     if(f.q && !fq(k.navn+' '+k.nr+' '+(k.kontakt||'')+' '+(k.sted||'')+' '+(o.nr||'')).includes(fq(f.q))) return false;
     if(f.fra && o.dato<f.fra) return false; if(f.til && o.dato>f.til) return false;
     if(f.status && statusKey(o)!==f.status) return false;
-    if(f.vare && !(o.linjer.some(l=>fq(l.navn).includes(fq(f.vare))) || (isMia() && alleMedLinjer(o).some(m=>fq(m.navn).includes(fq(f.vare)))))) return false;
+    if(f.vare && !((o.linjer||[]).some(l=>fq(l.navn).includes(fq(f.vare))) || (isMia() && alleMedLinjer(o).some(m=>fq(m.navn).includes(fq(f.vare)))))) return false;
     if(isMia() && f.dhp && !(harMed(o) && !apen(o) && !o.dhpTs)) return false;
-    if(isMia() && f.individ && !o.dyr.some(d=>fq(d.individ+' '+d.diagnose+' '+d.behandling+' '+d.notat).includes(fq(f.individ)))) return false;
+    if(isMia() && f.individ && !(o.dyr||[]).some(d=>fq((d.individ||'')+' '+(d.diagnose||'')+' '+(d.behandling||'')+' '+(d.notat||'')+' '+(d.resultat||'')).includes(fq(f.individ)))) return false;
     return true;
   }).sort((a,b)=>b.dato.localeCompare(a.dato));
-  return `<h1>Søk og historikk</h1>
+  return `${tilbakeKnapp('kunder')}<h1 style="margin-top:2px">Avansert søk</h1>
   <div class="card">
     <label class="f" style="margin-top:0">Kunde eller oppdragsnummer</label><input type="search" value="${esc(f.q)}" placeholder="Navn, kundenr, sted eller 2026-014" oninput="UI.sok.q=this.value;sokRes()">
     <div class="grid2"><div><label class="f">Fra dato</label><input type="date" value="${f.fra}" onchange="UI.sok.fra=this.value;render()"></div>
@@ -728,71 +1238,112 @@ VIEWS.sok = () => {
   </div>
   <div class="small muted" style="margin:8px 2px">${res.length} treff</div>${res.map(oppdragKort).join('')||'<div class="empty">Ingen oppdrag passer filtrene.</div>'}<div style="height:70px"></div>`;
 };
-function dyrHistorikk(ind){ UI.sok={q:'',fra:'',til:'',individ:ind,status:'',vare:''}; go('sok'); }
 
-// ================= Kunder =================
+// ================= Kunder (med søk) =================
+function dyrTreff(q){
+  if(!isMia()) return [];
+  const n=x=>String(x||'').replace(/\s+/g,'').toLowerCase(), nq=n(q), m={};
+  S.oppdrag.forEach(o=>(o.dyr||[]).forEach(d=>{ if(d.gruppe || erTomId(d.individ) || !n(d.individ).includes(nq)) return; const x=m[d.individ]; if(!x || o.dato>x.dato) m[d.individ]={individ:d.individ, art:d.art, kundenr:o.kundenr, dato:o.dato}; }));
+  return Object.values(m).sort((a,b)=>b.dato.localeCompare(a.dato)).slice(0,8);
+}
+const importKnapp = stor => `<label class="btn${stor?' primary stor':''}" style="cursor:pointer${stor?';width:100%':''}">Importer kunder fra fil<input type="file" accept=".xlsx,.xls,.csv" style="display:none" onchange="importerKunder(this.files[0]);this.value=''"></label>`;
 VIEWS.kunder = () => {
-  const q=(UI.kq||'').toLowerCase();
-  const l=S.kunder.filter(k=>!q||(k.navn+' '+k.nr+' '+(k.sted||'')+' '+(k.kontakt||'')+' '+(k.produsentnr||'')).toLowerCase().includes(q));
-  return `<h1>Kunder</h1>
-  ${isMia()&&kanSkrive()?`<div class="row wrapf" style="gap:8px;margin-bottom:10px"><label class="btn sm" style="cursor:pointer">Importer kunder fra fil<input type="file" accept=".xlsx,.xls,.csv" style="display:none" onchange="importerKunder(this.files[0]);this.value=''"></label><span class="ts">${S.kunder.length} kunder</span></div>`:''}
-  <input type="search" placeholder="Søk kunde" value="${esc(UI.kq||'')}" oninput="UI.kq=this.value;sokRes()" style="margin-bottom:10px">
-  ${l.map(k=>{ const n=S.oppdrag.filter(o=>o.kundenr===k.nr).length;
-    return `<div class="card item" onclick="visKunde(${k.nr})"><div class="row between"><strong>${esc(k.navn)}</strong><span class="small muted">${n} oppdrag</span></div>
-    <div class="small muted">${k.nr} · ${esc(k.adresse||'')}, ${esc(k.sted||'')}</div></div>`; }).join('')}
-  <div class="ts" style="margin:10px 2px 80px">Kunderegisteret lastes inn fra samme kundefil som brukes i Duett.</div>`;
+  const q=(UI.kq||'').trim(), ed=isMia()&&kanSkrive();
+  let h=`<h1>Kunder</h1><input type="search" placeholder="${isMia()?'Søk kunde, øremerke eller oppdragsnr.':'Søk kunde eller oppdragsnr.'}" value="${esc(UI.kq||'')}" oninput="UI.kq=this.value;sokRes()" style="margin-bottom:10px" aria-label="Søk">`;
+  if(!S.kunder.length) return h+`<div class="empty">Ingen kunder ennå.${ed?'<br>Importer kundelisten fra Duett for å komme i gang.':''}</div>${ed?importKnapp(true):''}<div style="height:40px"></div>`;
+  const kl = q ? rangert(S.kunder, q, k=>[k.navn,k.nr,k.sted,k.kontakt,k.produsentnr,k.tlf].filter(Boolean).join(' ')) : S.kunder.slice().sort((x,y)=>x.navn.localeCompare(y.navn,'nb'));
+  const dt = q.length>=3 ? dyrTreff(q) : [], ot = q.length>=3 ? S.oppdrag.filter(o=>o.nr && String(o.nr).includes(q)).slice(0,6) : [];
+  const ant={}; S.oppdrag.forEach(o=>{ ant[o.kundenr]=(ant[o.kundenr]||0)+1; });
+  if(dt.length) h+=`<h3>Dyr</h3><div class="card list0">${dt.map(d=>`<button class="rad" onclick="dyrHistorikk(${js(d.individ)})"><span class="grow"><strong class="blk mono">${esc(d.individ)}</strong><span class="sub">${esc(d.art)} · ${esc(kunde(d.kundenr).navn)} · sist ${esc(fmtKort(d.dato))}</span></span>${IK.pil}</button>`).join('')}</div>`;
+  if(ot.length) h+=`<h3>Oppdrag</h3><div class="card list0">${ot.map(o=>radOppdrag(o,true)).join('')}</div>`;
+  if(q && (dt.length||ot.length) && kl.length) h+=`<h3>Kunder</h3>`;
+  if(kl.length) h+=`<div class="card list0">${kl.slice(0,q?50:5000).map(k=>`<button class="rad" onclick="visKunde(${k.nr})"><span class="grow"><strong class="blk">${esc(k.navn)}</strong><span class="sub">${k.nr}${k.sted?' · '+esc(k.sted):''}${k.kontakt?' · '+esc(k.kontakt):''}</span></span>${ant[k.nr]?`<span class="ts">${ant[k.nr]} oppdrag</span>`:''}${IK.pil}</button>`).join('')}</div>`;
+  else if(!dt.length && !ot.length) h+=`<div class="empty">Ingenting passer søket.</div>`;
+  h+=`<div class="row wrapf" style="gap:8px;margin-top:12px"><button class="btn" onclick="avansertSok()">Avansert søk</button>${ed?importKnapp(false):''}</div>
+    <div class="ts" style="margin:10px 2px 0">${S.kunder.length} kunder.</div>`;
+  return h+'<div style="height:40px"></div>';
 };
-function visKunde(nr){ UI.kunde=nr; UI.view='kunde'; render(); window.scrollTo(0,0); }
+function avansertSok(){
+  const q=(UI.kq||'').trim(); UI.sok={q:'',fra:'',til:'',individ:'',status:'',vare:'',dhp:false};
+  if(q){ if(isMia() && dyrTreff(q).length) UI.sok.individ=q; else UI.sok.q=q; }
+  go('sok','kunder');
+}
+function visKunde(nr){
+  lagreNa();
+  UI.kundeFra = UI.view==='detalj' ? {id:UI.current, fane:UI.fane, fra:UI.fra} : (UI.view==='kunder' || UI.view==='kunde' ? null : {view:UI.view});
+  UI.kunde=nr; UI.view='kunde'; UI.current=null; render(); window.scrollTo(0,0);
+}
+function tilbakeFraKunde(){
+  const f=UI.kundeFra; UI.kundeFra=null;
+  if(f && f.id){ UI.current=f.id; UI.fane=f.fane||'info'; UI.fra=f.fra; UI.view='detalj'; UI.dyrApen=null; render(); window.scrollTo(0,0); }
+  else go(f && f.view || 'kunder');
+}
 VIEWS.kunde = () => {
-  const k=kunde(UI.kunde); const os=S.oppdrag.filter(o=>o.kundenr===k.nr).sort((a,b)=>b.dato.localeCompare(a.dato));
-  const dyr={}; os.forEach(o=>o.dyr.forEach(d=>{ if(d.individ){ const x=(dyr[d.individ]=dyr[d.individ]||{art:d.art,n:0,siste:o.dato}); x.n++; if(o.dato>x.siste) x.siste=o.dato; } }));
-  const ed = isMia() && kanSkrive();
-  return `<div style="margin-top:12px" class="noprint"><button class="btn ghost" onclick="go('kunder')">← Kunder</button></div>
-  <h1 style="margin-top:4px">${esc(k.navn)}</h1>
+  const k=kunde(UI.kunde), os=S.oppdrag.filter(o=>o.kundenr===k.nr).sort((a,b)=>b.dato.localeCompare(a.dato));
+  const dyr={}; os.forEach(o=>(o.dyr||[]).forEach(d=>{ if(d.gruppe || erTomId(d.individ)) return; const x=(dyr[d.individ]=dyr[d.individ]||{art:d.art,n:0,siste:o.dato,diagnose:d.diagnose||''}); x.n++; if(o.dato>=x.siste){ x.siste=o.dato; x.diagnose=d.diagnose||''; } }));
+  const ed=isMia()&&kanSkrive(), f=UI.kundeFra;
+  return `<div class="noprint tilbake"><button class="linkbtn" onclick="tilbakeFraKunde()">← ${f&&f.id?'Oppdraget':fraNavn(f&&f.view||'kunder')}</button></div>
+  <h1 style="margin-top:2px">${esc(k.navn)}</h1>
+  <div class="row noprint" style="gap:8px;margin-bottom:10px">${kontaktKnapper(k)}</div>
   <div class="card"><div class="kv"><div>Kundenr.</div><div>${k.nr}</div>${k.kontakt?`<div>Kontakt</div><div>${esc(k.kontakt)}</div>`:''}
-    <div>Adresse</div><div>${esc(k.adresse||'')}, ${esc(k.postnr||'')} ${esc(k.sted||'')}</div><div>Telefon</div><div>${esc(k.tlf||'')}</div>
-    <div>Produsentnr.</div><div>${ed?`<input type="text" value="${esc(k.produsentnr||'')}" placeholder="Brukes i rapport til Dyrehelseportalen" onchange="kunde(${k.nr}).produsentnr=this.value.trim();save();toast('Produsentnummer lagret')" style="max-width:240px;padding:6px 8px">`:esc(k.produsentnr||'–')}</div></div>
-    <div class="row wrapf" style="margin-top:12px;gap:8px">${ed?`<button class="btn primary sm" onclick="nyBestilling(${k.nr})">+ Ny bestilling</button>`:''}${isMia()?`<button class="btn sm" onclick="journalUtdrag(${k.nr})">Journalutdrag</button>`:''}</div></div>
-  ${isMia()&&Object.keys(dyr).length?`<h3>Dyr med journal</h3><div class="card">${Object.entries(dyr).map(([ind,d])=>`<div class="row between" style="padding:4px 0"><a href="#" onclick="dyrHistorikk('${esc(ind)}');return false">${esc(d.art)} · ${esc(ind)}</a><span class="small muted">${d.n} oppdrag · sist ${fmtDate(d.siste)}</span></div>`).join('')}</div>`:''}
-  <h3>Oppdragshistorikk</h3>${os.map(oppdragKort).join('')||'<div class="empty">Ingen oppdrag registrert.</div>'}<div style="height:70px"></div>`;
+    <div>Adresse</div><div>${esc(adresseTekst(k))||'–'}</div><div>Telefon</div><div>${esc(k.tlf||'–')}</div>
+    <div>Produsentnr.</div><div>${ed?`<input type="text" value="${esc(k.produsentnr||'')}" placeholder="Brukes i rapporten til Dyrehelseportalen" onchange="kunde(${k.nr}).produsentnr=this.value.trim();save();toast('Produsentnummeret er lagret')" style="max-width:260px" aria-label="Produsentnummer">`:esc(k.produsentnr||'–')}</div></div>
+    <div class="row wrapf" style="margin-top:12px;gap:8px">${ed?`<button class="btn primary" onclick="nyBestilling(${k.nr})">+ Ny bestilling</button>`:''}${isMia()?`<button class="btn" onclick="journalUtdrag(${k.nr})">Journalutdrag</button>`:''}</div></div>
+  ${isMia()&&Object.keys(dyr).length?`<h3>Dyr med journal</h3><div class="card list0">${Object.entries(dyr).sort((a,b)=>b[1].siste.localeCompare(a[1].siste)).map(([ind,d])=>`<button class="rad" onclick="dyrHistorikk(${js(ind)})"><span class="grow"><strong class="blk mono">${esc(ind)}</strong><span class="sub">${esc(d.art)} · ${d.n} ${d.n===1?'gang':'ganger'} · sist ${esc(fmtKort(d.siste))}${d.diagnose?' · '+esc(kortTekst(d.diagnose,30).toLowerCase()):''}</span></span>${IK.pil}</button>`).join('')}</div>`:''}
+  <h3>Oppdrag</h3>${os.map(oppdragKort).join('')||'<div class="empty">Ingen oppdrag registrert.</div>'}<div style="height:40px"></div>`;
 };
 function journalUtdrag(nr){
-  const k=kunde(nr); const os=S.oppdrag.filter(o=>o.kundenr===nr && (o.dyr.length||(o.flokk||[]).length)).sort((a,b)=>a.dato.localeCompare(b.dato));
-  let t=`JOURNALUTDRAG\nVeterinær: ${ME.praksis||''}\nDyreeier: ${k.navn} (${k.nr})${k.produsentnr?', produsentnr. '+k.produsentnr:''}, ${k.adresse||''}, ${k.postnr||''} ${k.sted||''}\nUtskrevet: ${new Date().toLocaleString('nb-NO')}\n`;
+  const k=kunde(nr); const os=S.oppdrag.filter(o=>o.kundenr===nr && ((o.dyr||[]).length||(o.flokk||[]).length)).sort((a,b)=>a.dato.localeCompare(b.dato));
+  let t=`JOURNALUTDRAG\nVeterinær: ${ME.praksis||''}\nDyreeier: ${k.navn} (${k.nr})${k.produsentnr?', produsentnr. '+k.produsentnr:''}, ${adresseTekst(k)}\nUtskrevet: ${new Date().toLocaleString('nb-NO')}\n`;
   os.forEach(o=>{ t+=`\n— ${oNr(o)}, ${fmtNo(o.dato)} —\nHenvendelse: ${fmtTs(o.henvendelseTs)} – ${o.henvendelse}\nJournalført: ${fmtTs(o.journalTs)}\n`;
-    o.dyr.forEach(d=>{ t+=`  ${d.art} ${d.individ}\n  Diagnose: ${d.diagnose}\n  Behandling: ${d.behandling}\n`;
-      (d.medisiner||[]).forEach(m=>{ t+=`  Legemiddel: ${m.navn}, mengde ${m.antall}, gitt ${fmtTs(m.tid)}\n`; }); });
-    (o.flokk||[]).forEach(m=>{ t+=`  Flokk${m.art?' ('+m.art+(m.antallDyr?', '+m.antallDyr+' dyr':'')+')':''}: ${m.navn}, mengde ${m.antall}, gitt ${fmtTs(m.tid)}\n`; }); });
+    (o.dyr||[]).forEach(d=>{ t+= d.gruppe ? `  ${d.art}, gruppe på ${d.antall||'?'} dyr uten øremerker\n` : `  ${d.art} ${d.individ||''}\n`;
+      t+=`  Diagnose: ${d.diagnose||''}\n`; if(d.resultat) t+=`  Resultat: ${d.resultat}\n`; t+=`  Behandling: ${d.behandling||''}\n`;
+      (d.medisiner||[]).forEach(m=>{ t+=`  Legemiddel: ${m.navn}, mengde ${fmtTall(m.antall)}${d.gruppe?' totalt':''}, gitt ${fmtTs(m.tid)}\n`; }); });
+    (o.flokk||[]).forEach(m=>{ t+=`  Flokk${m.art?' ('+m.art+(m.antallDyr?', '+m.antallDyr+' dyr':'')+')':''}: ${m.navn}, mengde ${fmtTall(m.antall)}, gitt ${fmtTs(m.tid)}\n`; }); });
   if(!os.length) t+='\nIngen journalførte opplysninger.';
   UI._ju=t;
   modal(`<h2>Journalutdrag – ${esc(k.navn)}</h2><p class="small muted">Til innsyn for dyreeier eller Mattilsynet. Egne notater er ikke tatt med.</p>
     <pre class="out">${esc(t)}</pre><div class="row" style="justify-content:flex-end;gap:8px;margin-top:10px"><button class="btn" onclick="closeModal()">Lukk</button><button class="btn primary" onclick="kopierTekst(UI._ju)">Kopier</button></div>`);
 }
 
-// ================= Meny =================
+// ================= Mer =================
 VIEWS.meny = () => {
-  const item=(v,t,sub)=>`<div class="card item" onclick="go('${v}')"><div class="row between"><strong>${t}</strong><span class="muted">›</span></div><div class="small muted">${sub}</div></div>`;
-  return `<h1>Meny</h1>
-  ${item('eksport','Fakturering','Lag ordrefil til Duett for en periode')}
-  ${isMia()?item('dhp','Rapport til Dyrehelseportalen','Legemidler per dyr, klar til å kopieres'):''}
-  ${isMia()?item('maler','Journalmaler','Ferdige tekster for vanlige tjenester'):''}
-  ${isMia()?item('medisiner','Medisinliste','Se og endre medisiner og priser'):''}
-  ${item('varer','Varer og tjenester','Se og endre varer, og lag varefil til Duett')}
-  ${item('kopi','Sikkerhetskopi','Last ned en kopi av alle data'+(SISTE_KOPI?' · siste '+fmtTs(SISTE_KOPI):' · ingen kopi tatt ennå'))}
-  ${isMia()&&kanSkrive()?`<div class="card item" onclick="journalpassordDialog()"><div class="row between"><strong>Journalpassord</strong><span class="muted">›</span></div><div class="small muted">Bytt journalpassord eller lag ny gjenopprettingsnøkkel</div></div>`:''}
-  <div class="card"><div class="small muted">Innlogget som ${esc(ME.user.email)}${ME.praksis?' · '+esc(ME.praksis):''}</div><button class="btn sm" style="margin-top:8px" onclick="loggUt()">Logg ut</button></div>
-  <div style="height:70px"></div>`;
+  const rad=(onclick,t,sub)=>`<button class="rad" onclick="${onclick}"><span class="grow"><strong class="blk">${t}</strong><span class="sub">${sub}</span></span>${IK.pil}</button>`;
+  const urap=S.oppdrag.filter(o=>!apen(o) && !o.dhpTs && harMed(o)).length;
+  let h=`<h1>Mer</h1>`;
+  if(isMia()){
+    h+=`<h3>Arbeid</h3><div class="card list0">
+      ${rad("go('oppdrag','meny')",'Alle oppdrag','Åpne og avsluttede oppdrag')}
+      ${rad("go('dhp','meny')",'Rapport til Dyrehelseportalen', urap?`${urap} oppdrag er ikke rapportert`:'Legemidler per dyr, klar til å kopieres')}
+      ${rad("go('eksport','meny')",'Fakturering','Lag ordrefil til Duett for en periode')}
+      ${rad("go('sok','meny')",'Avansert søk','Søk på dato, status, vare eller journaltekst')}</div>
+    <h3>Oppsett</h3><div class="card list0">
+      ${rad("go('maler','meny')",'Journalmaler','Ferdige tekster, medisiner og resultat for vanlige tjenester')}
+      ${rad("go('medisiner','meny')",'Medisinliste','Se og endre medisiner og priser')}
+      ${rad("go('varer','meny')",'Varer og tjenester','Se og endre varer, og lag varefil til Duett')}</div>`;
+  } else {
+    h+=`<div class="card list0">
+      ${rad("go('kalender','meny')",'Kalender','Oppdrag og vakter per dag')}
+      ${rad("go('sok','meny')",'Avansert søk','Søk på dato, status eller vare')}
+      ${rad("go('varer','meny')",'Varer og tjenester','Se varer og lag varefil til Duett')}</div>`;
+  }
+  h+=`<h3>Sikkerhet</h3><div class="card list0">
+      ${rad("go('kopi','meny')",'Sikkerhetskopi','Last ned en kopi av alle data'+(SISTE_KOPI?' · siste '+fmtTs(SISTE_KOPI):' · ingen kopi tatt ennå'))}
+      ${isMia()&&kanSkrive()?rad('journalpassordDialog()','Journalpassord','Bytt journalpassord eller lag ny gjenopprettingsnøkkel'):''}</div>
+    <div class="card"><div class="small muted">Innlogget som ${esc(ME.user.email)}${ME.praksis?' · '+esc(ME.praksis):''}</div><button class="btn sm" style="margin-top:8px" onclick="loggUt()">Logg ut</button></div>
+    <div style="height:40px"></div>`;
+  return h;
 };
 
 // ================= Medisinliste =================
 VIEWS.medisiner = () => {
   const q=UI.mq.toLowerCase(), ed=kanSkrive();
   const l=S.medisiner.filter(m=>!q||m.navn.toLowerCase().includes(q)).sort((a,b)=>(b.aktiv!==false)-(a.aktiv!==false)||a.navn.localeCompare(b.navn,'nb'));
-  return `<div style="margin-top:12px"><button class="btn ghost" onclick="go('meny')">← Meny</button></div><h1 style="margin-top:4px">Medisinliste</h1>
+  return `${tilbakeKnapp('meny')}<h1 style="margin-top:2px">Medisinliste</h1>
   <p class="small muted" style="margin-top:-4px">Prisene er uten mva. Endret pris gjelder medisiner som legges til fra nå av. Medisiner som allerede er registrert, beholder prisen sin.</p>
   <div class="row" style="gap:8px;margin-bottom:10px"><input type="search" placeholder="Søk medisin" value="${esc(UI.mq)}" oninput="UI.mq=this.value;sokRes()">${ed?'<button class="btn primary" onclick="medDialog()">+ Ny</button>':''}</div>
   <div class="card" style="padding:4px 14px"><table class="lines">${l.map(m=>`<tr class="${ed?'item':''}" ${ed?`onclick="medDialog('${m.id}')"`:''} style="${m.aktiv===false?'opacity:.5':''}"><td>${esc(m.navn)}${m.aktiv===false?' <span class="pill s-avlyst">Inaktiv</span>':''}</td><td class="right">${kr(m.pris)} kr${m.enhet?' / '+esc(m.enhet):''}</td></tr>`).join('')}</table></div>
-  <div style="height:70px"></div>`;
+  <div style="height:40px"></div>`;
 };
 function medDialog(id){
   const m = id ? S.medisiner.find(x=>x.id===id) : {navn:'',pris:0,enhet:'',aktiv:true};
@@ -814,7 +1365,7 @@ function lagreMed(id){
 VIEWS.varer = () => {
   const q=UI.vq.toLowerCase(), ed=isMia()&&kanSkrive();
   const l=S.varer.filter(v=>!q||(v.navn+' '+v.nr).toLowerCase().includes(q)).sort((a,b)=>a.nr-b.nr);
-  return `<div style="margin-top:12px"><button class="btn ghost" onclick="go('meny')">← Meny</button></div><h1 style="margin-top:4px">Varer og tjenester</h1>
+  return `${tilbakeKnapp('meny')}<h1 style="margin-top:2px">Varer og tjenester</h1>
   <p class="small muted" style="margin-top:-4px">Varenumrene må være de samme som i Duett. Lag ny varefil og importer den i Duett når du har endret eller lagt til varer.</p>
   <div class="row wrapf" style="gap:8px;margin-bottom:10px"><button class="btn" onclick="lastNedVarefil()">Last ned varefil til Duett</button>${ed?'<button class="btn primary" onclick="vareDialog()">+ Ny vare</button>':''}</div>
   <input type="search" placeholder="Søk vare eller varenummer" value="${esc(UI.vq)}" oninput="UI.vq=this.value;sokRes()" style="margin-bottom:10px">
@@ -876,13 +1427,14 @@ VIEWS.eksport = () => {
   const {os,per}=fakturaData(), p=UI.periode;
   const total=os.reduce((s,o)=>s+fakturaLinjer(o).reduce((a,l)=>a+l.antall*l.pris,0),0);
   const utenNr=os.filter(o=>!o.nr).length;
-  let h=`<div style="margin-top:12px"><button class="btn ghost" onclick="go('meny')">← Meny</button></div><h1 style="margin-top:4px">Fakturering</h1>
+  const hjem=!isMia();
+  let h=`${hjem?'':tilbakeKnapp('meny')}<h1${hjem?'':' style="margin-top:2px"'}>Fakturering</h1>${hjem?kopiPaminnelse():''}
   <div class="card"><div class="grid2"><div><label class="f" style="margin-top:0">Fra dato</label><input type="date" value="${p.fra}" onchange="UI.periode.fra=this.value;render()"></div>
   <div><label class="f" style="margin-top:0">Til dato</label><input type="date" value="${p.til}" onchange="UI.periode.til=this.value;render()"></div></div>
   <div class="row wrapf" style="gap:6px;margin-top:8px">${[['Forrige måned',-1],['Denne måneden',0]].map(([t,n])=>`<button class="chip x" onclick="settMnd(${n})">${t}</button>`).join('')}</div>
   <div class="ts" style="margin-top:8px">Med: fullførte oppdrag og avlyste oppdrag som er merket for fakturering, som ikke er fakturert før. Hver kunde får én faktura for perioden, og hvert oppdrag vises med nummer, dato og delsum.</div></div>`;
-  if(!os.length) return h+`<div class="empty">Ingen oppdrag å fakturere i perioden.</div>`;
-  h+=`<h3>${Object.keys(per).length} fakturaer · ${os.length} oppdrag · ${kr(total)} kr eks. mva</h3>`;
+  if(!os.length) return h+`<div class="empty">Ingen oppdrag å fakturere i perioden.</div><div style="height:40px"></div>`;
+  h+=`<h3>${Object.keys(per).length} fakturaer · ${os.length} oppdrag · ${kr(total)} kr eks. mva</h3><div class="fakt">`;
   Object.keys(per).sort((a,b)=>a-b).forEach(nr=>{ const k=kunde(+nr), l=per[nr];
     const s=l.reduce((a,o)=>a+fakturaLinjer(o).reduce((x,y)=>x+y.antall*y.pris,0),0);
     h+=`<div class="card"><div class="row between"><strong>${esc(k.navn)} <span class="small muted">${k.nr}</span></strong><span>${kr(s)} kr</span></div>
@@ -890,10 +1442,11 @@ VIEWS.eksport = () => {
       return `<tr><td colspan="3" class="small" style="background:#faf8f3"><a href="#" onclick="apne('${o.id}');return false"><strong>${esc(oppdragTekst(o))}</strong></a></td></tr>`+
       fl.map(x=>`<tr><td>${esc(x.navn)}</td><td class="right small muted">${x.belop?'':x.antall+' × '+kr(x.pris)}</td><td class="right">${kr(x.antall*x.pris)}</td></tr>`).join('')+
       `<tr><td class="small muted">Sum ${esc(oNr(o).toLowerCase())}</td><td></td><td class="right small"><strong>${kr(os_)}</strong></td></tr>`; }).join('')}</table></div>`; });
+  h+=`</div>`;
   if(utenNr) h+=`<div class="banner">${utenNr} oppdrag har ikke fått oppdragsnummer ennå, fordi de ikke er lagret på serveren. Vent til det står «Lagret» øverst.</div>`;
   h+=`<div class="banner" style="background:var(--blue-2);color:var(--blue)">Sjekk at «Priser registrert som» står på netto under Firmaoppsett faktura i Duett. Kunde- og varenumrene må finnes i Duett.</div>
   <div class="row wrapf" style="gap:8px"><button class="btn primary" onclick="lastNedOrdrefil()" ${utenNr?'disabled':''}>Last ned ordrefil til Duett</button>
-  <button class="btn grow" onclick="merkFakturert()">Merk ${os.length} oppdrag som fakturert</button></div><div style="height:70px"></div>`;
+  <button class="btn grow" onclick="merkFakturert()">Merk ${os.length} oppdrag som fakturert</button></div><div style="height:40px"></div>`;
   return h;
 };
 function settMnd(n){ const d=new Date(); d.setDate(1); d.setMonth(d.getMonth()+n); const f=iso(d); const e=new Date(d.getFullYear(),d.getMonth()+1,0); UI.periode={fra:f,til:n===0?TODAY:iso(e)}; render(); }
@@ -926,8 +1479,10 @@ function dhpRader(){
   const f=UI.dhp; const rader=[], oppd=new Set();
   S.oppdrag.filter(o=>!apen(o) && o.dato>=f.fra && o.dato<=f.til && (f.vis || !o.dhpTs)).sort((a,b)=>(a.dato+a.tid).localeCompare(b.dato+b.tid)).forEach(o=>{
     const k=kunde(o.kundenr);
-    o.dyr.forEach(d=>(d.medisiner||[]).forEach(m=>{ oppd.add(o.id);
-      rader.push({tid:m.tid, dato:iso(new Date(m.tid||oppdragTid(o))), kl:fmtKl(m.tid), kundenr:k.nr, kunde:k.navn, prod:k.produsentnr||'', art:d.art, individ:d.individ||'', legemiddel:m.navn, mengde:m.antall, vakt:paVakt(o)?'Ja':'Nei', nr:o.nr||'', rapportert:!!o.dhpTs, oid:o.id}); }));
+    (o.dyr||[]).forEach(d=>(d.medisiner||[]).forEach(m=>{ oppd.add(o.id);
+      rader.push({tid:m.tid, dato:iso(new Date(m.tid||oppdragTid(o))), kl:fmtKl(m.tid), kundenr:k.nr, kunde:k.navn, prod:k.produsentnr||'', art:d.art,
+        individ: d.gruppe ? (d.antall ? d.antall+' dyr (flokk)' : 'Flokk') : (d.individ||''), utenId:manglerId(d), gruppeUtenAntall:!!d.gruppe && !(+d.antall>0),
+        legemiddel:m.navn, mengde:m.antall, vakt:paVakt(o)?'Ja':'Nei', nr:o.nr||'', rapportert:!!o.dhpTs, oid:o.id}); }));
     (o.flokk||[]).forEach(m=>{ oppd.add(o.id);
       rader.push({tid:m.tid, dato:iso(new Date(m.tid||oppdragTid(o))), kl:fmtKl(m.tid), kundenr:k.nr, kunde:k.navn, prod:k.produsentnr||'', art:m.art||'', individ:m.antallDyr?m.antallDyr+' dyr (flokk)':'Flokk', legemiddel:m.navn, mengde:m.antall, vakt:paVakt(o)?'Ja':'Nei', nr:o.nr||'', rapportert:!!o.dhpTs, oid:o.id}); });
   });
@@ -936,20 +1491,21 @@ function dhpRader(){
 const DHP_KOL = [['dato','Dato',r=>fmtNo(r.dato)],['kl','Kl.',r=>r.kl],['prod','Produsentnr.',r=>r.prod],['kunde','Dyreeier',r=>r.kunde],['art','Dyreart',r=>r.art],['individ','Individnr.',r=>r.individ],['legemiddel','Legemiddel',r=>r.legemiddel],['mengde','Mengde',r=>String(r.mengde).replace('.',',')],['vakt','På vakt',r=>r.vakt],['nr','Oppdrag',r=>r.nr]];
 VIEWS.dhp = () => {
   const f=UI.dhp, {rader,oppd}=dhpRader();
-  const mangler=rader.filter(r=>!r.prod).length, uIndivid=rader.filter(r=>!r.individ).length, uArt=rader.filter(r=>!r.art).length;
-  let h=`<div style="margin-top:12px"><button class="btn ghost" onclick="go('meny')">← Meny</button></div><h1 style="margin-top:4px">Rapport til Dyrehelseportalen</h1>
+  const mangler=rader.filter(r=>!r.prod).length, uIndivid=rader.filter(r=>r.utenId).length, uAntall=rader.filter(r=>r.gruppeUtenAntall).length, uArt=rader.filter(r=>!r.art).length;
+  let h=`${tilbakeKnapp('meny')}<h1 style="margin-top:2px">Rapport til Dyrehelseportalen</h1>
   <p class="small muted" style="margin-top:-4px">Én rad per legemiddel per dyr. Kolonnen «På vakt» viser om oppdraget var på vakt, for rapportering av kjøring.</p>
   <div class="card"><div class="grid2"><div><label class="f" style="margin-top:0">Fra dato</label><input type="date" value="${f.fra}" onchange="UI.dhp.fra=this.value;render()"></div>
   <div><label class="f" style="margin-top:0">Til dato</label><input type="date" value="${f.til}" onchange="UI.dhp.til=this.value;render()"></div></div>
   <label class="check" style="margin-top:10px"><input type="checkbox" ${f.vis?'checked':''} onchange="UI.dhp.vis=this.checked;render()"> Vis også oppdrag som er rapportert</label></div>`;
   if(!rader.length) return h+`<div class="empty">Ingen legemidler å rapportere i perioden.</div>`;
   if(mangler) h+=`<div class="banner">${mangler} rader mangler produsentnummer. Legg det inn på kundekortet.</div>`;
-  if(uIndivid) h+=`<div class="banner">${uIndivid} rader mangler individnummer på dyret.</div>`;
+  if(uIndivid) h+=`<div class="banner">${uIndivid} rader mangler øremerke på dyret. Trykk på raden for å fylle det inn.</div>`;
+  if(uAntall) h+=`<div class="banner">${uAntall} rader gjelder en gruppe uten antall dyr.</div>`;
   if(uArt) h+=`<div class="banner">${uArt} rader mangler dyreart.</div>`;
   h+=`<div class="card" style="overflow-x:auto;padding:6px 10px"><table class="lines small" style="min-width:640px"><tr>${DHP_KOL.map(c=>`<th>${c[1]}</th>`).join('')}</tr>
-    ${rader.map(r=>`<tr style="${r.rapportert?'opacity:.55':''}" class="item" onclick="apne('${r.oid}')">${DHP_KOL.map(c=>`<td>${esc(c[2](r))}</td>`).join('')}</tr>`).join('')}</table></div>
+    ${rader.map(r=>`<tr style="${r.rapportert?'opacity:.55':''}" class="item" onclick="apne('${r.oid}','behandling')">${DHP_KOL.map(c=>`<td>${esc(c[2](r))}</td>`).join('')}</tr>`).join('')}</table></div>
   <div class="row wrapf" style="gap:8px;margin-top:4px"><button class="btn primary" onclick="kopierDhp()">Kopier rapport</button><button class="btn" onclick="merkDhp()">Merk ${oppd.length} oppdrag som rapportert</button></div>
-  <div class="ts" style="margin-top:8px">«Kopier rapport» kopierer radene med tabulator mellom kolonnene. De kan limes inn i Dyrehelseportalen eller i Excel. Rekkefølgen på kolonnene tilpasses når vi vet hvordan skjemaet i portalen ser ut.</div><div style="height:70px"></div>`;
+  <div class="ts" style="margin-top:8px">«Kopier rapport» kopierer radene med tabulator mellom kolonnene. De kan limes inn i Dyrehelseportalen eller i Excel. Rekkefølgen på kolonnene tilpasses når vi vet hvordan skjemaet i portalen ser ut.</div><div style="height:40px"></div>`;
   return h;
 };
 function kopierDhp(){ const {rader}=dhpRader(); kopierTekst([DHP_KOL.map(c=>c[1]).join('\t'),...rader.map(r=>DHP_KOL.map(c=>c[2](r)).join('\t'))].join('\n')); }
@@ -1054,7 +1610,7 @@ async function gjenopprettPassord(){
   Object.assign(NOKLER,ny); JN=await KRYPTO.unwrap(wrapFraRad(NOKLER,'pass'), a, false); await NOKKELLAGER.lagre(nokkelId(), {k:JN, id:NOKLER.opprettet});
   toast('Nytt journalpassord er lagret'); fortsett();
 }
-// Fra Meny → Journalpassord (når appen er i bruk)
+// Fra Mer → Journalpassord (når appen er i bruk)
 function journalpassordDialog(){
   modal(`<h2>Journalpassord</h2>
     <label class="f">Nåværende journalpassord</label><input type="password" id="bp-0" autocomplete="current-password">
@@ -1097,11 +1653,11 @@ function kopiPaminnelse(){
   if(!ME.medlem || !ME.medlem.live || isMia()) return '';
   const dager = SISTE_KOPI ? (Date.now()-new Date(SISTE_KOPI).getTime())/864e5 : 999;
   if(dager<30) return '';
-  return `<div class="banner row between" style="gap:10px"><span>${SISTE_KOPI?'Det er over 30 dager siden siste sikkerhetskopi.':'Det er ikke tatt noen sikkerhetskopi ennå.'}</span><button class="btn sm" onclick="go('kopi')">Ta kopi</button></div>`;
+  return `<div class="banner row between" style="gap:10px"><span>${SISTE_KOPI?'Det er over 30 dager siden siste sikkerhetskopi.':'Det er ikke tatt noen sikkerhetskopi ennå.'}</span><button class="btn sm" onclick="go('kopi',UI.view)">Ta kopi</button></div>`;
 }
 VIEWS.kopi = () => {
   const vet=kanSkrive() && isMia();
-  return `<div style="margin-top:12px"><button class="btn ghost" onclick="go('meny')">← Meny</button></div><h1 style="margin-top:4px">Sikkerhetskopi</h1>
+  return `${tilbakeKnapp('meny')}<h1 style="margin-top:2px">Sikkerhetskopi</h1>
   <div class="card"><p style="margin-top:0">Laster ned alle data som én fil: kunder, oppdrag, fakturagrunnlag, varer, medisiner, maler, vakter, journaler og endringsloggen med tidligere versjoner.</p>
     <p class="small muted">Journalene er kryptert i filen og kan bare leses med journalpassordet eller gjenopprettingsnøkkelen. Filen kan derfor oppbevares av den som drifter systemet uten at journalene blir lesbare.</p>
     <div class="kv" style="margin:10px 0"><div>Siste kopi</div><div>${SISTE_KOPI?fmtTs(SISTE_KOPI):'Ingen kopi tatt ennå'}</div></div>
@@ -1112,7 +1668,7 @@ VIEWS.kopi = () => {
     <li>Gjenopprettingsnøkkelen oppbevares av veterinæren, ikke sammen med kopiene.</li></ol></div>
   ${vet?`<h3>Gjenopprett fra sikkerhetskopi</h3><div class="card"><p class="small" style="margin-top:0">Leser inn en sikkerhetskopi og skriver over data med samme nøkler. Brukes hvis databasen er ødelagt eller flyttet til et nytt Supabase-prosjekt. Etterpå må du låse opp med journalpassordet som gjaldt da kopien ble tatt.</p>
     <label class="btn" style="cursor:pointer">Velg sikkerhetskopi …<input type="file" accept=".json,application/json" style="display:none" onchange="gjenopprettFil(this.files[0]);this.value=''"></label></div>`:''}
-  <div style="height:70px"></div>`;
+  <div style="height:40px"></div>`;
 };
 async function lastNedKopi(){
   const b=document.getElementById('kopi-b'); b.disabled=true; b.textContent='Henter data …';
@@ -1287,7 +1843,10 @@ async function fortsett(){
     if(m) try{ localStorage.setItem('vet5-medlem-'+ME.user.id, JSON.stringify(m)); }catch(e){}
   }catch(e){ try{ m=JSON.parse(localStorage.getItem('vet5-medlem-'+ME.user.id)||'null'); }catch(x){} }
   if(!m) return loginBody(`<p><strong>Kontoen din har ikke tilgang ennå.</strong></p><p class="small muted">Du er logget inn som ${esc(ME.user.email)}, men kontoen er ikke koblet til en praksis. Be administrator kjøre roller.sql med denne e-postadressen.</p><button class="btn" onclick="loggUtNa()">Logg ut</button>`);
-  ME.medlem=m; ME.praksis=m.praksisNavn||''; UI.role = m.rolle==='veterinaer' ? 'mia' : 'erik';
+  const rolle = m.rolle==='veterinaer' ? 'mia' : 'erik';
+  // Startside: «I dag» for veterinæren, «Fakturering» for den som fakturerer
+  if(!ME.medlem || UI.role!==rolle){ UI.view = rolle==='mia' ? 'idag' : 'eksport'; UI.current=null; UI.retur=null; }
+  ME.medlem=m; ME.praksis=m.praksisNavn||''; UI.role = rolle;
   if(m.rolle==='veterinaer' && !(await journalnokkel())) return;
   loginEl().style.display='none'; cacheLoad(); render(); sync();
 }
@@ -1301,7 +1860,7 @@ async function loggUtNa(){
   JN=null; NOKLER=null;
   await sb.auth.signOut();
   S={kunder:[],oppdrag:[],maler:[],varer:[],medisiner:[],vakter:[]}; SYNC.base={}; ME.user=null; ME.medlem=null;
-  document.getElementById('main').innerHTML=''; document.getElementById('syncbar').innerHTML=''; const fab=document.getElementById('fab'); if(fab) fab.remove(); visLogin();
+  document.getElementById('main').innerHTML=''; document.getElementById('syncbar').innerHTML=''; const hl=document.getElementById('handling'); if(hl) hl.remove(); document.body.classList.remove('besok'); visLogin();
 }
 
 // ================= Lokal kopi =================
@@ -1310,7 +1869,7 @@ const TOM = () => ({kunder:[],oppdrag:[],maler:[],varer:[],medisiner:[],vakter:[
 let SISTE_KOPI = null;
 function cacheSave(){ if(!ME.user) return; try{ localStorage.setItem('vet5-cache-'+ME.user.id, JSON.stringify({S, base:SYNC.base})); }catch(e){} }
 function cacheLoad(){
-  try{ const c=JSON.parse(localStorage.getItem('vet5-cache-'+ME.user.id)||'null'); if(c && c.S){ S=Object.assign(TOM(), c.S); SYNC.base=c.base||{}; } }catch(e){}
+  try{ const c=JSON.parse(localStorage.getItem('vet5-cache-'+ME.user.id)||'null'); if(c && c.S){ S=Object.assign(TOM(), c.S); SYNC.base=c.base||{}; S.oppdrag.forEach(migrerFlokk); } }catch(e){}
   SYNC.dirty = Object.keys(endredeNokler()).length>0;
 }
 
@@ -1336,7 +1895,7 @@ const tilOppdrag = o => ({id:o.id, praksis_id:P(), kundenr:o.kundenr, dato:o.dat
 const tilJournal = async o => ({oppdrag_id:o.id, praksis_id:P(), henvendelse:null, dyr:[], medisiner:[], journal_ts:o.journalTs||null,
   kryptert: await KRYPTO.krypter(JN, {henvendelse:o.henvendelse||'', dyr:o.dyr||[], flokk:o.flokk||[]})});
 async function journalKlartekst(j){ if(!j) return null; if(j.kryptert){ const d=await KRYPTO.dekrypter(JN, j.kryptert); return Object.assign({journal_ts:j.journal_ts}, d); } return {journal_ts:j.journal_ts, henvendelse:j.henvendelse, dyr:j.dyr, medisiner:j.medisiner}; }
-const tilMal = m => ({id:m.id, praksis_id:P(), deleted:!!m.deleted, data:{navn:m.navn, tjenester:m.tjenester, diagnose:m.diagnose, behandling:m.behandling, notat:m.notat, medisiner:m.medisiner}});
+const tilMal = m => ({id:m.id, praksis_id:P(), deleted:!!m.deleted, data:{navn:m.navn, tjenester:m.tjenester, diagnose:m.diagnose, behandling:m.behandling, notat:m.notat, medisiner:m.medisiner, resultat:m.resultat}});
 const tilVare = v => ({praksis_id:P(), nr:v.nr, navn:v.navn, pris:v.pris, enhet:v.enhet||null, konto:v.konto||3020, type:v.type||'Normal', aktiv:v.aktiv!==false});
 const tilLegemiddel = m => ({id:m.id, praksis_id:P(), navn:m.navn, pris:+m.pris||0, enhet:m.enhet||null, aktiv:m.aktiv!==false});
 const tilVakt = w => ({id:w.id, praksis_id:P(), fra:w.fra, til:w.til, serie:w.serie||null, deleted:!!w.deleted});
@@ -1349,10 +1908,10 @@ function fraOppdrag(r,j){
     const ms=gamle.map(m=>({id:uid(),navn:m.navn,antall:m.antall,pris:m.pris,tid:m.tid||j.journal_ts||r.henvendelse_ts||nowTs()}));
     if(dyr.length) dyr[0].medisiner=ms; else dyr=[{id:uid(),art:'Storfe',individ:'',diagnose:'',behandling:'',notat:'',medisiner:ms}];
   }
-  return {id:r.id, nr:r.nr||null, kundenr:r.kundenr, dato:r.dato, tid:r.tid||'', status:r.status, fakturer:r.fakturer, fakturert:r.fakturert,
+  return migrerFlokk({id:r.id, nr:r.nr||null, kundenr:r.kundenr, dato:r.dato, tid:r.tid||'', status:r.status, fakturer:r.fakturer, fakturert:r.fakturert,
     fakturertTs:r.fakturert_ts, ferdigTs:r.ferdig_ts, henvendelseTs:r.henvendelse_ts, utsattFra:r.utsatt_fra||undefined, linjer:r.linjer||[], medSum:+r.med_sum||0,
     vakt:(r.vakt===true||r.vakt===false)?r.vakt:null, dhpTs:r.dhp_ts||null, opprinnelig:r.opprinnelig||null,
-    henvendelse: j?(j.henvendelse||''):'', dyr, flokk: j?(j.flokk||[]):[], journalTs: j?j.journal_ts:null};
+    henvendelse: j?(j.henvendelse||''):'', dyr, flokk: j?(j.flokk||[]):[], journalTs: j?j.journal_ts:null});
 }
 const fraMal = r => Object.assign({id:r.id, deleted:r.deleted}, r.data);
 const fraVare = r => ({nr:r.nr, navn:r.navn, pris:r.pris==null?null:+r.pris, enhet:r.enhet||'', konto:r.konto, type:r.type||'Normal', aktiv:r.aktiv!==false});
