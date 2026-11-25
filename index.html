@@ -1090,7 +1090,9 @@ async function nyGjenNokkel(){
 }
 
 // ================= Sikkerhetskopi, gjenoppretting og kundeimport =================
-const KOPI_TABELLER = ['kunder','varer','legemidler','maler','vakter','oppdrag','journal','nokler'];
+const KOPI_TABELLER = ['kunder','varer','legemidler','maler','vakter','oppdrag','journal','nokler','historikk','medlemmer'];
+// Med i kopien, men legges ikke tilbake fra appen: endringsloggen skal ikke kunne skrives av brukere, og medlemmer styres av administrator
+const KUN_I_KOPI = ['historikk','medlemmer'];
 function kopiPaminnelse(){
   if(!ME.medlem || !ME.medlem.live || isMia()) return '';
   const dager = SISTE_KOPI ? (Date.now()-new Date(SISTE_KOPI).getTime())/864e5 : 999;
@@ -1100,7 +1102,7 @@ function kopiPaminnelse(){
 VIEWS.kopi = () => {
   const vet=kanSkrive() && isMia();
   return `<div style="margin-top:12px"><button class="btn ghost" onclick="go('meny')">← Meny</button></div><h1 style="margin-top:4px">Sikkerhetskopi</h1>
-  <div class="card"><p style="margin-top:0">Laster ned alle data som én fil: kunder, oppdrag, fakturagrunnlag, varer, medisiner, maler, vakter og journaler.</p>
+  <div class="card"><p style="margin-top:0">Laster ned alle data som én fil: kunder, oppdrag, fakturagrunnlag, varer, medisiner, maler, vakter, journaler og endringsloggen med tidligere versjoner.</p>
     <p class="small muted">Journalene er kryptert i filen og kan bare leses med journalpassordet eller gjenopprettingsnøkkelen. Filen kan derfor oppbevares av den som drifter systemet uten at journalene blir lesbare.</p>
     <div class="kv" style="margin:10px 0"><div>Siste kopi</div><div>${SISTE_KOPI?fmtTs(SISTE_KOPI):'Ingen kopi tatt ennå'}</div></div>
     <button class="btn primary" onclick="lastNedKopi()" id="kopi-b">Last ned sikkerhetskopi</button></div>
@@ -1116,8 +1118,9 @@ async function lastNedKopi(){
   const b=document.getElementById('kopi-b'); b.disabled=true; b.textContent='Henter data …';
   try{
     const tabeller={};
-    for(const t of KOPI_TABELLER){ const r=await sb.from(t).select('*'); if(r.error) throw r.error; tabeller[t]=r.data; }
-    const fil={app:'vet-oppdrag', format:1, tatt:nowTs(), praksis:{id:ME.medlem.praksis_id, navn:ME.praksis}, tattAv:ME.user.email, tabeller};
+    for(const t of KOPI_TABELLER){ b.textContent='Henter '+t+' …'; tabeller[t]=await hentAlle(t); }
+    const antall=Object.fromEntries(Object.entries(tabeller).map(([t,r])=>[t,r.length]));
+    const fil={app:'vet-oppdrag', format:2, antall, tatt:nowTs(), praksis:{id:ME.medlem.praksis_id, navn:ME.praksis}, tattAv:ME.user.email, tabeller};
     const navn=`vet-oppdrag-sikkerhetskopi-${TODAY}.json`;
     lastNedBlob(new Blob([JSON.stringify(fil)],{type:'application/json'}), navn);
     try{ await sb.from('kopier').insert({praksis_id:ME.medlem.praksis_id}); }catch(e){}
@@ -1128,8 +1131,9 @@ async function gjenopprettFil(fil){
   if(!fil) return;
   let data; try{ data=JSON.parse(await fil.text()); }catch(e){ toast('Filen kunne ikke leses'); return; }
   if(data.app!=='vet-oppdrag' || !data.tabeller){ toast('Dette er ikke en sikkerhetskopi fra Vet-oppdrag'); return; }
+  if(data.antall){ const feil=Object.entries(data.antall).filter(([t,n])=>(data.tabeller[t]||[]).length!==n); if(feil.length){ toast('Kopien er ufullstendig ('+feil.map(f=>f[0]).join(', ')+'). Velg en annen kopi.'); return; } }
   UI._gjen_data=data;
-  const n=KOPI_TABELLER.map(t=>`${t}: ${(data.tabeller[t]||[]).length}`).join(' · ');
+  const n=KOPI_TABELLER.filter(t=>!KUN_I_KOPI.includes(t)).map(t=>`${t}: ${(data.tabeller[t]||[]).length}`).join(' · ');
   modal(`<h2>Gjenopprette fra sikkerhetskopi?</h2><p class="small">Kopi tatt ${fmtTs(data.tatt)} fra «${esc(data.praksis&&data.praksis.navn||'')}».</p><p class="small muted">${n}</p>
     <div class="banner">Rader med samme nøkkel som i kopien blir overskrevet. Ingenting slettes. Journalnøkkelen fra kopien tas også i bruk, så du må låse opp med journalpassordet som gjaldt da kopien ble tatt, eller med gjenopprettingsnøkkelen fra den tiden.</div>
     <label class="check"><input type="checkbox" id="gj-ok"> Jeg forstår, og vil gjenopprette</label>
@@ -1140,6 +1144,7 @@ async function utforGjenoppretting(){
   const data=UI._gjen_data, p=ME.medlem.praksis_id; closeModal(); toast('Gjenoppretter …');
   try{
     for(const t of KOPI_TABELLER){
+      if(KUN_I_KOPI.includes(t)) continue;
       let rader=(data.tabeller[t]||[]).map(r=>{ const x=Object.assign({},r,{praksis_id:p}); delete x.oppdatert; return x; });
       if(t==='nokler'){ rader=rader.slice(0,1); if(!rader.length) continue; const fins=await sb.from('nokler').select('praksis_id').eq('praksis_id',p).maybeSingle();
         if(fins.data){ const r=await sb.from('nokler').update(rader[0]).eq('praksis_id',p); if(r.error) throw r.error; continue; } }
@@ -1311,6 +1316,15 @@ function cacheLoad(){
 
 // ================= Synkronisering =================
 const P = () => ME.medlem.praksis_id;
+// Supabase gir høyst 1000 rader per spørring. Hent i sider så ingenting faller bort når datamengden vokser.
+const SORTERING = {kunder:'nr', varer:'nr', journal:'oppdrag_id', nokler:'praksis_id', medlemmer:'user_id'};
+async function hentAlle(t, side=1000){
+  const ut=[];
+  for(let fra=0;;fra+=side){
+    const r=await sb.from(t).select('*').eq('praksis_id',P()).order(SORTERING[t]||'id',{ascending:true}).range(fra,fra+side-1);
+    if(r.error) throw r.error; ut.push(...r.data); if(r.data.length<side) return ut;
+  }
+}
 // k=kunder, o=oppdrag(+journal), m=maler, v=varer, l=legemidler, w=vakter
 const SAML = [['k','kunder',x=>x.nr],['o','oppdrag',x=>x.id],['m','maler',x=>x.id],['v','varer',x=>x.nr],['l','medisiner',x=>x.id],['w','vakter',x=>x.id]];
 const nokler = () => { const m={}; for(const [p,a,key] of SAML) (S[a]||[]).forEach(x=>m[p+':'+key(x)]=x); return m; };
@@ -1371,7 +1385,7 @@ async function sync(){
     for(const o of b.f) chk(await sb.from('oppdrag').update({fakturert:!!o.fakturert, fakturert_ts:o.fakturertTs||null}).eq('id',o.id));
     for(const k in sendt) SYNC.base[k]=sendt[k];
     // 2. Hent alt
-    const hent = async t => chk(await sb.from(t).select('*')).data;
+    const hent = t => hentAlle(t);
     const [rk,ro,rv,rw] = [await hent('kunder'), await hent('oppdrag'), await hent('varer'), await hent('vakter')];
     const [rj,rm,rl] = vet ? [await hent('journal'), await hent('maler'), await hent('legemidler')] : [[],[],[]];
     // 3. Første gang: legg inn demodata og standardlister for veterinæren
