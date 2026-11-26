@@ -345,7 +345,7 @@ function lastNedBlob(blob, navn){ const a=document.createElement('a'); a.href=UR
 // ================= Tilstand =================
 let S = {kunder:[], oppdrag:[], maler:[], varer:[], medisiner:[], vakter:[]};
 let UI = {role:'mia', view:'idag', listTab:'apne', current:null, kunde:null, mal:null,
-  fane:'info', fra:null, retur:null, dyrApen:null, prisApen:null, nb:null, fd:null, kundeFra:null, kq:'',
+  fane:'info', fra:null, retur:null, dyrApen:null, prisApen:null, nb:null, fd:null, kundeFra:null, kq:'', faktKunde:null, medFakturert:false,
   sok:{q:'',fra:'',til:'',individ:'',status:'',vare:'',dhp:false},
   periode:{fra:addDays(-30), til:TODAY}, dhp:{fra:TODAY.slice(0,8)+'01', til:TODAY, vis:false},
   kal:{ym:TODAY.slice(0,7), dag:TODAY}, vq:'', mq:''};
@@ -1427,9 +1427,14 @@ function lastNedVarefil(){
 }
 
 // ================= Fakturering: ordrefil til Duett =================
+// Oppdrag som kan være med i fakturagrunnlaget for perioden: ikke fakturert ennå, og eventuelt også de som allerede er fakturert
+function fakturaKandidater(){
+  const {fra,til}=UI.periode, medF=!!UI.medFakturert;
+  return S.oppdrag.filter(o=>(fakturerbar(o) || (medF && o.fakturert)) && (!fra||o.dato>=fra) && (!til||o.dato<=til));
+}
 function fakturaData(){
-  const {fra,til}=UI.periode;
-  const os=S.oppdrag.filter(o=>fakturerbar(o) && (!fra||o.dato>=fra) && (!til||o.dato<=til)).sort((a,b)=>(a.dato+a.tid).localeCompare(b.dato+b.tid));
+  const kn=UI.faktKunde;
+  const os=fakturaKandidater().filter(o=>!kn || o.kundenr===kn).sort((a,b)=>(a.dato+a.tid).localeCompare(b.dato+b.tid));
   const per={}; os.forEach(o=>{ (per[o.kundenr]=per[o.kundenr]||[]).push(o); });
   return {os, per};
 }
@@ -1447,40 +1452,61 @@ function periodeVelger(medAar, ekstra){
   <div><label class="f" style="margin-top:0" for="per-til">Til dato</label><input type="date" id="per-til" value="${p.til}" onchange="UI.periode.til=this.value;render()"></div></div>
   <div class="row wrapf" style="gap:6px;margin-top:8px">${[['Forrige måned',-1],['Denne måneden',0]].map(([t,n])=>`<button class="chip x" onclick="settMnd(${n})">${t}</button>`).join('')}${medAar?`<button class="chip x" onclick="UI.periode={fra:TODAY.slice(0,4)+'-01-01',til:TODAY};render()">Hittil i år</button>`:''}</div>${ekstra||''}</div>`;
 }
+function kundeFilter(){
+  const kn=UI.faktKunde, ant={};
+  fakturaKandidater().forEach(o=>{ ant[o.kundenr]=(ant[o.kundenr]||0)+1; });
+  const nr=Object.keys(ant).map(Number); if(kn && !nr.includes(kn)) nr.push(kn);
+  const ks=nr.map(n=>kunde(n)).sort((a,b)=>String(a.navn).localeCompare(String(b.navn),'nb'));
+  return `<label class="f" for="fakt-kunde">Kunde</label><select id="fakt-kunde" onchange="UI.faktKunde=this.value?+this.value:null;render()">
+    <option value="">Alle kunder (${Object.keys(ant).length})</option>${ks.map(k=>`<option value="${k.nr}" ${k.nr===kn?'selected':''}>${esc(k.navn)} (${ant[k.nr]||0})</option>`).join('')}</select>`;
+}
 VIEWS.eksport = () => {
+  const kn=UI.faktKunde, medF=!!UI.medFakturert;
   const {os,per}=fakturaData(), nF=Object.keys(per).length;
-  const total=os.reduce((s,o)=>s+fakturaSum(o),0);
-  const ps=periodeOppdrag(), fakt=ps.filter(o=>o.fakturert), fsum=fakt.reduce((s,o)=>s+fakturaSum(o),0), apneP=ps.filter(apen).length;
+  const ikke=os.filter(o=>!o.fakturert), sumIkke=ikke.reduce((s,o)=>s+fakturaSum(o),0), sumFaktVist=os.filter(o=>o.fakturert).reduce((s,o)=>s+fakturaSum(o),0);
+  const total=sumIkke+sumFaktVist;
+  const ps=periodeOppdrag().filter(o=>!kn || o.kundenr===kn), fakt=ps.filter(o=>o.fakturert), fsum=fakt.reduce((s,o)=>s+fakturaSum(o),0), apneP=ps.filter(apen).length;
   const utenNr=os.filter(o=>!o.nr).length;
   const hjem=!isMia();
   let h=`${hjem?'':tilbakeKnapp('meny')}<h1${hjem?'':' style="margin-top:2px"'}>Fakturering</h1>${hjem?kopiPaminnelse():''}
-  ${periodeVelger(false, `<div class="ts" style="margin-top:8px">Med: fullførte oppdrag og avlyste oppdrag som er merket for fakturering, som ikke er fakturert før. Hver kunde får én faktura for perioden, og hvert oppdrag vises med nummer, dato og delsum.</div>`)}
-  <div class="card sumkort"><p class="lbl">Kan faktureres i perioden</p>
+  ${periodeVelger(false, `<div style="margin-top:4px">${kundeFilter()}</div>
+    <label class="check" style="margin-top:12px"><input type="checkbox" id="fakt-medf" ${medF?'checked':''} onchange="UI.medFakturert=this.checked;render()"> Ta med oppdrag som allerede er fakturert</label>
+    <div class="ts" style="margin-top:8px">Med: fullførte oppdrag og avlyste oppdrag som er merket for fakturering${medF?', også de som allerede er fakturert':', som ikke er fakturert før'}. Hver kunde får én faktura for perioden, og hvert oppdrag vises med nummer, dato og delsum.</div>`)}
+  <div class="card sumkort"><p class="lbl">${medF?'Sum i perioden':'Kan faktureres i perioden'}</p>
+    ${kn?`<div class="small" style="margin-top:2px">${esc(kunde(kn).navn)} · <button class="linkbtn" onclick="UI.faktKunde=null;render()">Vis alle kunder</button></div>`:''}
     <div class="stortall">${kr(total)} kr <span class="small muted">eks. mva</span></div>
     <div class="small muted">${kr(total*(1+MVA))} kr inkl. mva · ${os.length} oppdrag · ${nF} ${nF===1?'faktura':'fakturaer'}</div>
-    ${fakt.length?`<div class="small muted" style="margin-top:6px">Allerede fakturert i perioden: ${kr(fsum)} kr eks. mva (${fakt.length} oppdrag)</div>`:''}
+    ${medF ? (sumFaktVist>0 || sumIkke>0 ? `<div class="small muted" style="margin-top:6px">Ikke fakturert ennå: ${kr(sumIkke)} kr · Allerede fakturert: ${kr(sumFaktVist)} kr</div>` : '')
+           : (fakt.length?`<div class="small muted" style="margin-top:6px">Allerede fakturert i perioden: ${kr(fsum)} kr eks. mva (${fakt.length} oppdrag)</div>`:'')}
     ${apneP?`<div class="small muted" style="margin-top:2px">${apneP} oppdrag i perioden er ikke avsluttet ennå og er ikke med.</div>`:''}
     <div style="margin-top:12px"><button class="linkbtn" onclick="go('lonn','eksport')">Lønnsberegning for perioden →</button></div></div>`;
-  if(!os.length) return h+`<div style="height:40px"></div>`;
+  if(!os.length) return h+`<div class="empty">${kn?'Ingen oppdrag for denne kunden i perioden.':'Ingen oppdrag å vise i perioden.'}</div><div style="height:40px"></div>`;
   h+=`<h3>Fakturaer</h3><div class="fakt">`;
   Object.keys(per).sort((a,b)=>a-b).forEach(nr=>{ const k=kunde(+nr), l=per[nr];
     const s=l.reduce((a,o)=>a+fakturaSum(o),0);
     h+=`<div class="card"><div class="row between"><strong>${esc(k.navn)} <span class="small muted">${k.nr}</span></strong><span>${kr(s)} kr</span></div>
     <table class="lines" style="margin-top:6px">${l.map(o=>{ const fl=fakturaLinjer(o), os_=fl.reduce((x,y)=>x+y.antall*y.pris,0);
-      return `<tr><td colspan="3" class="small" style="background:#faf8f3"><a href="#" onclick="apne('${o.id}');return false"><strong>${esc(oppdragTekst(o))}</strong></a></td></tr>`+
+      return `<tr><td colspan="3" class="small" style="background:#faf8f3"><a href="#" onclick="apne('${o.id}');return false"><strong>${esc(oppdragTekst(o))}</strong></a>${o.fakturert?` <span class="pill s-fakturert">Fakturert${o.fakturertTs?' '+fmtNo(iso(new Date(o.fakturertTs))):''}</span>`:''}</td></tr>`+
       fl.map(x=>`<tr><td>${esc(x.navn)}</td><td class="right small muted">${x.belop?'':x.antall+' × '+kr(x.pris)}</td><td class="right">${kr(x.antall*x.pris)}</td></tr>`).join('')+
       `<tr><td class="small muted">Sum ${esc(oNr(o).toLowerCase())}</td><td></td><td class="right small"><strong>${kr(os_)}</strong></td></tr>`; }).join('')}</table></div>`; });
   h+=`</div>`;
   if(utenNr) h+=`<div class="banner">${utenNr} oppdrag har ikke fått oppdragsnummer ennå, fordi de ikke er lagret på serveren. Vent til det står «Lagret» øverst.</div>`;
   h+=`<div class="banner" style="background:var(--blue-2);color:var(--blue)">Sjekk at «Priser registrert som» står på netto under Firmaoppsett faktura i Duett. Kunde- og varenumrene må finnes i Duett.</div>
   <div class="row wrapf" style="gap:8px"><button class="btn primary" onclick="lastNedOrdrefil()" ${utenNr?'disabled':''}>Last ned ordrefil til Duett</button>
-  <button class="btn grow" onclick="merkFakturert()">Merk ${os.length} oppdrag som fakturert</button></div><div style="height:40px"></div>`;
+  ${ikke.length?`<button class="btn grow" onclick="merkFakturert()">Merk ${ikke.length} oppdrag som fakturert</button>`:''}</div>
+  ${os.length>ikke.length?`<div class="ts" style="margin-top:8px">${os.length-ikke.length} av oppdragene er allerede fakturert. ${os.length-ikke.length===1?'Det':'De'} blir med i ordrefilen, men merkes ikke på nytt.</div>`:''}<div style="height:40px"></div>`;
   return h;
 };
 function settMnd(n){ const d=new Date(); d.setDate(1); d.setMonth(d.getMonth()+n); const f=iso(d); const e=new Date(d.getFullYear(),d.getMonth()+1,0); UI.periode={fra:f,til:n===0?TODAY:iso(e)}; render(); }
-function lastNedOrdrefil(){
+function lastNedOrdrefil(bekreftet){
   if(!window.XLSX){ toast('Excel-biblioteket er ikke lastet. Sjekk nettet.'); return; }
-  const {per}=fakturaData(), p=UI.periode;
+  const {os,per}=fakturaData(), p=UI.periode, nFakt=os.filter(o=>o.fakturert).length;
+  if(nFakt && !bekreftet){
+    modal(`<h2>Ta med fakturerte oppdrag?</h2><p>Filen tar med ${nFakt} ${nFakt===1?'oppdrag':'oppdrag'} som allerede er fakturert. Importerer du den i Duett, blir ${nFakt===1?'det':'de'} fakturert på nytt.</p>
+      <p class="small muted">Bruk dette bare hvis forrige import i Duett ikke ble fullført, eller hvis fakturaene er slettet i Duett.</p>
+      <div class="row" style="justify-content:flex-end;gap:8px;margin-top:12px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="closeModal();lastNedOrdrefil(true)">Last ned likevel</button></div>`);
+    return;
+  }
   const H=['Ordrenummer','Kundenummer*','Ordretype','Leveringsdato','Notat','Betalingsform','Linjetype','Varenummer*','Varenavn','Salgspris','Antall'];
   const rows=[['[Ordre]'], H];
   const notat=`Oppdrag i perioden ${fmtNo(p.fra)}–${fmtNo(p.til)}`;
@@ -1494,13 +1520,13 @@ function lastNedOrdrefil(){
     });
   });
   const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rows), 'Ordre');
-  lastNedBlob(new Blob([XLSX.write(wb,{bookType:'xlsx',type:'array'})],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}), `Duett_ordre_${p.fra}_${p.til}.xlsx`);
+  lastNedBlob(new Blob([XLSX.write(wb,{bookType:'xlsx',type:'array'})],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}), `Duett_ordre_${p.fra}_${p.til}${UI.faktKunde?'_kunde'+UI.faktKunde:''}${nFakt?'_med_fakturerte':''}.xlsx`);
   toast('Ordrefilen er lastet ned');
 }
-function merkFakturert(){ const {os}=fakturaData();
-  modal(`<h2>Merk som fakturert?</h2><p>${os.length} oppdrag låses og tas ut av fremtidige eksporter. Gjør dette etter at ordrefilen er importert i Duett og fakturaene er laget.</p>
+function merkFakturert(){ const os=fakturaData().os.filter(o=>!o.fakturert);
+  modal(`<h2>Merk som fakturert?</h2><p>${os.length} oppdrag låses for endringer og tas ikke med i neste ordrefil, med mindre du krysser av for å ta med fakturerte oppdrag. Gjør dette etter at ordrefilen er importert i Duett og fakturaene er laget.</p>
   <div class="row" style="justify-content:flex-end;gap:8px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="bekreftFakturert()">Merk som fakturert</button></div>`); }
-function bekreftFakturert(){ const {os}=fakturaData(); const t=nowTs(); os.forEach(o=>{o.fakturert=true;o.fakturertTs=t;}); save(); closeModal(); render(); toast(os.length+' oppdrag merket som fakturert'); }
+function bekreftFakturert(){ const os=fakturaData().os.filter(o=>!o.fakturert); const t=nowTs(); os.forEach(o=>{o.fakturert=true;o.fakturertTs=t;}); save(); closeModal(); render(); toast(os.length+' oppdrag merket som fakturert'); }
 
 // ================= Lønnsberegning =================
 // Hva Mia kan ta ut i lønn fra enkeltpersonforetaket i en periode, og hva som skal settes av til mva, skatt og sparing.
