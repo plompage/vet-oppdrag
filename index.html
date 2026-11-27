@@ -243,6 +243,16 @@ img,table{max-width:100%}
 .prikk{width:12px;height:12px;border-radius:3px;flex:none}
 .kv.lonnkv{grid-template-columns:minmax(0,1fr) auto}
 .lonnkv>div:nth-child(even){text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* Innloggingsbildet kan rulles når innholdet er høyere enn skjermen (stor skrift, lav skjerm eller skjermtastatur).
+   margin:auto sentrerer kortet når det er plass, uten at toppen klippes når det ikke er plass. */
+.login{flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  padding:max(24px,env(safe-area-inset-top)) 24px max(24px,env(safe-area-inset-bottom))}
+.login-card{margin:auto 0;flex-shrink:0}
+/* Plass under innholdet så høyt som skjermtastaturet (settes fra sync.js), så knappen kan rulles opp over tastaturet */
+.login::after{content:'';flex:0 0 auto;height:var(--tastatur,0px)}
+/* På telefon og nettbrett står kortet øverst, så det ikke flytter seg når tastaturet kommer og går */
+@media (hover:none) and (pointer:coarse){ .login-card{margin:0} }
 </style>
 </head>
 <body>
@@ -1713,8 +1723,8 @@ function visGjenopprettingsnokkel(gjen, forsteGang){
       <li>Lagre den også i passordbehandleren din.</li>
       <li>Ikke gi den til den som tar vare på sikkerhetskopiene.</li></ol>
     <div class="row" style="gap:8px"><button class="btn sm" onclick="kopierTekst(UI._gjen)">Kopier</button><button class="btn sm" onclick="skrivUtGjen()">Skriv ut</button></div>
-    <label class="f">Skriv inn de fire siste tegnene for å bekrefte</label><input type="text" id="gj-c" maxlength="4" style="text-transform:uppercase">
-    <button class="btn primary" style="width:100%;margin-top:14px" onclick="bekreftGjen(${forsteGang?'true':'false'})">Jeg har tatt vare på nøkkelen</button>`);
+    <form onsubmit="event.preventDefault();bekreftGjen(${forsteGang?'true':'false'})"><label class="f">Skriv inn de fire siste tegnene for å bekrefte</label><input type="text" id="gj-c" maxlength="4" style="text-transform:uppercase" autocomplete="off" autocapitalize="characters">
+    <button class="btn primary" style="width:100%;margin-top:14px">Jeg har tatt vare på nøkkelen</button></form>`);
 }
 function skrivUtGjen(){
   const w=window.open('','_blank'); if(!w){ toast('Utskrift ble blokkert. Bruk Kopier i stedet.'); return; }
@@ -1897,8 +1907,30 @@ const hashType = new URLSearchParams(location.hash.slice(1)).get('type');
 const sb = window.supabase.createClient(SB_URL, SB_KEY, {auth:{persistSession:true, autoRefreshToken:true, detectSessionInUrl:true, flowType:'implicit'}});
 const ME = {user:null, medlem:null, praksis:'', trengerPassord: hashType==='invite' || hashType==='recovery'};
 const loginEl = () => document.getElementById('login');
-const loginBody = h => { document.getElementById('login-body').innerHTML=h; document.getElementById('login-err').textContent=''; loginEl().style.display='flex'; };
-const loginErr = t => { document.getElementById('login-err').textContent=t; };
+const loginBody = h => { document.getElementById('login-body').innerHTML=h; document.getElementById('login-err').textContent=''; loginEl().style.display='flex'; loginEl().scrollTop=0; loginTastatur(); };
+const loginErr = t => { document.getElementById('login-err').textContent=t; if(t) setTimeout(loginSynlig,60); };
+// Skjermtastatur: rull innloggingsbildet så knappen under feltet (og en eventuell feilmelding) står over tastaturet
+function loginSynlig(){
+  const el=loginEl(); if(!el || el.style.display==='none') return;
+  const a=document.activeElement; if(!a || !el.contains(a) || !/INPUT|TEXTAREA/.test(a.tagName)) return;
+  const b=[...el.querySelectorAll('#login-body .btn.primary')].find(k=>a.compareDocumentPosition(k) & Node.DOCUMENT_POSITION_FOLLOWING);
+  if(!b) return;
+  const vv=window.visualViewport, topp0=vv?vv.offsetTop:0, bunn=vv?vv.offsetTop+vv.height:window.innerHeight;
+  const feil=document.getElementById('login-err'); let nede=b.getBoundingClientRect().bottom;
+  if(feil && feil.textContent) nede=Math.max(nede, feil.getBoundingClientRect().bottom);
+  const over=nede+12-bunn, luft=a.getBoundingClientRect().top-topp0-8;   // feltet selv skal ikke rulles ut i toppen
+  if(over>0 && luft>0) el.scrollTop += Math.min(over, luft);
+}
+// Skjermtastaturet krymper det synlige området: gi innloggingsbildet like mye plass under innholdet, og rull knappen opp over tastaturet.
+// Plassen følger tastaturet, ikke fokus, så ingenting flytter seg i det Mia trykker på knappen.
+function loginTastatur(){
+  const el=loginEl(), vv=window.visualViewport; if(!el || !vv || el.style.display==='none') return;
+  const kb=Math.max(0, Math.round(el.clientHeight - vv.height)), opp=kb>80;
+  el.style.setProperty('--tastatur', opp ? kb+'px' : '0px');
+  if(opp) setTimeout(loginSynlig, 30);
+}
+if(window.visualViewport) window.visualViewport.addEventListener('resize', loginTastatur);
+document.addEventListener('focusin', e=>{ const el=loginEl(); if(el && el.contains(e.target) && parseFloat(el.style.getPropertyValue('--tastatur'))>0) setTimeout(loginSynlig,50); });
 const oversett = m => { m=String(m||'');
   if(/Invalid login credentials/i.test(m)) return 'Feil e-post eller passord.';
   if(/Email not confirmed/i.test(m)) return 'E-posten er ikke bekreftet ennå. Sjekk innboksen.';
@@ -1944,23 +1976,35 @@ async function lagrePassord(){
   ME.trengerPassord=false; history.replaceState(null,'',location.pathname); toast('Passordet er lagret'); fortsett();
 }
 let MFA_ENROLL=null;
+const mfaNokkel = () => 'vet5-mfa-'+(ME.user?ME.user.id:'');
 async function visMfaOppsett(){
   const {data:lf}=await sb.auth.mfa.listFactors();
-  for(const f of ((lf&&lf.all)||[]).filter(f=>f.status!=='verified')){ try{ await sb.auth.mfa.unenroll({factorId:f.id}); }catch(e){} }
-  const {data,error}=await sb.auth.mfa.enroll({factorType:'totp', friendlyName:'Autentiseringsapp '+new Date().toISOString().slice(0,16)});
-  if(error) return loginBody(`<p>Kunne ikke starte oppsett av to-trinns innlogging.</p><p class="small muted">${esc(oversett(error.message))}</p><button class="btn" onclick="loggUtNa()">Logg ut</button>`);
-  MFA_ENROLL=data;
+  const uverifisert=((lf&&lf.all)||[]).filter(f=>f.status!=='verified');
+  // Lastes siden på nytt under oppsettet, for eksempel etter bytte til autentiseringsappen, brukes samme kode, så koden som er lagt inn i appen fortsatt stemmer
+  let lagret=null; try{ lagret=JSON.parse(sessionStorage.getItem(mfaNokkel())||'null'); }catch(e){}
+  if(!(lagret && lagret.totp && uverifisert.some(f=>f.id===lagret.id))) lagret=null;
+  for(const f of uverifisert) if(!lagret || f.id!==lagret.id){ try{ await sb.auth.mfa.unenroll({factorId:f.id}); }catch(e){} }
+  if(lagret) MFA_ENROLL=lagret;
+  else {
+    const {data,error}=await sb.auth.mfa.enroll({factorType:'totp', friendlyName:'Autentiseringsapp '+new Date().toISOString().slice(0,16)});
+    if(error) return loginBody(`<p>Kunne ikke starte oppsett av to-trinns innlogging.</p><p class="small muted">${esc(oversett(error.message))}</p><button class="btn" onclick="loggUtNa()">Logg ut</button>`);
+    MFA_ENROLL={id:data.id, totp:{qr_code:data.totp.qr_code, secret:data.totp.secret}};
+    try{ sessionStorage.setItem(mfaNokkel(), JSON.stringify(MFA_ENROLL)); }catch(e){}
+  }
   loginBody(`<p><strong>Sett opp to-trinns innlogging</strong></p>
-    <ol class="small" style="padding-left:18px;margin:6px 0 10px"><li>Åpne autentiseringsappen på telefonen, for eksempel Microsoft Authenticator eller Google Authenticator.</li>
-    <li>Trykk + og skann QR-koden. På telefonen kan du heller kopiere koden under og legge den inn manuelt.</li><li>Skriv inn den sekssifrede koden appen viser.</li></ol>
-    <div style="text-align:center;background:#fff;border-radius:10px;padding:10px"><img src="${data.totp.qr_code}" alt="QR-kode" style="width:190px;height:190px"></div>
-    <div class="small muted" style="margin-top:8px;word-break:break-all;text-align:center">Kode for manuell innlegging:<br><strong style="user-select:all">${esc(data.totp.secret)}</strong></div>
+    <ol class="small" style="padding-left:18px;margin:6px 0 10px"><li>Åpne autentiseringsappen, for eksempel Microsoft Authenticator eller Google Authenticator, og legg til en konto.</li>
+    <li>Skann QR-koden. Setter du opp på den samme telefonen, trykker du «Kopier koden» og velger å legge inn koden manuelt i appen.</li><li>Skriv inn den sekssifrede koden appen viser, og trykk Bekreft.</li></ol>
+    <div style="text-align:center;background:#fff;border-radius:10px;padding:10px"><img src="${MFA_ENROLL.totp.qr_code}" alt="QR-kode" style="width:180px;height:180px"></div>
+    <div class="small muted" style="margin-top:8px;word-break:break-all;text-align:center">Kode for å legge inn manuelt:<br><strong style="user-select:all">${esc(MFA_ENROLL.totp.secret)}</strong></div>
+    <div style="text-align:center;margin-top:8px"><button type="button" class="btn sm" onclick="kopierTekst(MFA_ENROLL.totp.secret)">Kopier koden</button></div>
     <form onsubmit="event.preventDefault();bekreftMfaOppsett()"><label class="f">Sekssifret kode</label><input type="text" id="mf-c" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
     <button class="btn primary" style="width:100%;margin-top:14px">Bekreft</button></form>`);
 }
 async function bekreftMfaOppsett(){
   const {error}=await sb.auth.mfa.challengeAndVerify({factorId:MFA_ENROLL.id, code:document.getElementById('mf-c').value.trim()});
-  if(error) return loginErr(oversett(error.message)); toast('To-trinns innlogging er slått på'); fortsett();
+  if(error) return loginErr(oversett(error.message));
+  try{ sessionStorage.removeItem(mfaNokkel()); }catch(e){}
+  toast('To-trinns innlogging er slått på'); fortsett();
 }
 function visMfaKode(){
   loginBody(`<p class="small">Skriv inn koden fra autentiseringsappen.</p>
@@ -2008,7 +2052,7 @@ function loggUt(){
 }
 async function loggUtNa(){
   if(SYNC.dirty){ try{ await sync(); }catch(e){} }
-  if(ME.user){ try{ localStorage.removeItem('vet5-cache-'+ME.user.id); localStorage.removeItem('vet5-medlem-'+ME.user.id); }catch(e){} if(ME.medlem) await NOKKELLAGER.slett(nokkelId()); }
+  if(ME.user){ try{ localStorage.removeItem('vet5-cache-'+ME.user.id); localStorage.removeItem('vet5-medlem-'+ME.user.id); sessionStorage.removeItem(mfaNokkel()); }catch(e){} if(ME.medlem) await NOKKELLAGER.slett(nokkelId()); }
   JN=null; NOKLER=null;
   await sb.auth.signOut();
   S={kunder:[],oppdrag:[],maler:[],varer:[],medisiner:[],vakter:[]}; SYNC.base={}; ME.user=null; ME.medlem=null;
