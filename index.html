@@ -1986,9 +1986,12 @@ async function fortsett(){
   let m=null;
   try{
     const {data,error}=await sb.from('medlemmer').select('*').eq('user_id',ME.user.id).maybeSingle(); if(error) throw error; m=data;
-    if(m){ const {data:p}=await sb.from('praksiser').select('navn,live').eq('id',m.praksis_id).maybeSingle(); m.praksisNavn=p?p.navn:''; m.live=!!(p&&p.live); }
-    // Overgang fra test til ekte drift: kast testdata som ligger lagret på denne enheten, så de ikke lastes opp igjen
-    if(m && m.live){ try{ const f=JSON.parse(localStorage.getItem('vet5-medlem-'+ME.user.id)||'null'); if(!f || !f.live) localStorage.removeItem('vet5-cache-'+ME.user.id); }catch(e){} }
+    // select('*'): appen virker også før kolonnen «nullstilt» finnes. Feiler oppslaget, brukes lagret medlemskap, slik at appen aldri tror at en live praksis er i test.
+    if(m){ const {data:p,error:pe}=await sb.from('praksiser').select('*').eq('id',m.praksis_id).maybeSingle(); if(pe) throw pe; m.praksisNavn=p?p.navn:''; m.live=!!(p&&p.live); m.nullstilt=(p&&p.nullstilt)||null; }
+    // Overgang fra test til ekte drift, eller blank start (golive.sql kjørt på nytt): kast data som ligger lagret på denne enheten,
+    // så de verken vises eller lastes opp igjen. Lagret medlemskap uten «nullstilt» er fra en eldre versjon og regnes som uendret.
+    if(m && m.live){ try{ const f=JSON.parse(localStorage.getItem('vet5-medlem-'+ME.user.id)||'null');
+      if(!f || !f.live || (f.nullstilt!==undefined && (f.nullstilt||null)!==m.nullstilt)) localStorage.removeItem('vet5-cache-'+ME.user.id); }catch(e){} }
     if(m) try{ localStorage.setItem('vet5-medlem-'+ME.user.id, JSON.stringify(m)); }catch(e){}
   }catch(e){ try{ m=JSON.parse(localStorage.getItem('vet5-medlem-'+ME.user.id)||'null'); }catch(x){} }
   if(!m) return loginBody(`<p><strong>Kontoen din har ikke tilgang ennå.</strong></p><p class="small muted">Du er logget inn som ${esc(ME.user.email)}, men kontoen er ikke koblet til en praksis. Be administrator kjøre roller.sql med denne e-postadressen.</p><button class="btn" onclick="loggUtNa()">Logg ut</button>`);
