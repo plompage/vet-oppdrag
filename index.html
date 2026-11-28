@@ -253,6 +253,14 @@ img,table{max-width:100%}
 .login::after{content:'';flex:0 0 auto;height:var(--tastatur,0px)}
 /* På telefon og nettbrett står kortet øverst, så det ikke flytter seg når tastaturet kommer og går */
 @media (hover:none) and (pointer:coarse){ .login-card{margin:0} }
+
+/* Avtaletekst (innlogging og Mer → Avtale) */
+.login.login-bred .login-card{max-width:760px}
+.avtaletekst{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 16px;font-size:14px;line-height:1.5;margin:10px 0}
+.avtaletekst h2{font-size:18px;margin:16px 0 6px}.avtaletekst h3{font-size:16px;margin:14px 0 6px}.avtaletekst h4,.avtaletekst h5{font-size:15px;margin:12px 0 4px}
+.avtaletekst p{margin:6px 0}.avtaletekst ul,.avtaletekst ol{padding-left:20px;margin:6px 0}.avtaletekst ul.oppgaver{list-style:none;padding-left:4px}
+.mdtabell{overflow-x:auto;margin:8px 0}.mdtabell table{border-collapse:collapse;width:100%;font-size:13px}
+.mdtabell th,.mdtabell td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top}.mdtabell th{background:var(--grey-2)}
 </style>
 </head>
 <body>
@@ -319,6 +327,44 @@ const NOKKELLAGER = {
   async lagre(id,k){ try{ const d=await NOKKELLAGER.db(); await new Promise(ok=>{ const t=d.transaction('nokler','readwrite'); t.objectStore('nokler').put(k,id); t.oncomplete=ok; t.onerror=ok; }); }catch(e){} },
   async slett(id){ try{ const d=await NOKKELLAGER.db(); await new Promise(ok=>{ const t=d.transaction('nokler','readwrite'); t.objectStore('nokler').delete(id); t.oncomplete=ok; t.onerror=ok; }); }catch(e){} }
 };
+
+// ================= Enkel og trygg visning av Markdown =================
+// Brukes for avtaletekster i appen og på adminsiden. All tekst escapes først, så ingen HTML fra teksten slipper gjennom.
+// Støtter overskrifter, avsnitt, fet skrift, lenker (bare http/https), punkt- og nummerlister, avkrysningslister, tabeller og skillelinjer.
+function mdTilHtml(md){
+  const e = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  const inl = s => e(s)
+    .replace(/\*\*([^*]+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s"]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+  const celler = l => l.trim().replace(/^\|/,'').replace(/\|$/,'').split('|').map(c=>c.trim());
+  const linjer = String(md||'').replace(/\r\n?/g,'\n').split('\n');
+  let ut='', avsnitt=[], liste=null;
+  const lukkAvsnitt = () => { if(avsnitt.length){ ut+='<p>'+inl(avsnitt.join(' '))+'</p>'; avsnitt=[]; } };
+  const lukkListe = () => { if(liste){ ut+=`<${liste.type}${liste.oppgaver?' class="oppgaver"':''}>${liste.punkter.join('')}</${liste.type}>`; liste=null; } };
+  const punkt = (type, html, oppgave) => { lukkAvsnitt(); if(!liste || liste.type!==type){ lukkListe(); liste={type, punkter:[], oppgaver:false}; } if(oppgave) liste.oppgaver=true; liste.punkter.push('<li>'+html+'</li>'); };
+  for(let i=0;i<linjer.length;i++){
+    const l=linjer[i]; let m;
+    if(!l.trim()){ lukkAvsnitt(); lukkListe(); continue; }
+    if((m=l.match(/^(#{1,6})\s+(.*)$/))){ lukkAvsnitt(); lukkListe(); const n=Math.min(m[1].length+1,5); ut+=`<h${n}>${inl(m[2])}</h${n}>`; continue; }
+    if(/^\s*(-{3,}|\*{3,})\s*$/.test(l)){ lukkAvsnitt(); lukkListe(); ut+='<hr>'; continue; }
+    if(/^\s*\|/.test(l) && i+1<linjer.length && /^\s*\|?\s*:?-{3,}/.test(linjer[i+1])){
+      lukkAvsnitt(); lukkListe();
+      const hode=celler(l); i+=2; const rader=[];
+      while(i<linjer.length && /^\s*\|/.test(linjer[i])){ rader.push(celler(linjer[i])); i++; }
+      i--;
+      ut+='<div class="mdtabell"><table><thead><tr>'+hode.map(c=>'<th>'+inl(c)+'</th>').join('')+'</tr></thead><tbody>'+
+        rader.map(r=>'<tr>'+hode.map((_,k)=>'<td>'+inl(r[k]||'')+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
+      continue;
+    }
+    if((m=l.match(/^\s*[-*]\s+\[( |x|X)\]\s+(.*)$/))){ punkt('ul', (m[1]===' '?'☐ ':'☑ ')+inl(m[2]), true); continue; }
+    if((m=l.match(/^\s*[-*]\s+(.*)$/))){ punkt('ul', inl(m[1])); continue; }
+    if((m=l.match(/^\s*\d+[.)]\s+(.*)$/))){ punkt('ol', inl(m[1])); continue; }
+    if(liste && /^\s{2,}\S/.test(l)){ const s=liste.punkter.pop(); liste.punkter.push(s.replace(/<\/li>$/,' '+inl(l.trim())+'</li>')); continue; }
+    lukkListe(); avsnitt.push(l.trim());
+  }
+  lukkAvsnitt(); lukkListe();
+  return ut;
+}
 
 'use strict';
 // ================= Konfigurasjon =================
@@ -514,7 +560,7 @@ function renderFrame(){
 }
 function setRole(r){ lagreNa(); UI.role=r; UI.view = r==='mia' ? 'idag' : 'eksport'; UI.current=null; UI.retur=null; render(); toast(r==='mia'?'Visning: veterinær':'Visning: fakturering (bare i test)'); }
 function go(v, fra){ lagreNa(); UI.view=v; UI.current=null; UI.dyrApen=null; UI.retur=fra||null; render(); window.scrollTo(0,0); }
-const FRA_NAVN = {idag:'I dag', kunde:'Kunden', kunder:'Kunder', kalender:'Kalender', sok:'Søk', eksport:'Fakturering', lonn:'Lønnsberegning', dhp:'Rapport', meny:'Mer', maler:'Maler', kopi:'Sikkerhetskopi'};
+const FRA_NAVN = {idag:'I dag', kunde:'Kunden', kunder:'Kunder', kalender:'Kalender', sok:'Søk', eksport:'Fakturering', lonn:'Lønnsberegning', dhp:'Rapport', meny:'Mer', maler:'Maler', kopi:'Sikkerhetskopi', avtale:'Avtale'};
 const fraNavn = v => v==='oppdrag' ? (isMia()?'Alle oppdrag':'Oppdrag') : (FRA_NAVN[v]||'Tilbake');
 const tilbakeKnapp = std => { const v=UI.retur||std; return `<div class="noprint tilbake"><button class="linkbtn" onclick="go('${v}')">← ${fraNavn(v)}</button></div>`; };
 const VIEWS = {};
@@ -1332,6 +1378,19 @@ function journalUtdrag(nr){
 }
 
 // ================= Mer =================
+VIEWS.avtale = () => {
+  const st=AVTALE;
+  if(!st || !st.siste) return `${tilbakeKnapp('meny')}<h1 style="margin-top:2px">Avtale og personvern</h1><div class="card">Avtalen kunne ikke hentes nå. Prøv igjen når du har nett.</div>`;
+  const g=st.godtatt, v=st.siste;
+  return `${tilbakeKnapp('meny')}<h1 style="margin-top:2px">Avtale og personvern</h1>
+  <div class="card"><div class="kv">
+    <div>Godtatt</div><div>${g?`Versjon ${esc(g.versjon)}, ${fmtTs(g.tid)}, av ${esc(g.navn||g.epost||'')}`:'Ikke godtatt ennå'}</div>
+    <div>Siste versjon</div><div>${esc(v.versjon)}${v.gjelder_fra?' · gjelder fra '+fmtDateKort(v.gjelder_fra):''}${st.har_godtatt_siste?'':' · ikke godtatt'}</div>
+    <div>Fingeravtrykk</div><div class="small" style="word-break:break-all">${esc(v.sha256)}</div></div>
+    <div class="row" style="gap:8px;margin-top:10px"><button class="btn sm" onclick="lastNedAvtale()">Last ned avtalen</button>
+    ${st.eier && !st.har_godtatt_siste?`<button class="btn sm primary" onclick="UI._avtaleSenere=false;visAvtale(AVTALE)">Les og godta versjon ${esc(v.versjon)}</button>`:''}</div></div>
+  <div class="card avtaletekst">${mdTilHtml(v.tekst)}</div><div style="height:40px"></div>`;
+};
 VIEWS.meny = () => {
   const rad=(onclick,t,sub)=>`<button class="rad" onclick="${onclick}"><span class="grow"><strong class="blk">${t}</strong><span class="sub">${sub}</span></span>${IK.pil}</button>`;
   const urap=S.oppdrag.filter(o=>!apen(o) && !o.dhpTs && harMed(o)).length;
@@ -1355,7 +1414,8 @@ VIEWS.meny = () => {
   }
   h+=`<h3>Sikkerhet</h3><div class="card list0">
       ${rad("go('kopi','meny')",'Sikkerhetskopi','Last ned en kopi av alle data'+(SISTE_KOPI?' · siste '+fmtTs(SISTE_KOPI):' · ingen kopi tatt ennå'))}
-      ${isMia()&&kanSkrive()?rad('journalpassordDialog()','Journalpassord','Bytt journalpassord eller lag ny gjenopprettingsnøkkel'):''}</div>
+      ${isMia()&&kanSkrive()?rad('journalpassordDialog()','Journalpassord','Bytt journalpassord eller lag ny gjenopprettingsnøkkel'):''}
+      ${AVTALE&&AVTALE.siste?rad("go('avtale','meny')",'Avtale og personvern',AVTALE.godtatt?`Versjon ${esc(AVTALE.godtatt.versjon)} godtatt ${fmtDateKort(String(AVTALE.godtatt.tid).slice(0,10))}`:'Ikke godtatt ennå'):''}</div>
     <div class="card"><div class="small muted">Innlogget som ${esc(ME.user.email)}${ME.praksis?' · '+esc(ME.praksis):''}</div><button class="btn sm" style="margin-top:8px" onclick="loggUt()">Logg ut</button></div>
     <div style="height:40px"></div>`;
   return h;
@@ -1693,7 +1753,7 @@ async function journalnokkel(){
 }
 function visOpprettJournalpassord(){
   loginBody(`<p><strong>Lag journalpassord</strong></p>
-    <p class="small">Journalene krypteres på enheten før de lagres. Bare den som kan journalpassordet eller gjenopprettingsnøkkelen, kan lese dem. Verken Erik, Supabase eller andre kan lese dem.</p>
+    <p class="small">Journalene krypteres på enheten før de lagres. Bare den som kan journalpassordet eller gjenopprettingsnøkkelen, kan lese dem. Verken leverandøren av Vet-oppdrag, Supabase eller andre kan lese dem.</p>
     <p class="small">Bruk et annet passord enn det du logger inn med, og minst 12 tegn. Gjerne en setning, for eksempel «Fire kuer på tunet i Follebu».</p>
     <form onsubmit="event.preventDefault();opprettJournalpassord()">
     <label class="f">Journalpassord</label><input type="password" id="jp-1" autocomplete="new-password">
@@ -1880,7 +1940,7 @@ async function importerKunder(fil){
   const hi=rader.findIndex(r=>r.some(c=>/^kundenummer\*?$/i.test(String(c).trim()))); if(hi<0){ toast('Fant ikke kolonnen «Kundenummer» i filen'); return; }
   const H=rader[hi].map(c=>String(c).trim().replace(/\*$/,'').toLowerCase());
   const col = (...navn) => { for(const n of navn){ const i=H.indexOf(n.toLowerCase()); if(i>=0) return i; } return -1; };
-  const c={nr:col('Kundenummer'), navn:col('Kundenavn','Navn'), a1:col('Adresse 1','Adresse'), a2:col('Adresse 2'), pn:col('Postnummer'), ps:col('Poststed','Sted'), t1:col('Telefon 1','Telefon'), mob:col('Mobil'), kontakt:col('Kontaktperson','Kontakt')};
+  const c={nr:col('Kundenummer'), navn:col('Kundenavn','Navn'), a1:col('Adresse 1','Adresse'), a2:col('Adresse 2'), pn:col('Postnummer'), ps:col('Poststed','Sted'), t1:col('Telefon 1','Telefon'), mob:col('Mobil'), kontakt:col('Kontaktperson','Kontaktperson navn','Kontakt')};
   const g=(r,i)=> i<0 ? '' : String(r[i]??'').trim();
   const liste=[];
   for(const r of rader.slice(hi+1)){
@@ -1907,7 +1967,7 @@ const hashType = new URLSearchParams(location.hash.slice(1)).get('type');
 const sb = window.supabase.createClient(SB_URL, SB_KEY, {auth:{persistSession:true, autoRefreshToken:true, detectSessionInUrl:true, flowType:'implicit'}});
 const ME = {user:null, medlem:null, praksis:'', trengerPassord: hashType==='invite' || hashType==='recovery'};
 const loginEl = () => document.getElementById('login');
-const loginBody = h => { document.getElementById('login-body').innerHTML=h; document.getElementById('login-err').textContent=''; loginEl().style.display='flex'; loginEl().scrollTop=0; loginTastatur(); };
+const loginBody = h => { document.getElementById('login-body').innerHTML=h; document.getElementById('login-err').textContent=''; loginEl().classList.remove('login-bred'); loginEl().style.display='flex'; loginEl().scrollTop=0; loginTastatur(); };
 const loginErr = t => { document.getElementById('login-err').textContent=t; if(t) setTimeout(loginSynlig,60); };
 // Skjermtastatur: rull innloggingsbildet så knappen under feltet (og en eventuell feilmelding) står over tastaturet
 function loginSynlig(){
@@ -2031,7 +2091,8 @@ async function fortsett(){
   try{
     const {data,error}=await sb.from('medlemmer').select('*').eq('user_id',ME.user.id).maybeSingle(); if(error) throw error; m=data;
     // select('*'): appen virker også før kolonnen «nullstilt» finnes. Feiler oppslaget, brukes lagret medlemskap, slik at appen aldri tror at en live praksis er i test.
-    if(m){ const {data:p,error:pe}=await sb.from('praksiser').select('*').eq('id',m.praksis_id).maybeSingle(); if(pe) throw pe; m.praksisNavn=p?p.navn:''; m.live=!!(p&&p.live); m.nullstilt=(p&&p.nullstilt)||null; }
+    if(m){ const {data:p,error:pe}=await sb.from('praksiser').select('*').eq('id',m.praksis_id).maybeSingle(); if(pe) throw pe; m.praksisNavn=p?p.navn:''; m.live=!!(p&&p.live); m.nullstilt=(p&&p.nullstilt)||null;
+      m.status=(p&&p.status)||'aktiv'; m.status_grunn=(p&&p.status_grunn)||''; m.data_slettet=(p&&p.data_slettet)||null; }
     // Overgang fra test til ekte drift, eller blank start (golive.sql kjørt på nytt): kast data som ligger lagret på denne enheten,
     // så de verken vises eller lastes opp igjen. Lagret medlemskap uten «nullstilt» er fra en eldre versjon og regnes som uendret.
     if(m && m.live){ try{ const f=JSON.parse(localStorage.getItem('vet5-medlem-'+ME.user.id)||'null');
@@ -2039,13 +2100,61 @@ async function fortsett(){
     if(m) try{ localStorage.setItem('vet5-medlem-'+ME.user.id, JSON.stringify(m)); }catch(e){}
   }catch(e){ try{ m=JSON.parse(localStorage.getItem('vet5-medlem-'+ME.user.id)||'null'); }catch(x){} }
   if(!m) return loginBody(`<p><strong>Kontoen din har ikke tilgang ennå.</strong></p><p class="small muted">Du er logget inn som ${esc(ME.user.email)}, men kontoen er ikke koblet til en praksis. Be administrator kjøre roller.sql med denne e-postadressen.</p><button class="btn" onclick="loggUtNa()">Logg ut</button>`);
+  if(m.aktiv===false || (m.status && m.status!=='aktiv')) return visStengt(m);
   const rolle = m.rolle==='veterinaer' ? 'mia' : 'erik';
   // Startside: «I dag» for veterinæren, «Fakturering» for den som fakturerer
   if(!ME.medlem || UI.role!==rolle){ UI.view = rolle==='mia' ? 'idag' : 'eksport'; UI.current=null; UI.retur=null; }
   ME.medlem=m; ME.praksis=m.praksisNavn||''; UI.role = rolle;
+  if(!(await avtaleSjekk())) return;
   if(m.rolle==='veterinaer' && !(await journalnokkel())) return;
   loginEl().style.display='none'; cacheLoad(); render(); sync();
 }
+// ================= Stengt tilgang og avtale =================
+function visStengt(m){
+  const deakt = m.aktiv===false;
+  const navn = esc(m.praksisNavn||'praksisen');
+  const hva = deakt ? 'Brukeren din er deaktivert.' : m.status==='opphort' ? `Kundeforholdet for ${navn} er avsluttet.` : `Tilgangen til ${navn} er stengt.`;
+  const data = m.data_slettet ? 'Dataene er slettet etter avtalen.' : 'Dataene er ikke slettet.';
+  loginBody(`<p><strong>${hva}</strong></p>${!deakt && m.status_grunn?`<p class="small">${esc(m.status_grunn)}</p>`:''}
+    <p class="small muted">${data} Ta kontakt med den som leverer Vet-oppdrag til dere.</p>
+    <button class="btn" onclick="fortsett()">Prøv igjen</button> <button class="btn" onclick="loggUtNa()">Logg ut</button>`);
+}
+let AVTALE = null;
+// Eieren må godta avtalen før praksisen tar i bruk Vet-oppdrag. En nyere versjon kan godtas nå eller senere.
+// Uten nett, eller før databasen er oppdatert, sperres ingen ute.
+async function avtaleSjekk(){
+  let st=null;
+  try{ const r=await sb.rpc('avtale_status'); if(r.error) return true; st=r.data; }catch(e){ return true; }
+  AVTALE=st;
+  if(!st || !st.siste || st.har_godtatt_siste) return true;
+  if(st.eier){ if(st.har_godtatt_noen && UI._avtaleSenere) return true; visAvtale(st); return false; }
+  if(!st.har_godtatt_noen){ visAvtaleVenter(st); return false; }
+  return true;
+}
+function visAvtale(st){
+  const v=st.siste, ny=st.har_godtatt_noen;
+  loginBody(`<p><strong>${ny?'Oppdaterte vilkår for Vet-oppdrag':'Avtale før dere tar i bruk Vet-oppdrag'}</strong></p>
+    <p class="small">${ny?`Dere har godtatt versjon ${esc(st.godtatt.versjon)}. Nå er versjon ${esc(v.versjon)} klar${v.gjelder_fra?', og den gjelder fra '+fmtDateKort(v.gjelder_fra):''}. Les gjennom og godta den, eller gjør det senere.`
+      :`Les avtalen og godta den på vegne av ${esc(st.praksis_navn)}. Den inneholder databehandleravtalen som må være på plass før Vet-oppdrag lagrer opplysninger om kundene deres.`}</p>
+    <div class="avtaletekst">${mdTilHtml(v.tekst)}</div>
+    <p class="small muted" style="text-align:left">Versjon ${esc(v.versjon)} · fingeravtrykk ${esc(String(v.sha256).slice(0,16))} · <button class="linkbtn" onclick="lastNedAvtale()">Last ned avtalen</button></p>
+    <label class="check" style="text-align:left"><input type="checkbox" id="av-ok" onchange="document.getElementById('av-b').disabled=!this.checked"> Jeg har lest avtalen og godtar den på vegne av ${esc(st.praksis_navn)}</label>
+    <button class="btn primary" style="width:100%;margin-top:12px" id="av-b" disabled onclick="godtaAvtale()">Godta avtalen</button>
+    <div style="text-align:center;margin-top:10px">${ny?`<button class="linkbtn" onclick="UI._avtaleSenere=true;fortsett()">Senere</button>`:`<button class="linkbtn" onclick="loggUtNa()">Logg ut</button>`}</div>`);
+  loginEl().classList.add('login-bred');
+}
+function visAvtaleVenter(st){
+  loginBody(`<p><strong>Avtalen er ikke godtatt ennå</strong></p>
+    <p class="small">${esc(st.eier_navn||'Eieren av praksisen')} må logge inn og godta avtalen for ${esc(st.praksis_navn)} før Vet-oppdrag kan tas i bruk.</p>
+    <button class="btn primary" onclick="fortsett()">Prøv igjen</button> <button class="btn" onclick="loggUtNa()">Logg ut</button>`);
+}
+async function godtaAvtale(){
+  const b=document.getElementById('av-b'); b.disabled=true;
+  const {data,error}=await sb.rpc('godta_avtale',{p_versjon:AVTALE.siste.id, p_nettleser:navigator.userAgent});
+  if(error){ b.disabled=false; return loginErr(oversett(error.message)); }
+  AVTALE=data; toast('Avtalen er godtatt'); fortsett();
+}
+function lastNedAvtale(){ const v=AVTALE&&AVTALE.siste; if(v) lastNedBlob(new Blob([v.tekst],{type:'text/markdown;charset=utf-8'}), `vet-oppdrag-avtale-${v.versjon}.md`); }
 function loggUt(){
   modal(`<h2>Logge ut?</h2><p class="small muted">${SYNC.dirty?'<strong>Noen endringer er ikke lagret på serveren ennå.</strong> ':''}Lokal kopi på denne enheten slettes. Dataene ligger trygt på serveren.</p>
   <div class="row" style="justify-content:flex-end;gap:8px"><button class="btn" onclick="closeModal()">Avbryt</button><button class="btn primary" onclick="closeModal();loggUtNa()">Logg ut</button></div>`);
